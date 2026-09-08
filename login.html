@@ -610,149 +610,148 @@ body::after {
 
 <main class="login-wrapper">
 
-```
 <section class="login-info">
 
-    <div class="logo-mark">
-        ⚡
+```
+<div class="logo-mark">
+    ⚡
+</div>
+
+<span class="event-badge">
+    AI Design Challenge 2026
+</span>
+
+<h1>
+    Prompt<br>
+    Forge
+</h1>
+
+<p class="description">
+
+    Welcome to the AI Design Workspace.
+
+    Create innovative visual concepts,
+    transform your ideas with AI, and
+    showcase your creativity.
+
+</p>
+
+<div class="features">
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            ✨
+        </div>
+
+        <span>
+            Create powerful AI designs
+        </span>
+
     </div>
 
-    <span class="event-badge">
-        AI Design Challenge 2026
-    </span>
+    <div class="feature">
 
-    <h1>
-        Prompt<br>
-        Forge
-    </h1>
-
-    <p class="description">
-
-        Welcome to the AI Design Workspace.
-
-        Create innovative visual concepts,
-        transform your ideas with AI, and
-        showcase your creativity.
-
-    </p>
-
-    <div class="features">
-
-        <div class="feature">
-
-            <div class="feature-icon">
-                ✨
-            </div>
-
-            <span>
-                Create powerful AI designs
-            </span>
-
+        <div class="feature-icon">
+            🎨
         </div>
 
-
-        <div class="feature">
-
-            <div class="feature-icon">
-                🎨
-            </div>
-
-            <span>
-                Design with Canva AI
-            </span>
-
-        </div>
-
-
-        <div class="feature">
-
-            <div class="feature-icon">
-                ⏱️
-            </div>
-
-            <span>
-                Complete your challenge in 20 minutes
-            </span>
-
-        </div>
+        <span>
+            Design with Canva AI
+        </span>
 
     </div>
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            ⏱️
+        </div>
+
+        <span>
+            Complete your challenge in 20 minutes
+        </span>
+
+    </div>
+
+</div>
+```
 
 </section>
-
 
 <section class="login-panel">
 
-    <div class="login-card">
+```
+<div class="login-card">
 
-        <div class="login-card-header">
+    <div class="login-card-header">
 
-            <h2>
-                Participant Login
-            </h2>
+        <h2>
+            Participant Login
+        </h2>
 
-            <p>
-                Enter your registered email
-                to enter the competition.
-            </p>
-
-        </div>
-
-
-        <div class="input-group">
-
-            <label for="email">
-                Registered Email
-            </label>
-
-            <div class="input-wrapper">
-
-                <span class="input-icon">
-                    ✉
-                </span>
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="you@example.com"
-                    autocomplete="email"
-                >
-
-            </div>
-
-        </div>
-
-
-        <button
-            id="loginBtn"
-            type="button"
-        >
-            Enter Competition →
-        </button>
-
-
-        <p class="register-text">
-
-            Don't have an account?
-
-            <a href="register.html">
-                Register Here
-            </a>
-
+        <p>
+            Enter your registered email
+            to enter the competition.
         </p>
 
+    </div>
 
-        <div class="security-note">
 
-            🔒 Your registered email is checked
-            against the approved participant list.
+    <div class="input-group">
+
+        <label for="email">
+            Registered Email
+        </label>
+
+        <div class="input-wrapper">
+
+            <span class="input-icon">
+                ✉
+            </span>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+            >
 
         </div>
 
     </div>
 
-</section>
+
+    <button
+        id="loginBtn"
+        type="button"
+    >
+        Enter Competition →
+    </button>
+
+
+    <p class="register-text">
+
+        Don't have an account?
+
+        <a href="register.html">
+            Register Here
+        </a>
+
+    </p>
+
+
+    <div class="security-note">
+
+        🔒 Your registered email is checked
+        against the approved participant list.
+
+    </div>
+
+</div>
 ```
+
+</section>
 
 </main>
 
@@ -911,28 +910,18 @@ async function loginParticipant() {
 
 
         /* =================================================
-           IMPORTANT:
-           RESTORE QUESTION PROGRESS
-        =================================================
+           QUESTION PROGRESS
 
-           DO NOT reset battleQuestionIndex here.
+           DO NOT RESET THIS VALUE.
 
-           Example:
+           0 = Question 1
+           1 = Question 2
+           2 = Question 3
+           ...
+           14 = Question 15
 
-           First login:
-           battleQuestionIndex = 0
-           → Question 1
-
-           After submitting Question 1:
-           battleQuestionIndex = 1
-
-           Second login:
-           battleQuestionIndex = 1
-           → Question 2
-
-           After Question 15:
-           battleQuestionIndex becomes 0
-           and battleRound becomes 2.
+           battle.html increases this after a successful
+           submission.
         ================================================= */
 
         let questionIndex =
@@ -944,7 +933,7 @@ async function loginParticipant() {
 
 
         /* =============================================
-           FIRST LOGIN / INVALID PROGRESS
+           FIRST LOGIN
         ============================================= */
 
         if (
@@ -963,7 +952,7 @@ async function loginParticipant() {
 
 
         /* =============================================
-           RESTORE ROUND
+           ROUND
         ============================================= */
 
         let round =
@@ -988,19 +977,16 @@ async function loginParticipant() {
         }
 
 
-        /* =============================================
-           RESTORE / START TIMER
-        =============================================
+        /* =================================================
+           TIMER
 
            IMPORTANT:
+           DO NOT DELETE timerStart.
 
-           DO NOT delete timerStart here.
+           It is created only if this is the first login.
 
-           If the participant logs in again after
-           submitting a question, the original timer
-           continues.
-
-        ============================================= */
+           Every later login keeps the same timer.
+        ================================================= */
 
         let timerStart =
             Number(
@@ -1020,13 +1006,13 @@ async function loginParticipant() {
 
             localStorage.setItem(
                 "timerStart",
-                timerStart.toString()
+                String(timerStart)
             );
         }
 
 
         /* =============================================
-           CURRENT QUESTION INFORMATION
+           SAVE CURRENT QUESTION INFO
         ============================================= */
 
         localStorage.setItem(
@@ -1036,7 +1022,6 @@ async function loginParticipant() {
             )
         );
 
-
         localStorage.setItem(
             "currentRound",
             String(round)
@@ -1044,7 +1029,9 @@ async function loginParticipant() {
 
 
         /* =============================================
-           REMOVE OLD SUBMISSION BLOCK
+           REMOVE OLD SUBMISSION FLAG
+
+           This does NOT affect question progress.
         ============================================= */
 
         localStorage.removeItem(
@@ -1053,11 +1040,11 @@ async function loginParticipant() {
 
 
         /* =============================================
-           DEBUG INFORMATION
+           DEBUG
         ============================================= */
 
         console.log(
-            "================================="
+            "---------------------------------"
         );
 
         console.log(
@@ -1086,19 +1073,12 @@ async function loginParticipant() {
         );
 
         console.log(
-            "Timer Start:",
-            new Date(
-                timerStart
-            ).toLocaleString()
-        );
-
-        console.log(
-            "================================="
+            "---------------------------------"
         );
 
 
         /* =============================================
-           ENTER BATTLE
+           GO TO BATTLE
         ============================================= */
 
         window.location.href =
