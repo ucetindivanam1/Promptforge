@@ -1,730 +1,135 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Prompt Forge | Participant Login</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(124, 58, 237, 0.30),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(37, 99, 235, 0.25),
-            transparent 30%
-        ),
-        #050816;
-
-    color: #ffffff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-    position: relative;
-}
-
-body::before {
-    content: "";
-
-    position: fixed;
-
-    width: 500px;
-    height: 500px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(139, 92, 246, 0.12);
-
-    top: -220px;
-    left: -180px;
-
-    box-shadow:
-        0 0 100px rgba(124, 58, 237, 0.12);
-
-    pointer-events: none;
-}
-
-body::after {
-    content: "";
-
-    position: fixed;
-
-    width: 600px;
-    height: 600px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(59, 130, 246, 0.10);
-
-    bottom: -300px;
-    right: -250px;
-
-    pointer-events: none;
-}
-
-.background-grid {
-    position: fixed;
-    inset: 0;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,0.025) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,0.025) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 85%
-        );
-
-    pointer-events: none;
-}
-
-.login-wrapper {
-
-    width: 100%;
-    max-width: 1050px;
-
-    min-height: 620px;
-
-    margin: 25px;
-
-    display: grid;
-
-    grid-template-columns: 1.05fr 0.95fr;
-
-    background:
-        rgba(15, 23, 42, 0.78);
-
-    border:
-        1px solid rgba(255,255,255,0.09);
-
-    border-radius: 28px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,0.50),
-        0 0 80px rgba(124,58,237,0.10);
-
-    backdrop-filter: blur(20px);
-}
-
-.login-info {
-
-    padding: 65px 55px;
-
-    position: relative;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(124,58,237,0.16),
-            rgba(37,99,235,0.05),
-            transparent
-        );
-}
-
-.logo-mark {
-
-    width: 62px;
-    height: 62px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #2563eb
-        );
-
-    font-size: 28px;
-
-    box-shadow:
-        0 12px 35px rgba(124,58,237,0.35);
-
-    margin-bottom: 28px;
-}
-
-.event-badge {
-
-    display: inline-flex;
-
-    width: fit-content;
-
-    padding: 8px 14px;
-
-    border-radius: 50px;
-
-    background:
-        rgba(124,58,237,0.12);
-
-    border:
-        1px solid rgba(167,139,250,0.30);
-
-    color: #c4b5fd;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1.5px;
-
-    margin-bottom: 18px;
-}
-
-.login-info h1 {
-
-    font-size:
-        clamp(42px, 5vw, 68px);
-
-    line-height: 0.95;
-
-    margin-bottom: 22px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #c4b5fd,
-            #60a5fa
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.login-info .description {
-
-    max-width: 480px;
-
-    color: #94a3b8;
-
-    font-size: 15px;
-
-    line-height: 1.8;
-
-    margin-bottom: 35px;
-}
-
-.features {
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.feature {
-
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-
-    color: #cbd5e1;
-
-    font-size: 13px;
-}
-
-.feature-icon {
-
-    width: 32px;
-    height: 32px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 9px;
-
-    background:
-        rgba(124,58,237,0.13);
-
-    border:
-        1px solid rgba(139,92,246,0.18);
-
-    font-size: 14px;
-}
-
-.login-panel {
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 45px;
-
-    background:
-        rgba(2,6,23,0.48);
-}
-
-.login-card {
-
-    width: 100%;
-    max-width: 390px;
-}
-
-.login-card-header {
-    margin-bottom: 30px;
-}
-
-.login-card-header h2 {
-
-    font-size: 30px;
-
-    margin-bottom: 9px;
-}
-
-.login-card-header p {
-
-    color: #64748b;
-
-    font-size: 14px;
-
-    line-height: 1.6;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-
-.input-group label {
-
-    display: block;
-
-    color: #cbd5e1;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    margin-bottom: 9px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.8px;
-}
-
-.input-wrapper {
-    position: relative;
-}
-
-.input-icon {
-
-    position: absolute;
-
-    left: 16px;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    color: #64748b;
-
-    font-size: 16px;
-
-    pointer-events: none;
-}
-
-#email {
-
-    width: 100%;
-
-    height: 54px;
-
-    padding:
-        0 16px 0 46px;
-
-    border-radius: 13px;
-
-    border:
-        1px solid #334155;
-
-    background:
-        rgba(15,23,42,0.90);
-
-    color: #ffffff;
-
-    outline: none;
-
-    font-size: 14px;
-
-    transition: 0.2s ease;
-}
-
-#email:focus {
-
-    border-color: #8b5cf6;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(139,92,246,0.10);
-}
-
-#email::placeholder {
-    color: #475569;
-}
-
-#loginBtn {
-
-    width: 100%;
-
-    height: 55px;
-
-    margin-top: 8px;
-
-    border: none;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #2563eb
-        );
-
-    color: #ffffff;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 12px 30px
-        rgba(79,70,229,0.25);
-
-    transition: 0.2s ease;
-}
-
-#loginBtn:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 16px 35px
-        rgba(79,70,229,0.40);
-}
-
-#loginBtn:disabled {
-
-    opacity: 0.55;
-
-    cursor: not-allowed;
-
-    transform: none;
-}
-
-.register-text {
-
-    text-align: center;
-
-    margin-top: 24px;
-
-    color: #64748b;
-
-    font-size: 13px;
-}
-
-.register-text a {
-
-    color: #a78bfa;
-
-    font-weight: 700;
-
-    text-decoration: none;
-
-    margin-left: 4px;
-}
-
-.register-text a:hover {
-
-    color: #c4b5fd;
-
-    text-decoration: underline;
-}
-
-.security-note {
-
-    margin-top: 30px;
-
-    padding: 13px 15px;
-
-    border-radius: 11px;
-
-    background:
-        rgba(15,23,42,0.70);
-
-    border:
-        1px solid rgba(255,255,255,0.06);
-
-    color: #64748b;
-
-    font-size: 11px;
-
-    line-height: 1.6;
-
-    text-align: center;
-}
-
-.footer-text {
-
-    position: fixed;
-
-    bottom: 15px;
-
-    left: 0;
-    right: 0;
-
-    text-align: center;
-
-    color: #334155;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    text-transform: uppercase;
-}
-
-@media (max-width: 800px) {
-
-    body {
-
-        overflow-y: auto;
-
-        align-items: flex-start;
-
-        padding-top: 30px;
-
-        padding-bottom: 50px;
-    }
-
-    .login-wrapper {
-
-        grid-template-columns: 1fr;
-
-        min-height: auto;
-
-        margin: 15px;
-    }
-
-    .login-info {
-
-        padding: 40px 30px;
-    }
-
-    .login-info h1 {
-
-        font-size: 48px;
-    }
-
-    .login-panel {
-
-        padding: 35px 25px 45px;
-    }
-
-    .footer-text {
-        display: none;
-    }
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Participant Login | AI Prompt Battle 2026</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(circle at top, #172554, #020617 55%);
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 430px;
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(34, 211, 238, 0.35);
+            box-shadow:
+                0 0 30px rgba(34, 211, 238, 0.15);
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 10px;
+            color: #22d3ee;
+            font-size: 32px;
+        }
+
+        .login-container p {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #020617;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #22d3ee;
+            box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #22d3ee;
+            color: #020617;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #message {
+            margin-top: 20px;
+            min-height: 22px;
+            color: #f87171;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #22d3ee;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="background-grid"></div>
+<div class="login-container">
 
-<main class="login-wrapper">
+    <h1>AI PROMPT BATTLE</h1>
 
-<section class="login-info">
+    <p>
+        Participant Login<br>
+        AI Design Challenge 2026
+    </p>
 
-<div class="logo-mark">
-    ⚡
-</div>
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter registered email"
+        autocomplete="email"
+    >
 
-<span class="event-badge">
-    AI Design Challenge 2026
-</span>
+    <button id="loginBtn">
+        LOGIN & START BATTLE
+    </button>
 
-<h1>
-    Prompt<br>
-    Forge
-</h1>
+    <div id="message"></div>
 
-<p class="description">
-
-    Welcome to the AI Design Workspace.
-
-    Create innovative visual concepts,
-    transform your ideas with AI, and
-    showcase your creativity.
-
-</p>
-
-<div class="features">
-
-<div class="feature">
-
-<div class="feature-icon">
-    ✨
-</div>
-
-<span>
-    Create powerful AI designs
-</span>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-    🎨
-</div>
-
-<span>
-    Design with Canva AI
-</span>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-    ⏱️
-</div>
-
-<span>
-    Complete your challenge in 20 minutes
-</span>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="login-panel">
-
-<div class="login-card">
-
-<div class="login-card-header">
-
-<h2>
-    Participant Login
-</h2>
-
-<p>
-    Enter your registered email
-    to enter the competition.
-</p>
-
-</div>
-
-<div class="input-group">
-
-<label for="email">
-    Registered Email
-</label>
-
-<div class="input-wrapper">
-
-<span class="input-icon">
-    ✉
-</span>
-
-<input
-    type="email"
-    id="email"
-    placeholder="you@example.com"
-    autocomplete="email"
-/>
-
-</div>
-
-</div>
-
-<button
-    id="loginBtn"
-    type="button"
->
-    Enter Competition →
-</button>
-
-<p class="register-text">
-
-    Don't have an account?
-
-    <a href="register.html">
-        Register Here
+    <a href="index.html" class="back-link">
+        ← Back to Home
     </a>
 
-</p>
-
-<div class="security-note">
-
-    🔒 Your registered email is checked
-    against the approved participant list.
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-<div class="footer-text">
-    Prompt Forge • AI Design Challenge 2026
 </div>
 
 
@@ -740,10 +145,14 @@ import {
     doc,
     runTransaction,
     Timestamp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+/*
+=====================================================
+ELEMENTS
+=====================================================
+*/
 
 const emailInput =
     document.getElementById("email");
@@ -751,27 +160,38 @@ const emailInput =
 const loginBtn =
     document.getElementById("loginBtn");
 
+const message =
+    document.getElementById("message");
+
 
 /*
 =====================================================
-GET / CREATE GLOBAL EVENT ASSIGNMENT
+GLOBAL SETTINGS
+=====================================================
+*/
+
+const TOTAL_QUESTIONS = 15;
+
+
+/*
+=====================================================
+ASSIGN QUESTION
 =====================================================
 
-This is the important part.
+Participant order:
 
-The assignment is stored in Firebase.
-
-15 slots:
-
-1  = Question 1
-2  = Question 2
+1  -> Q1
+2  -> Q2
+3  -> Q3
 ...
-15 = Question 15
+15 -> Q15
+16 -> Round 2 Q1
+17 -> Round 2 Q2
 
-16 = Round 2 Question 1
-17 = Round 2 Question 2
+Existing participants keep their original question.
 
-etc.
+Firestore transaction prevents two people from
+receiving the same slot at the same time.
 =====================================================
 */
 
@@ -781,7 +201,11 @@ async function assignQuestionForParticipant(
 ) {
 
     const userRef =
-        doc(db, "users", userDocId);
+        doc(
+            db,
+            "users",
+            userDocId
+        );
 
     const eventRef =
         doc(
@@ -791,168 +215,159 @@ async function assignQuestionForParticipant(
         );
 
 
-    return await runTransaction(
-        db,
-        async (transaction) => {
+    const result =
+        await runTransaction(
+            db,
+            async (transaction) => {
 
-            /*
-            =========================================
-            CHECK PARTICIPANT ASSIGNMENT
-            =========================================
-            */
+                /*
+                -----------------------------------------
+                READ USER
+                -----------------------------------------
+                */
 
-            const freshUserSnap =
-                await transaction.get(
-                    userRef
+                const userSnapshot =
+                    await transaction.get(
+                        userRef
+                    );
+
+
+                const currentUser =
+                    userSnapshot.exists()
+                        ? userSnapshot.data()
+                        : userData;
+
+
+                /*
+                -----------------------------------------
+                EXISTING ASSIGNMENT
+                -----------------------------------------
+                */
+
+                if (
+                    currentUser.assignedQuestion &&
+                    currentUser.assignedRound
+                ) {
+
+                    return {
+                        question:
+                            Number(
+                                currentUser.assignedQuestion
+                            ),
+
+                        round:
+                            Number(
+                                currentUser.assignedRound
+                            ),
+
+                        existing: true
+                    };
+                }
+
+
+                /*
+                -----------------------------------------
+                READ EVENT STATE
+                -----------------------------------------
+                */
+
+                const eventSnapshot =
+                    await transaction.get(
+                        eventRef
+                    );
+
+
+                let nextSlot = 1;
+
+
+                if (
+                    eventSnapshot.exists()
+                ) {
+
+                    const eventData =
+                        eventSnapshot.data();
+
+
+                    nextSlot =
+                        Number(
+                            eventData.nextSlot || 1
+                        );
+                }
+
+
+                /*
+                -----------------------------------------
+                CALCULATE QUESTION
+                -----------------------------------------
+                */
+
+                const question =
+                    ((nextSlot - 1) %
+                        TOTAL_QUESTIONS) + 1;
+
+
+                const assignedRound =
+                    Math.floor(
+                        (nextSlot - 1) /
+                        TOTAL_QUESTIONS
+                    ) + 1;
+
+
+                /*
+                -----------------------------------------
+                UPDATE GLOBAL SLOT
+                -----------------------------------------
+                */
+
+                transaction.set(
+                    eventRef,
+                    {
+                        nextSlot:
+                            nextSlot + 1
+                    },
+                    {
+                        merge: true
+                    }
                 );
 
-            const freshUser =
-                freshUserSnap.data();
 
+                /*
+                -----------------------------------------
+                UPDATE PARTICIPANT
+                -----------------------------------------
+                */
 
-            /*
-            If participant already has a question,
-            NEVER assign another one.
-            */
+                transaction.update(
+                    userRef,
+                    {
+                        assignedQuestion:
+                            question,
 
-            if (
-                freshUser.assignedQuestion &&
-                freshUser.assignedRound
-            ) {
+                        assignedRound:
+                            assignedRound,
+
+                        battleAssignedAt:
+                            Timestamp.now()
+                    }
+                );
+
 
                 return {
-
                     question:
-                        Number(
-                            freshUser.assignedQuestion
-                        ),
+                        question,
 
                     round:
-                        Number(
-                            freshUser.assignedRound
-                        ),
+                        assignedRound,
 
-                    existing: true
-
+                    existing:
+                        false
                 };
 
             }
+        );
 
 
-            /*
-            =========================================
-            GET GLOBAL EVENT COUNTER
-            =========================================
-            */
-
-            const eventSnap =
-                await transaction.get(
-                    eventRef
-                );
-
-
-            let nextSlot = 1;
-
-
-            if (
-                eventSnap.exists()
-            ) {
-
-                const eventData =
-                    eventSnap.data();
-
-                nextSlot =
-                    Number(
-                        eventData.nextSlot
-                    ) || 1;
-            }
-
-
-            /*
-            =========================================
-            CALCULATE ROUND + QUESTION
-            =========================================
-
-            Slot 1  → R1 Q1
-            Slot 2  → R1 Q2
-            ...
-            Slot 15 → R1 Q15
-            Slot 16 → R2 Q1
-            */
-
-            const question =
-                (
-                    (nextSlot - 1) %
-                    15
-                ) + 1;
-
-
-            const assignedRound =
-                Math.floor(
-                    (nextSlot - 1) / 15
-                ) + 1;
-
-
-            /*
-            =========================================
-            SAVE GLOBAL NEXT SLOT
-            =========================================
-            */
-
-            transaction.set(
-                eventRef,
-                {
-
-                    nextSlot:
-                        nextSlot + 1,
-
-                    updatedAt:
-                        Timestamp.now()
-
-                },
-                {
-                    merge: true
-                }
-            );
-
-
-            /*
-            =========================================
-            SAVE PARTICIPANT ASSIGNMENT
-            =========================================
-            */
-
-            transaction.update(
-                userRef,
-                {
-
-                    assignedQuestion:
-                        question,
-
-                    assignedRound:
-                        assignedRound,
-
-                    battleAssignedAt:
-                        Timestamp.now()
-
-                }
-            );
-
-
-            return {
-
-                question:
-                    question,
-
-                round:
-                    assignedRound,
-
-                existing: false
-
-            };
-
-        }
-    );
+    return result;
 }
 
 
@@ -962,275 +377,258 @@ LOGIN
 =====================================================
 */
 
-async function loginParticipant() {
+loginBtn.addEventListener(
+    "click",
+    async () => {
 
-    const email =
-        emailInput.value
-            .trim()
-            .toLowerCase();
+        const email =
+            emailInput.value
+                .trim()
+                .toLowerCase();
 
-
-    if (!email) {
-
-        alert(
-            "Please enter your registered email."
-        );
-
-        emailInput.focus();
-
-        return;
-    }
-
-
-    if (!email.includes("@")) {
-
-        alert(
-            "Please enter a valid email address."
-        );
-
-        emailInput.focus();
-
-        return;
-    }
-
-
-    loginBtn.disabled = true;
-
-    loginBtn.innerText =
-        "Checking participant...";
-
-
-    try {
 
         /*
-        =============================================
-        FIND USER
-        =============================================
+        -----------------------------------------
+        VALIDATION
+        -----------------------------------------
         */
 
-        const q =
-            query(
+        if (!email) {
+
+            message.innerText =
+                "Please enter your registered email.";
+
+            return;
+        }
+
+
+        loginBtn.disabled = true;
+
+        loginBtn.innerText =
+            "CHECKING...";
+
+        message.innerText = "";
+
+
+        try {
+
+            /*
+            -----------------------------------------
+            FIND USER
+            -----------------------------------------
+            */
+
+            const usersRef =
                 collection(
                     db,
                     "users"
-                ),
-                where(
-                    "email",
-                    "==",
-                    email
+                );
+
+
+            const userQuery =
+                query(
+                    usersRef,
+                    where(
+                        "email",
+                        "==",
+                        email
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    userQuery
+                );
+
+
+            /*
+            -----------------------------------------
+            USER NOT FOUND
+            -----------------------------------------
+            */
+
+            if (
+                snapshot.empty
+            ) {
+
+                message.innerText =
+                    "Email is not registered.";
+
+                loginBtn.disabled =
+                    false;
+
+                loginBtn.innerText =
+                    "LOGIN & START BATTLE";
+
+                return;
+            }
+
+
+            /*
+            -----------------------------------------
+            GET USER
+            -----------------------------------------
+            */
+
+            const userDoc =
+                snapshot.docs[0];
+
+
+            const userData =
+                userDoc.data();
+
+
+            /*
+            -----------------------------------------
+            APPROVAL CHECK
+            -----------------------------------------
+            */
+
+            if (
+                userData.emailApproved !== true
+            ) {
+
+                message.innerText =
+                    "Your registration has not been approved by the admin yet.";
+
+                loginBtn.disabled =
+                    false;
+
+                loginBtn.innerText =
+                    "LOGIN & START BATTLE";
+
+                return;
+            }
+
+
+            /*
+            -----------------------------------------
+            ASSIGN QUESTION
+            -----------------------------------------
+            */
+
+            const assignment =
+                await assignQuestionForParticipant(
+                    userDoc.id,
+                    userData
+                );
+
+
+            /*
+            -----------------------------------------
+            SAVE SESSION DATA
+            -----------------------------------------
+            */
+
+            localStorage.setItem(
+                "currentUser",
+                userData.fullName ||
+                "Participant"
+            );
+
+
+            localStorage.setItem(
+                "currentEmail",
+                userData.email ||
+                email
+            );
+
+
+            localStorage.setItem(
+                "assignedQuestion",
+                String(
+                    assignment.question
                 )
             );
 
 
-        const snapshot =
-            await getDocs(q);
-
-
-        if (
-            snapshot.empty
-        ) {
-
-            alert(
-                "This email is not registered.\n\nPlease register first."
+            localStorage.setItem(
+                "assignedRound",
+                String(
+                    assignment.round
+                )
             );
 
-            return;
+
+            /*
+            =================================================
+            START TIMER HERE
+            =================================================
+
+            IMPORTANT:
+
+            Timer starts ONLY after successful login.
+
+            battle.html will NEVER create the timer.
+            =================================================
+            */
+
+            if (
+                !localStorage.getItem(
+                    "timerStart"
+                )
+            ) {
+
+                localStorage.setItem(
+                    "timerStart",
+                    String(
+                        Date.now()
+                    )
+                );
+            }
+
+
+            /*
+            -----------------------------------------
+            GO TO BATTLE
+            -----------------------------------------
+            */
+
+            window.location.href =
+                "battle.html";
+
         }
 
+        catch (error) {
 
-        const userDoc =
-            snapshot.docs[0];
-
-
-        const user =
-            userDoc.data();
-
-
-        /*
-        =============================================
-        APPROVAL
-        =============================================
-        */
-
-        if (
-            user.emailApproved !== true
-        ) {
-
-            alert(
-                "Your registration is waiting for admin approval."
+            console.error(
+                "Login error:",
+                error
             );
 
-            return;
+
+            message.innerText =
+                "Login failed. Please try again.";
+
+
+            loginBtn.disabled =
+                false;
+
+
+            loginBtn.innerText =
+                "LOGIN & START BATTLE";
         }
 
-
-        /*
-        =============================================
-        ASSIGN QUESTION
-        =============================================
-        */
-
-        loginBtn.innerText =
-            "Assigning challenge...";
-
-
-        const assignment =
-            await assignQuestionForParticipant(
-                userDoc.id,
-                user
-            );
-
-
-        /*
-        =============================================
-        SAVE CURRENT PARTICIPANT SESSION
-        =============================================
-        */
-
-        localStorage.setItem(
-            "currentUser",
-            user.fullName ||
-            "Participant"
-        );
-
-        localStorage.setItem(
-            "currentEmail",
-            user.email ||
-            email
-        );
-
-
-        /*
-        =============================================
-        SAVE ASSIGNED QUESTION LOCALLY
-        =============================================
-
-        These are ONLY for displaying the current
-        assignment.
-
-        Firebase remains the source of truth.
-        */
-
-        localStorage.setItem(
-            "assignedQuestion",
-            String(
-                assignment.question
-            )
-        );
-
-        localStorage.setItem(
-            "assignedRound",
-            String(
-                assignment.round
-            )
-        );
-
-
-        /*
-        =============================================
-        LOG
-        =============================================
-        */
-
-        console.log(
-            "================================="
-        );
-
-        console.log(
-            "Participant:",
-            user.fullName
-        );
-
-        console.log(
-            "Email:",
-            user.email
-        );
-
-        console.log(
-            "Assigned Question:",
-            assignment.question
-        );
-
-        console.log(
-            "Assigned Round:",
-            assignment.round
-        );
-
-        console.log(
-            "Existing Assignment:",
-            assignment.existing
-        );
-
-        console.log(
-            "================================="
-        );
-
-
-        /*
-        =============================================
-        GO TO BATTLE
-        =============================================
-        */
-
-        window.location.href =
-            "battle.html";
-
     }
-
-    catch (error) {
-
-        console.error(
-            "Participant login error:",
-            error
-        );
-
-        alert(
-            "Login failed.\n\n" +
-            error.message
-        );
-
-    }
-
-    finally {
-
-        loginBtn.disabled = false;
-
-        loginBtn.innerText =
-            "Enter Competition →";
-
-    }
-}
-
-
-/*
-=====================================================
-BUTTON
-=====================================================
-*/
-
-loginBtn.addEventListener(
-    "click",
-    loginParticipant
 );
 
 
 /*
 =====================================================
-ENTER KEY
+ENTER KEY LOGIN
 =====================================================
 */
 
 emailInput.addEventListener(
     "keydown",
-    function(event) {
+    (event) => {
 
         if (
             event.key === "Enter"
         ) {
 
-            event.preventDefault();
-
-            loginParticipant();
+            loginBtn.click();
 
         }
 
@@ -1241,3 +639,4 @@ emailInput.addEventListener(
 
 </body>
 </html>
+```
