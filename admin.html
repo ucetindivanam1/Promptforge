@@ -1,226 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Prompt Forge | Admin Dashboard</title>
+    <title>Prompt Forge Admin</title>
 
     <link rel="stylesheet" href="style.css">
 
     <style>
+        /* ==============================
+           ADMIN DASHBOARD
+        ============================== */
 
-        /* ==========================================
-           SUBMISSION CARD
-        ========================================== */
-
-        .design-card {
-            margin-top: 20px;
-            background: #1e293b;
-            padding: 24px;
-            border-radius: 16px;
-            border: 1px solid #334155;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+        .admin-container {
+            width: 95%;
+            max-width: 1500px;
+            margin: 40px auto;
         }
 
-        .design-card h3 {
-            margin-bottom: 15px;
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
 
-
-        /* ==========================================
-           SUBMISSION INFORMATION
-        ========================================== */
-
-        .submission-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 15px;
+        .admin-header h1 {
+            margin: 5px 0;
         }
 
-        .info-box {
-            background: #0f172a;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            overflow-wrap: anywhere;
+        .admin-header p {
+            margin: 5px 0;
+            opacity: 0.8;
         }
 
-        .info-box span {
-            display: block;
-            font-size: 11px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
+        .admin-email {
+            margin-top: 10px;
+            color: #22d3ee;
+            font-weight: bold;
         }
 
-        .info-box strong {
-            color: white;
-            font-size: 15px;
-        }
-
-
-        /* ==========================================
-           TIME
-        ========================================== */
-
-        .time-used {
-            color: #facc15 !important;
-            font-size: 17px !important;
-        }
-
-
-        /* ==========================================
-           SUBMITTED DATE
-        ========================================== */
-
-        .submitted-date {
-            color: #93c5fd !important;
-        }
-
-
-        /* ==========================================
-           DESIGN IMAGE
-        ========================================== */
-
-        .design-image {
-            width: 300px;
-            max-width: 100%;
-            max-height: 400px;
-            object-fit: contain;
-            border-radius: 12px;
-            display: block;
-            margin-top: 20px;
-            background: #020617;
-            border: 1px solid #334155;
-        }
-
-
-        /* ==========================================
-           ACTION BUTTONS
-        ========================================== */
-
-        .submission-actions {
+        .admin-actions {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 15px;
         }
 
-        .submission-actions .btn {
+        .admin-btn {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .refresh-btn {
+            background: #22d3ee;
+            color: #0f172a;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* ==============================
+           CARDS
+        ============================== */
+
+        .admin-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .admin-card h2 {
             margin-top: 0;
+            color: #22d3ee;
         }
 
+        /* ==============================
+           TABLE
+        ============================== */
 
-        /* ==========================================
-           EMPTY / ERROR MESSAGE
-        ========================================== */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            vertical-align: middle;
+        }
+
+        th {
+            color: #22d3ee;
+            font-weight: bold;
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        td {
+            color: #e5e7eb;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* ==============================
+           STATUS
+        ============================== */
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: rgba(34, 211, 238, 0.12);
+            color: #22d3ee;
+        }
+
+        .approved {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .pending {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+        }
+
+        /* ==============================
+           ACTION BUTTONS
+        ============================== */
+
+        .approve-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .approve-btn:hover {
+            opacity: 0.85;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            opacity: 0.85;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background: #22d3ee;
+            color: #0f172a;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ==============================
+           QUESTION DISPLAY
+        ============================== */
+
+        .question-number {
+            color: #22d3ee;
+            font-size: 16px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .round-number {
+            color: #a78bfa;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .challenge-title {
+            color: #f8fafc;
+            font-weight: bold;
+            min-width: 150px;
+        }
+
+        .prompt-cell {
+            max-width: 300px;
+            min-width: 220px;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+
+        /* ==============================
+           DESIGN IMAGE
+        ============================== */
+
+        .submission-image {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+        }
+
+        /* ==============================
+           EMPTY / LOADING
+        ============================== */
 
         .empty-message {
-            margin-top: 20px;
-            padding: 20px;
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            color: #cbd5e1;
+            text-align: center;
+            padding: 30px;
+            opacity: 0.7;
         }
 
-        .error-message {
-            color: #fca5a5;
+        .loading {
+            text-align: center;
+            padding: 25px;
+            color: #22d3ee;
         }
 
-
-        /* ==========================================
-           STATUS
-        ========================================== */
-
-        .status-approved {
-            color: #4ade80 !important;
-        }
-
-        .status-pending {
-            color: #facc15 !important;
-        }
-
-
-        /* ==========================================
+        /* ==============================
            RESPONSIVE
-        ========================================== */
+        ============================== */
 
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
 
-            .submission-info {
-                grid-template-columns: 1fr;
+            .admin-container {
+                width: 92%;
+                margin: 20px auto;
             }
 
-            .design-card {
-                padding: 18px;
+            .admin-card {
+                padding: 15px;
             }
 
+            .admin-header {
+                align-items: flex-start;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-<div class="container">
+<div class="admin-container">
 
-
-    <!-- ==========================================
+    <!-- =========================================
          HEADER
-    =========================================== -->
+    ========================================== -->
 
-    <div class="workspace-header">
+    <div class="admin-header">
 
         <div>
+            <div class="status-badge">
+                ADMIN PANEL
+            </div>
 
-            <span class="badge">
-                Admin Panel
-            </span>
-
-            <h1>
-                Prompt Forge Dashboard
-            </h1>
+            <h1>Prompt Forge Dashboard</h1>
 
             <p>
-                Approve participants and review
-                submitted AI designs.
+                Approve participants and review submitted AI designs.
             </p>
 
-            <p
-                id="adminEmail"
-                style="font-size:14px;"
-            ></p>
-
+            <div class="admin-email">
+                Admin: promptforgeadmin@gmail.com
+            </div>
         </div>
 
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div class="admin-actions">
 
             <button
-                id="refreshBtn"
-                class="btn btn-primary"
-                type="button"
-            >
+                class="admin-btn refresh-btn"
+                onclick="refreshData()">
                 Refresh Data
             </button>
 
             <button
-                id="logoutBtn"
-                class="btn btn-danger"
-                type="button"
-            >
+                class="admin-btn logout-btn"
+                onclick="logoutAdmin()">
                 Logout
             </button>
 
@@ -229,107 +324,122 @@
     </div>
 
 
-    <hr>
-
-
-    <!-- ==========================================
+    <!-- =========================================
          PARTICIPANT APPROVAL
-    =========================================== -->
+    ========================================== -->
 
-    <h2>
-        Participant Approval
-    </h2>
+    <div class="admin-card">
 
+        <h2>Participant Approval</h2>
 
-    <div class="table-wrapper">
+        <div class="table-wrapper">
 
-        <table>
+            <table>
 
-            <thead>
+                <thead>
 
-                <tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>College</th>
+                        <th>Department</th>
+                        <th>Email</th>
 
-                    <th>Name</th>
+                        <!-- NEW -->
+                        <th>Round</th>
+                        <th>Question</th>
+                        <th>Challenge</th>
 
-                    <th>College</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
 
-                    <th>Department</th>
+                </thead>
 
-                    <th>Email</th>
+                <tbody id="usersTable">
 
-                    <th>Status</th>
+                    <tr>
+                        <td colspan="9" class="loading">
+                            Loading participants...
+                        </td>
+                    </tr>
 
-                    <th>Action</th>
+                </tbody>
 
-                </tr>
+            </table>
 
-            </thead>
-
-
-            <tbody id="table">
-
-                <tr>
-
-                    <td colspan="6">
-                        Loading participants...
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
+        </div>
 
     </div>
 
 
-    <hr>
-
-
-    <!-- ==========================================
+    <!-- =========================================
          SUBMITTED DESIGNS
-    =========================================== -->
+    ========================================== -->
 
-    <h2>
-        Submitted Designs
-    </h2>
+    <div class="admin-card">
 
+        <h2>Submitted Designs</h2>
 
-    <div id="submissions">
+        <div class="table-wrapper">
 
-        <p>
-            Loading submissions...
-        </p>
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Participant</th>
+                        <th>Email</th>
+
+                        <!-- NEW -->
+                        <th>Round</th>
+                        <th>Question</th>
+                        <th>Challenge</th>
+
+                        <th>Time Used</th>
+                        <th>Submitted Date</th>
+                        <th>Status</th>
+                        <th>Prompt</th>
+                        <th>Design</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="submissionsTable">
+
+                    <tr>
+                        <td colspan="11" class="loading">
+                            Loading submissions...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
-
 
 </div>
 
 
-<!-- ==========================================
+<!-- =========================================
      FIREBASE
-=========================================== -->
+========================================= -->
 
 <script type="module">
 
-
-    // ==========================================
-    // IMPORT FIREBASE
-    // ==========================================
-
-    import {
-        auth,
-        db
-    } from "./firebase.js";
-
+    import { auth, db }
+        from "./firebase.js";
 
     import {
         onAuthStateChanged,
         signOut
     }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 
     import {
         collection,
@@ -341,124 +451,465 @@
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-    // ==========================================
-    // ADMIN EMAIL
-    // ==========================================
+    /* =========================================
+       ADMIN EMAIL
+    ========================================== */
 
-    const ADMIN_EMAIL =
-        "promptforgeadmin@gmail.com";
-
-
-    // ==========================================
-    // PAGE ELEMENTS
-    // ==========================================
-
-    const table =
-        document.getElementById("table");
+    const ADMIN_EMAIL = "promptforgeadmin@gmail.com";
 
 
-    const submissions =
-        document.getElementById("submissions");
+    /* =========================================
+       CHALLENGES
+       Same questions used in battle.html
+    ========================================== */
 
+    const challenges = [
 
-    const refreshBtn =
-        document.getElementById("refreshBtn");
+        {
+            id: 1,
+            title: "Future City",
+            description:
+                "Create a futuristic Indian city in 2050 with smart transport, green buildings, renewable energy and advanced technology."
+        },
 
+        {
+            id: 2,
+            title: "AI in Education",
+            description:
+                "Show how AI is transforming education with students, teachers, AI tools and a modern classroom."
+        },
 
-    const logoutBtn =
-        document.getElementById("logoutBtn");
+        {
+            id: 3,
+            title: "Eco-Friendly Product",
+            description:
+                "Create a realistic advertisement for a new eco-friendly reusable water bottle."
+        },
 
+        {
+            id: 4,
+            title: "Cybersecurity Awareness",
+            description:
+                "Create a college cybersecurity awareness campaign showing data protection, hackers, phishing and unsafe links."
+        },
 
-    const adminEmail =
-        document.getElementById("adminEmail");
+        {
+            id: 5,
+            title: "Festival Fusion",
+            description:
+                "Combine an Indian cultural festival with futuristic technology including holograms, drones and smart devices while respecting Indian culture."
+        },
 
+        {
+            id: 6,
+            title: "Space Exploration",
+            description:
+                "Show an Indian astronaut landing on Mars in 2045 with a Mars base, rover, Indian flag and Earth."
+        },
 
-    // ==========================================
-    // AUTHENTICATION CHECK
-    // ==========================================
+        {
+            id: 7,
+            title: "Smart Campus",
+            description:
+                "Create a futuristic college campus with AI assistants, smart classrooms, digital boards, renewable energy and autonomous transport."
+        },
 
-    onAuthStateChanged(
-        auth,
-        async function(user) {
+        {
+            id: 8,
+            title: "Save the Planet",
+            description:
+                "Create an emotional environmental campaign showing a polluted Earth transforming into a restored green planet."
+        },
 
-            // No logged-in user
+        {
+            id: 9,
+            title: "Tech Startup Logo",
+            description:
+                "Create a modern logo for a fictional AI startup called NovaMind."
+        },
 
-            if (!user) {
+        {
+            id: 10,
+            title: "Historical Reimagining",
+            description:
+                "Show an ancient Indian marketplace using sustainable modern technology such as solar lighting, digital payments and electric transport."
+        },
 
-                window.location.href =
-                    "admin-login.html";
+        {
+            id: 11,
+            title: "Robot Assistant",
+            description:
+                "Create a friendly household robot helping an elderly person."
+        },
 
-                return;
+        {
+            id: 12,
+            title: "Underwater City",
+            description:
+                "Create an underwater city in 2100 with transparent buildings, marine life, transportation, researchers and sustainable technology."
+        },
 
-            }
+        {
+            id: 13,
+            title: "Career of the Future",
+            description:
+                "Show students preparing for careers in AI, robotics, cybersecurity, data science and space exploration."
+        },
 
+        {
+            id: 14,
+            title: "Mystery Scene",
+            description:
+                "Create a cinematic mystery scene inside an abandoned futuristic laboratory at night."
+        },
 
-            // Check admin email
-
-            if (
-                user.email !== ADMIN_EMAIL
-            ) {
-
-                alert(
-                    "You are not authorized to access the admin dashboard."
-                );
-
-
-                try {
-
-                    await signOut(auth);
-
-                }
-
-                catch(error) {
-
-                    console.error(
-                        "Sign out error:",
-                        error
-                    );
-
-                }
-
-
-                window.location.href =
-                    "admin-login.html";
-
-                return;
-
-            }
-
-
-            // Display admin email
-
-            adminEmail.innerText =
-                "Logged in as: " +
-                user.email;
-
-
-            // Load dashboard
-
-            await refreshData();
-
+        {
+            id: 15,
+            title: "One Prompt Challenge",
+            description:
+                "Interpret 'Technology should make humans more human' creatively without using long text."
         }
-    );
+
+    ];
 
 
-    // ==========================================
-    // LOAD USERS
-    // ==========================================
+    /* =========================================
+       AUTHENTICATION CHECK
+    ========================================== */
+
+    onAuthStateChanged(auth, async (user) => {
+
+        if (!user) {
+
+            window.location.href = "admin-login.html";
+
+            return;
+        }
+
+
+        if (user.email !== ADMIN_EMAIL) {
+
+            await signOut(auth);
+
+            window.location.href = "admin-login.html";
+
+            return;
+        }
+
+
+        await refreshData();
+
+    });
+
+
+    /* =========================================
+       LOAD USERS
+    ========================================== */
 
     async function loadUsers() {
 
-        table.innerHTML = `
+        const usersTable =
+            document.getElementById("usersTable");
 
+        usersTable.innerHTML = `
             <tr>
-
-                <td colspan="6">
+                <td colspan="9" class="loading">
                     Loading participants...
                 </td>
-
             </tr>
+        `;
 
+
+        try {
+
+            const snapshot =
+                await getDocs(collection(db, "users"));
+
+
+            if (snapshot.empty) {
+
+                usersTable.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="empty-message">
+                            No participants found.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            let users = [];
+
+
+            snapshot.forEach((docSnap) => {
+
+                users.push({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                });
+
+            });
+
+
+            /*
+             * Sort participants by assigned round/question.
+             * Users without an assignment are placed at the end.
+             */
+
+            users.sort((a, b) => {
+
+                const roundA =
+                    Number(a.assignedRound) || 999999;
+
+                const roundB =
+                    Number(b.assignedRound) || 999999;
+
+                if (roundA !== roundB) {
+
+                    return roundA - roundB;
+
+                }
+
+
+                const questionA =
+                    Number(a.assignedQuestion) || 999999;
+
+                const questionB =
+                    Number(b.assignedQuestion) || 999999;
+
+                return questionA - questionB;
+
+            });
+
+
+            usersTable.innerHTML = "";
+
+
+            users.forEach((u) => {
+
+                const assignedQuestion =
+                    Number(u.assignedQuestion) || 0;
+
+                const assignedRound =
+                    Number(u.assignedRound) || 0;
+
+
+                const challenge =
+                    assignedQuestion
+                        ? challenges.find(
+                            c => c.id === assignedQuestion
+                        )
+                        : null;
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${escapeHTML(
+                            u.fullName ||
+                            u.name ||
+                            "N/A"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            u.college ||
+                            "N/A"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            u.department ||
+                            "N/A"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            u.email ||
+                            "N/A"
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            assignedRound
+                                ? `<span class="round-number">
+                                    Round ${assignedRound}
+                                   </span>`
+                                : `<span class="status-badge">
+                                    Not assigned
+                                   </span>`
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            assignedQuestion
+                                ? `<span class="question-number">
+                                    Q${assignedQuestion}
+                                   </span>`
+                                : `<span class="status-badge">
+                                    Not assigned
+                                   </span>`
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            challenge
+                                ? `<span class="challenge-title">
+                                    ${escapeHTML(
+                                        challenge.title
+                                    )}
+                                   </span>`
+                                : "Not assigned"
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            u.emailApproved === true
+                                ? `<span class="status-badge approved">
+                                    Approved
+                                   </span>`
+                                : `<span class="status-badge pending">
+                                    Pending
+                                   </span>`
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            u.emailApproved === true
+
+                                ? `<span class="status-badge approved">
+                                    Approved
+                                   </span>`
+
+                                : `<button
+                                    class="approve-btn"
+                                    onclick="approveUser('${escapeAttribute(u.id)}')">
+                                    Approve
+                                   </button>`
+                        }
+
+                    </td>
+
+                `;
+
+
+                usersTable.appendChild(row);
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Error loading users:",
+                error
+            );
+
+
+            usersTable.innerHTML = `
+                <tr>
+                    <td colspan="9" class="empty-message">
+                        Failed to load participants.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    }
+
+
+    /* =========================================
+       APPROVE USER
+    ========================================== */
+
+    window.approveUser = async function(userId) {
+
+        try {
+
+            await updateDoc(
+                doc(db, "users", userId),
+                {
+                    emailApproved: true
+                }
+            );
+
+
+            alert(
+                "Participant approved successfully."
+            );
+
+
+            await loadUsers();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Approval error:",
+                error
+            );
+
+            alert(
+                "Failed to approve participant."
+            );
+
+        }
+
+    };
+
+
+    /* =========================================
+       LOAD SUBMISSIONS
+    ========================================== */
+
+    async function loadSubmissions() {
+
+        const submissionsTable =
+            document.getElementById(
+                "submissionsTable"
+            );
+
+
+        submissionsTable.innerHTML = `
+            <tr>
+                <td colspan="11" class="loading">
+                    Loading submissions...
+                </td>
+            </tr>
         `;
 
 
@@ -466,845 +917,273 @@
 
             const snapshot =
                 await getDocs(
-                    collection(
-                        db,
-                        "users"
-                    )
+                    collection(db, "submissions")
                 );
 
 
-            table.innerHTML = "";
+            if (snapshot.empty) {
 
-
-            // No users
-
-            if (
-                snapshot.empty
-            ) {
-
-                table.innerHTML = `
-
+                submissionsTable.innerHTML = `
                     <tr>
-
-                        <td colspan="6">
-
-                            No participants
-                            registered yet.
-
+                        <td colspan="11" class="empty-message">
+                            No submissions yet.
                         </td>
-
                     </tr>
-
                 `;
 
                 return;
-
             }
 
 
-            // ==================================
-            // DISPLAY USERS
-            // ==================================
-
-            snapshot.forEach(
-                function(userDoc) {
-
-                    const u =
-                        userDoc.data();
+            let submissions = [];
 
 
-                    const approved =
-                        u.emailApproved === true;
+            snapshot.forEach((docSnap) => {
+
+                submissions.push({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                });
+
+            });
 
 
-                    const row =
-                        document.createElement(
-                            "tr"
-                        );
+            /*
+             * Sort by round and question.
+             */
+
+            submissions.sort((a, b) => {
+
+                const roundA =
+                    Number(a.round) || 999999;
+
+                const roundB =
+                    Number(b.round) || 999999;
 
 
-                    row.innerHTML = `
+                if (roundA !== roundB) {
 
-                        <td>
-                            ${escapeHTML(
-                                u.fullName || "-"
-                            )}
-                        </td>
-
-
-                        <td>
-                            ${escapeHTML(
-                                u.college || "-"
-                            )}
-                        </td>
-
-
-                        <td>
-                            ${escapeHTML(
-                                u.department || "-"
-                            )}
-                        </td>
-
-
-                        <td>
-                            ${escapeHTML(
-                                u.email || "-"
-                            )}
-                        </td>
-
-
-                        <td>
-
-                            <span
-                                class="${
-                                    approved
-                                    ? "status-approved"
-                                    : "status-pending"
-                                }"
-                            >
-
-                                ${
-                                    approved
-                                    ? "Approved"
-                                    : "Pending"
-                                }
-
-                            </span>
-
-                        </td>
-
-
-                        <td>
-
-                            ${
-                                approved
-
-                                ?
-
-                                `
-                                <button
-                                    class="btn btn-secondary"
-                                    disabled
-                                    type="button"
-                                >
-                                    Approved
-                                </button>
-                                `
-
-                                :
-
-                                `
-                                <button
-                                    class="btn btn-primary approve-btn"
-                                    data-id="${escapeAttribute(
-                                        userDoc.id
-                                    )}"
-                                    type="button"
-                                >
-                                    Approve
-                                </button>
-                                `
-                            }
-
-                        </td>
-
-                    `;
-
-
-                    table.appendChild(
-                        row
-                    );
+                    return roundA - roundB;
 
                 }
-            );
 
 
-            // ==================================
-            // APPROVE BUTTONS
-            // ==================================
+                const questionA =
+                    Number(a.questionNumber) || 999999;
 
-            document
-                .querySelectorAll(
-                    ".approve-btn"
-                )
-                .forEach(
-                    function(button) {
-
-                        button.addEventListener(
-                            "click",
-                            async function() {
-
-                                const id =
-                                    button.getAttribute(
-                                        "data-id"
-                                    );
+                const questionB =
+                    Number(b.questionNumber) || 999999;
 
 
-                                if (!id) {
+                return questionA - questionB;
 
-                                    return;
-
-                                }
+            });
 
 
-                                button.disabled =
-                                    true;
+            submissionsTable.innerHTML = "";
 
 
-                                button.innerText =
-                                    "Approving...";
+            submissions.forEach((data) => {
+
+                const row =
+                    document.createElement("tr");
 
 
-                                try {
-
-                                    await updateDoc(
-
-                                        doc(
-                                            db,
-                                            "users",
-                                            id
-                                        ),
-
-                                        {
-                                            emailApproved:
-                                                true
-                                        }
-
-                                    );
+                /*
+                 * IMPORTANT:
+                 *
+                 * questionNumber
+                 * challengeTitle
+                 * round
+                 *
+                 * are already saved by battle.html.
+                 */
 
 
-                                    await loadUsers();
+                row.innerHTML = `
 
-                                }
-
-                                catch(error) {
-
-                                    console.error(
-                                        "Approval error:",
-                                        error
-                                    );
+                    <td>
+                        ${escapeHTML(
+                            data.participant ||
+                            "Unknown"
+                        )}
+                    </td>
 
 
-                                    alert(
-                                        "Failed to approve participant."
-                                    );
+                    <td>
+                        ${escapeHTML(
+                            data.email ||
+                            "N/A"
+                        )}
+                    </td>
 
 
-                                    button.disabled =
-                                        false;
+                    <!-- PARTICIPANT ROUND -->
+
+                    <td>
+
+                        ${
+                            data.round
+                                ? `<span class="round-number">
+                                    Round ${escapeHTML(
+                                        String(data.round)
+                                    )}
+                                   </span>`
+                                : "N/A"
+                        }
+
+                    </td>
 
 
-                                    button.innerText =
-                                        "Approve";
+                    <!-- PARTICIPANT QUESTION -->
 
-                                }
+                    <td>
 
-                            }
-                        );
+                        ${
+                            data.questionNumber
+                                ? `<span class="question-number">
+                                    Q${escapeHTML(
+                                        String(
+                                            data.questionNumber
+                                        )
+                                    )}
+                                   </span>`
+                                : "N/A"
+                        }
 
-                    }
-                );
-
-        }
-
-
-        catch(error) {
-
-            console.error(
-                "Users error:",
-                error
-            );
+                    </td>
 
 
-            table.innerHTML = `
+                    <!-- QUESTION / CHALLENGE -->
 
-                <tr>
+                    <td>
 
-                    <td colspan="6">
+                        <span class="challenge-title">
 
-                        Failed to load participants.
+                            ${escapeHTML(
+                                data.challengeTitle ||
+                                "N/A"
+                            )}
 
-                        <br><br>
+                        </span>
+
+                    </td>
+
+
+                    <!-- TIME USED -->
+
+                    <td>
 
                         ${escapeHTML(
-                            error.message ||
-                            "Unknown error"
+                            formatTime(
+                                data.timeUsedSeconds
+                            )
                         )}
 
                     </td>
 
-                </tr>
 
-            `;
+                    <!-- SUBMITTED DATE -->
 
-        }
+                    <td>
 
-    }
+                        ${escapeHTML(
+                            formatDate(
+                                data.submittedAt
+                            )
+                        )}
 
-
-    // ==========================================
-    // LOAD SUBMISSIONS
-    // ==========================================
-
-    async function loadSubmissions() {
-
-        submissions.innerHTML = `
-
-            <p>
-                Loading submitted designs...
-            </p>
-
-        `;
+                    </td>
 
 
-        try {
+                    <!-- STATUS -->
 
-            const snapshot =
-                await getDocs(
-                    collection(
-                        db,
-                        "submissions"
-                    )
-                );
+                    <td>
+
+                        <span class="status-badge">
+
+                            ${escapeHTML(
+                                data.status ||
+                                "Submitted"
+                            )}
+
+                        </span>
+
+                    </td>
 
 
-            submissions.innerHTML = "";
+                    <!-- PROMPT -->
+
+                    <td class="prompt-cell">
+
+                        ${escapeHTML(
+                            data.prompt ||
+                            "No prompt"
+                        )}
+
+                    </td>
 
 
-            // ==================================
-            // NO SUBMISSIONS
-            // ==================================
+                    <!-- DESIGN -->
 
-            if (
-                snapshot.empty
-            ) {
+                    <td>
 
-                submissions.innerHTML = `
+                        ${
+                            data.image
 
-                    <div class="empty-message">
+                                ? `
+                                    <a
+                                        href="${escapeAttribute(
+                                            data.image
+                                        )}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="view-btn">
+                                        View Design
+                                    </a>
+                                  `
 
-                        No designs submitted yet.
+                                : "No Image"
+                        }
 
-                    </div>
+                    </td>
+
+
+                    <!-- DELETE -->
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteSubmission('${escapeAttribute(data.id)}')">
+                            Delete
+                        </button>
+
+                    </td>
 
                 `;
 
-                return;
 
-            }
+                submissionsTable.appendChild(row);
 
-
-            // ==================================
-            // DISPLAY SUBMISSIONS
-            // ==================================
-
-            snapshot.forEach(
-                function(designDoc) {
-
-                    const d =
-                        designDoc.data();
-
-
-                    const card =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    card.className =
-                        "design-card";
-
-
-                    // ==================================
-                    // PARTICIPANT NAME
-                    // ==================================
-
-                    const participant =
-                        d.participant ||
-                        d.fullName ||
-                        d.name ||
-                        "Participant";
-
-
-                    // ==================================
-                    // EMAIL
-                    // ==================================
-
-                    const email =
-                        d.email ||
-                        "-";
-
-
-                    // ==================================
-                    // PROMPT
-                    // ==================================
-
-                    const prompt =
-                        d.prompt ||
-                        "-";
-
-
-                    // ==================================
-                    // STATUS
-                    // ==================================
-
-                    const status =
-                        d.status ||
-                        "Submitted";
-
-
-                    // ==================================
-                    // TIME USED
-                    // ==================================
-
-                    let timeUsed =
-                        d.timeUsed ||
-                        "Not recorded";
-
-
-                    // Old submission:
-                    // timeUsedSeconds
-
-                    if (
-                        !d.timeUsed &&
-                        typeof d.timeUsedSeconds === "number"
-                    ) {
-
-                        const totalSeconds =
-                            Math.max(
-                                0,
-                                Math.floor(
-                                    d.timeUsedSeconds
-                                )
-                            );
-
-
-                        const minutes =
-                            Math.floor(
-                                totalSeconds / 60
-                            );
-
-
-                        const seconds =
-                            totalSeconds % 60;
-
-
-                        timeUsed =
-                            `${minutes} min ${String(
-                                seconds
-                            ).padStart(2, "0")} sec`;
-
-                    }
-
-
-                    // ==================================
-                    // IMAGE
-                    // ==================================
-
-                    const image =
-                        d.image ||
-                        d.imageUrl ||
-                        d.designImage ||
-                        "";
-
-
-                    // ==================================
-                    // SUBMITTED DATE
-                    // ==================================
-
-                    const submittedDate =
-                        formatDate(
-                            d.submittedAt ||
-                            d.createdAt ||
-                            d.timestamp ||
-                            d.submittedDate
-                        );
-
-
-                    // ==================================
-                    // CARD HTML
-                    // ==================================
-
-                    card.innerHTML = `
-
-                        <h3>
-
-                            ${escapeHTML(
-                                participant
-                            )}
-
-                        </h3>
-
-
-                        <div class="submission-info">
-
-
-                            <!-- EMAIL -->
-
-                            <div class="info-box">
-
-                                <span>
-                                    Email
-                                </span>
-
-                                <strong>
-                                    ${escapeHTML(
-                                        email
-                                    )}
-                                </strong>
-
-                            </div>
-
-
-                            <!-- TIME USED -->
-
-                            <div class="info-box">
-
-                                <span>
-                                    Time Used
-                                </span>
-
-                                <strong
-                                    class="time-used"
-                                >
-
-                                    ⏱️
-                                    ${escapeHTML(
-                                        timeUsed
-                                    )}
-
-                                </strong>
-
-                            </div>
-
-
-                            <!-- SUBMITTED -->
-
-                            <div class="info-box">
-
-                                <span>
-                                    Submitted
-                                </span>
-
-                                <strong
-                                    class="submitted-date"
-                                >
-
-                                    📅
-                                    ${escapeHTML(
-                                        submittedDate
-                                    )}
-
-                                </strong>
-
-                            </div>
-
-
-                            <!-- STATUS -->
-
-                            <div class="info-box">
-
-                                <span>
-                                    Status
-                                </span>
-
-                                <strong>
-
-                                    ${escapeHTML(
-                                        status
-                                    )}
-
-                                </strong>
-
-                            </div>
-
-
-                        </div>
-
-
-                        <!-- ==================================
-                             DESIGN PROMPT
-                        =================================== -->
-
-                        <div
-                            style="margin-top:20px;"
-                        >
-
-                            <strong>
-                                Design Prompt
-                            </strong>
-
-
-                            <p
-                                style="
-                                    margin-top:8px;
-                                    color:#cbd5e1;
-                                    line-height:1.6;
-                                    white-space:pre-wrap;
-                                "
-                            >
-
-                                ${escapeHTML(
-                                    prompt
-                                )}
-
-                            </p>
-
-                        </div>
-
-
-                        <!-- ==================================
-                             DESIGN IMAGE
-                        =================================== -->
-
-                        ${
-                            image
-
-                            ?
-
-                            `
-
-                            <img
-
-                                src="${escapeAttribute(
-                                    image
-                                )}"
-
-                                class="design-image"
-
-                                alt="Submitted Design"
-
-                                loading="lazy"
-
-                                onerror="
-                                    this.style.display='none';
-                                    this.nextElementSibling.style.display='block';
-                                "
-
-                            >
-
-                            <p
-                                style="
-                                    display:none;
-                                    color:#fca5a5;
-                                    margin-top:15px;
-                                "
-                            >
-                                Unable to load submitted design.
-                            </p>
-
-                            `
-
-                            :
-
-                            `
-
-                            <p
-                                style="
-                                    margin-top:20px;
-                                    color:#94a3b8;
-                                "
-                            >
-                                No design image available.
-                            </p>
-
-                            `
-
-                        }
-
-
-                        <!-- ==================================
-                             ACTIONS
-                        =================================== -->
-
-                        <div class="submission-actions">
-
-
-                            ${
-                                image
-
-                                ?
-
-                                `
-
-                                <a
-                                    href="${escapeAttribute(
-                                        image
-                                    )}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-
-                                    <button
-                                        class="btn btn-secondary"
-                                        type="button"
-                                    >
-                                        View Design
-                                    </button>
-
-                                </a>
-
-                                `
-
-                                :
-
-                                ""
-
-                            }
-
-
-                            <button
-
-                                class="btn btn-danger delete-btn"
-
-                                data-id="${escapeAttribute(
-                                    designDoc.id
-                                )}"
-
-                                type="button"
-
-                            >
-
-                                Delete
-
-                            </button>
-
-
-                        </div>
-
-                    `;
-
-
-                    submissions.appendChild(
-                        card
-                    );
-
-                }
-            );
-
-
-            // ==================================
-            // DELETE BUTTONS
-            // ==================================
-
-            document
-                .querySelectorAll(
-                    ".delete-btn"
-                )
-                .forEach(
-                    function(button) {
-
-                        button.addEventListener(
-                            "click",
-                            async function() {
-
-                                const id =
-                                    button.getAttribute(
-                                        "data-id"
-                                    );
-
-
-                                if (!id) {
-
-                                    return;
-
-                                }
-
-
-                                const ok =
-                                    confirm(
-                                        "Delete this submission?"
-                                    );
-
-
-                                if (!ok) {
-
-                                    return;
-
-                                }
-
-
-                                button.disabled =
-                                    true;
-
-
-                                button.innerText =
-                                    "Deleting...";
-
-
-                                try {
-
-                                    await deleteDoc(
-
-                                        doc(
-                                            db,
-                                            "submissions",
-                                            id
-                                        )
-
-                                    );
-
-
-                                    await loadSubmissions();
-
-                                }
-
-                                catch(error) {
-
-                                    console.error(
-                                        "Delete error:",
-                                        error
-                                    );
-
-
-                                    alert(
-                                        "Failed to delete submission."
-                                    );
-
-
-                                    button.disabled =
-                                        false;
-
-
-                                    button.innerText =
-                                        "Delete";
-
-                                }
-
-                            }
-                        );
-
-                    }
-                );
+            });
 
         }
 
-
-        catch(error) {
+        catch (error) {
 
             console.error(
-                "Submissions error:",
+                "Error loading submissions:",
                 error
             );
 
 
-            submissions.innerHTML = `
-
-                <div
-                    class="empty-message error-message"
-                >
-
-                    Failed to load submissions.
-
-                    <br><br>
-
-                    ${escapeHTML(
-                        error.message ||
-                        "Unknown error"
-                    )}
-
-                </div>
-
+            submissionsTable.innerHTML = `
+                <tr>
+                    <td colspan="11" class="empty-message">
+                        Failed to load submissions.
+                    </td>
+                </tr>
             `;
 
         }
@@ -1312,289 +1191,20 @@
     }
 
 
-    // ==========================================
-    // FORMAT DATE
-    //
-    // Supports:
-    // 1. Firestore Timestamp
-    // 2. Firestore Timestamp-like object
-    // 3. JavaScript Date
-    // 4. Unix milliseconds
-    // 5. Unix seconds
-    // 6. Date strings
-    // ==========================================
+    /* =========================================
+       DELETE SUBMISSION
+    ========================================== */
 
-    function formatDate(value) {
+    window.deleteSubmission =
+        async function(submissionId) {
 
-        // Empty value
-
-        if (
-            value === null ||
-            value === undefined ||
-            value === ""
-        ) {
-
-            return "-";
-
-        }
-
-
-        try {
-
-            let date = null;
-
-
-            // ======================================
-            // FIRESTORE TIMESTAMP
-            // ======================================
-
-            if (
-                value &&
-                typeof value.toDate === "function"
-            ) {
-
-                date =
-                    value.toDate();
-
-            }
-
-
-            // ======================================
-            // FIRESTORE TIMESTAMP-LIKE OBJECT
-            //
-            // Example:
-            // {
-            //    seconds: 1234567890,
-            //    nanoseconds: 123456789
-            // }
-            // ======================================
-
-            else if (
-                value &&
-                typeof value.seconds === "number"
-            ) {
-
-                date =
-                    new Date(
-                        value.seconds * 1000
-                    );
-
-            }
-
-
-            // ======================================
-            // JAVASCRIPT DATE
-            // ======================================
-
-            else if (
-                value instanceof Date
-            ) {
-
-                date =
-                    value;
-
-            }
-
-
-            // ======================================
-            // NUMBER
-            // ======================================
-
-            else if (
-                typeof value === "number"
-            ) {
-
-                // Seconds timestamp
-                // Example: 1750000000
-
-                if (
-                    value < 10000000000
-                ) {
-
-                    date =
-                        new Date(
-                            value * 1000
-                        );
-
-                }
-
-                // Milliseconds timestamp
-
-                else {
-
-                    date =
-                        new Date(
-                            value
-                        );
-
-                }
-
-            }
-
-
-            // ======================================
-            // STRING
-            // ======================================
-
-            else if (
-                typeof value === "string"
-            ) {
-
-                const trimmed =
-                    value.trim();
-
-
-                if (!trimmed) {
-
-                    return "-";
-
-                }
-
-
-                date =
-                    new Date(
-                        trimmed
-                    );
-
-            }
-
-
-            // ======================================
-            // UNKNOWN TYPE
-            // ======================================
-
-            else {
-
-                return "-";
-
-            }
-
-
-            // ======================================
-            // INVALID DATE CHECK
-            // ======================================
-
-            if (
-                !date ||
-                isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                return "-";
-
-            }
-
-
-            // ======================================
-            // FORMAT DATE
-            // ======================================
-
-            return date.toLocaleString(
-                "en-IN",
-                {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                    hour12: true
-                }
-            );
-
-        }
-
-        catch(error) {
-
-            console.error(
-                "Date formatting error:",
-                error,
-                value
-            );
-
-
-            return "-";
-
-        }
-
-    }
-
-
-    // ==========================================
-    // REFRESH DATA
-    // ==========================================
-
-    async function refreshData() {
-
-        refreshBtn.disabled =
-            true;
-
-
-        refreshBtn.innerText =
-            "Refreshing...";
-
-
-        try {
-
-            await Promise.all([
-
-                loadUsers(),
-
-                loadSubmissions()
-
-            ]);
-
-        }
-
-        catch(error) {
-
-            console.error(
-                "Refresh error:",
-                error
-            );
-
-        }
-
-        finally {
-
-            refreshBtn.disabled =
-                false;
-
-
-            refreshBtn.innerText =
-                "Refresh Data";
-
-        }
-
-    }
-
-
-    // ==========================================
-    // REFRESH BUTTON
-    // ==========================================
-
-    refreshBtn.addEventListener(
-        "click",
-        refreshData
-    );
-
-
-    // ==========================================
-    // LOGOUT
-    // ==========================================
-
-    logoutBtn.addEventListener(
-        "click",
-        async function() {
-
-            const ok =
+            const confirmed =
                 confirm(
-                    "Logout from admin dashboard?"
+                    "Are you sure you want to delete this submission?"
                 );
 
 
-            if (!ok) {
+            if (!confirmed) {
 
                 return;
 
@@ -1603,124 +1213,237 @@
 
             try {
 
-                await signOut(
-                    auth
+                await deleteDoc(
+                    doc(
+                        db,
+                        "submissions",
+                        submissionId
+                    )
                 );
 
 
-                localStorage.removeItem(
-                    "adminLoggedIn"
+                alert(
+                    "Submission deleted successfully."
                 );
 
 
-                localStorage.removeItem(
-                    "adminEmail"
+                await loadSubmissions();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Delete error:",
+                    error
                 );
 
+
+                alert(
+                    "Failed to delete submission."
+                );
+
+            }
+
+        };
+
+
+    /* =========================================
+       REFRESH DATA
+    ========================================== */
+
+    window.refreshData =
+        async function() {
+
+            await loadUsers();
+
+            await loadSubmissions();
+
+        };
+
+
+    /* =========================================
+       LOGOUT ADMIN
+    ========================================== */
+
+    window.logoutAdmin =
+        async function() {
+
+            try {
+
+                await signOut(auth);
 
                 window.location.href =
                     "admin-login.html";
 
             }
 
-
-            catch(error) {
+            catch (error) {
 
                 console.error(
                     "Logout error:",
                     error
                 );
 
+            }
 
-                alert(
-                    "Logout failed."
-                );
+        };
+
+
+    /* =========================================
+       FORMAT TIME
+    ========================================== */
+
+    function formatTime(seconds) {
+
+        if (
+            seconds === undefined ||
+            seconds === null ||
+            isNaN(Number(seconds))
+        ) {
+
+            return "N/A";
+
+        }
+
+
+        seconds =
+            Number(seconds);
+
+
+        const minutes =
+            Math.floor(seconds / 60);
+
+
+        const remainingSeconds =
+            seconds % 60;
+
+
+        return `${minutes}m ${remainingSeconds}s`;
+
+    }
+
+
+    /* =========================================
+       FORMAT DATE
+    ========================================== */
+
+    function formatDate(timestamp) {
+
+        if (!timestamp) {
+
+            return "N/A";
+
+        }
+
+
+        try {
+
+            let date;
+
+
+            if (
+                timestamp &&
+                typeof timestamp.toDate === "function"
+            ) {
+
+                date =
+                    timestamp.toDate();
 
             }
 
+            else if (
+                timestamp &&
+                timestamp.seconds
+            ) {
+
+                date =
+                    new Date(
+                        timestamp.seconds * 1000
+                    );
+
+            }
+
+            else {
+
+                date =
+                    new Date(timestamp);
+
+            }
+
+
+            if (isNaN(date.getTime())) {
+
+                return "N/A";
+
+            }
+
+
+            return date.toLocaleString();
+
         }
-    );
+
+        catch (error) {
+
+            return "N/A";
+
+        }
+
+    }
 
 
-    // ==========================================
-    // SECURITY HELPER
-    // ==========================================
+    /* =========================================
+       ESCAPE HTML
+    ========================================== */
 
     function escapeHTML(value) {
 
-        return String(
-            value ?? ""
-        )
+        if (
+            value === undefined ||
+            value === null
+        ) {
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+            return "";
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+        }
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
     }
 
 
-    // ==========================================
-    // ATTRIBUTE SECURITY HELPER
-    // ==========================================
+    /* =========================================
+       ESCAPE ATTRIBUTE
+    ========================================== */
 
     function escapeAttribute(value) {
 
-        return String(
-            value ?? ""
-        )
+        if (
+            value === undefined ||
+            value === null
+        ) {
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+            return "";
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+        }
 
-        .replace(
-            /'/g,
-            "&#039;"
-        )
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        );
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
 
     }
-
 
 </script>
 
 </body>
-
 </html>
-
