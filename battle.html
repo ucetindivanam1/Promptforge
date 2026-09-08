@@ -3,14 +3,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Prompt Forge | AI Design Workspace</title>
 
@@ -100,11 +94,9 @@ body {
 }
 
 @keyframes timerPulse {
-
     50% {
         opacity: .5;
     }
-
 }
 
 /* HEADER */
@@ -814,12 +806,7 @@ body {
             <input
                 type="file"
                 id="imageUpload"
-                accept="
-                    image/png,
-                    image/jpeg,
-                    image/jpg,
-                    image/webp
-                "
+                accept="image/png,image/jpeg,image/jpg,image/webp"
             >
 
 
@@ -849,8 +836,9 @@ body {
             Submit the final image and the exact prompt
             you used for this challenge.
 
-            After submission, the next challenge will
-            automatically appear.
+            After submission, you will be returned to
+            the login page. Your next challenge will
+            appear when you login again.
 
         </p>
 
@@ -871,7 +859,6 @@ import {
     db
 } from "./firebase.js";
 
-
 import {
     collection,
     addDoc,
@@ -888,10 +875,8 @@ from
 const currentUser =
     localStorage.getItem("currentUser") || "Guest";
 
-
 const currentEmail =
     localStorage.getItem("currentEmail") || "";
-
 
 document.getElementById("user").innerText =
     currentUser;
@@ -910,8 +895,8 @@ if (
         "Please login before entering the competition."
     );
 
-    window.location.href = "login.html";
-
+    window.location.href =
+        "login.html";
 }
 
 
@@ -1036,56 +1021,43 @@ const challenges = [
 const questionNumber =
     document.getElementById("questionNumber");
 
-
 const roundNumber =
     document.getElementById("roundNumber");
 
-
 const questionTitle =
     document.getElementById("questionTitle");
-
 
 const questionDescription =
     document.getElementById(
         "questionDescription"
     );
 
-
 const progressText =
     document.getElementById("progressText");
-
 
 const progressFill =
     document.getElementById("progressFill");
 
-
 const promptInput =
     document.getElementById("prompt");
-
 
 const imageInput =
     document.getElementById("imageUpload");
 
-
 const preview =
     document.getElementById("preview");
-
 
 const submitBtn =
     document.getElementById("submitBtn");
 
-
 const generateBtn =
     document.getElementById("generateBtn");
-
 
 const loading =
     document.getElementById("loading");
 
-
 const submitStatus =
     document.getElementById("submitStatus");
-
 
 const timerElement =
     document.getElementById("timer");
@@ -1098,7 +1070,6 @@ const timerElement =
 const TOTAL_QUESTIONS =
     challenges.length;
 
-
 let battleQuestions = [];
 
 let currentQuestionIndex = 0;
@@ -1107,7 +1078,7 @@ let round = 1;
 
 
 /* =====================================================
-   SHUFFLE FUNCTION
+   SHUFFLE
 ===================================================== */
 
 function shuffle(array) {
@@ -1134,7 +1105,6 @@ function shuffle(array) {
             shuffled[j],
             shuffled[i]
         ];
-
     }
 
     return shuffled;
@@ -1142,7 +1112,7 @@ function shuffle(array) {
 
 
 /* =====================================================
-   START NEW ROUND
+   CREATE NEW ROUND
 ===================================================== */
 
 function startNewRound() {
@@ -1154,7 +1124,11 @@ function startNewRound() {
 
     localStorage.setItem(
         "battleQuestions",
-        JSON.stringify(battleQuestions.map(q => q.id))
+        JSON.stringify(
+            battleQuestions.map(
+                q => q.id
+            )
+        )
     );
 
     localStorage.setItem(
@@ -1168,12 +1142,11 @@ function startNewRound() {
     );
 
     displayQuestion();
-
 }
 
 
 /* =====================================================
-   RESTORE BATTLE
+   RESTORE EXISTING BATTLE
 ===================================================== */
 
 function restoreBattle() {
@@ -1183,14 +1156,12 @@ function restoreBattle() {
             "battleQuestions"
         );
 
-
     const savedIndex =
         Number(
             localStorage.getItem(
                 "battleQuestionIndex"
             )
         );
-
 
     const savedRound =
         Number(
@@ -1200,27 +1171,46 @@ function restoreBattle() {
         );
 
 
-    if (
-        savedQuestions
-    ) {
+    /* -----------------------------------------------
+       EXISTING QUESTIONS
+    ------------------------------------------------ */
 
-        const ids =
-            JSON.parse(
-                savedQuestions
+    if (savedQuestions) {
+
+        try {
+
+            const ids =
+                JSON.parse(
+                    savedQuestions
+                );
+
+            battleQuestions =
+                ids
+                    .map(
+                        id =>
+                            challenges.find(
+                                challenge =>
+                                    challenge.id === id
+                            )
+                    )
+                    .filter(Boolean);
+
+        }
+        catch (error) {
+
+            console.error(
+                "Could not restore questions:",
+                error
             );
 
+            battleQuestions = [];
 
-        battleQuestions =
-            ids
-                .map(
-                    id =>
-                        challenges.find(
-                            challenge =>
-                                challenge.id === id
-                        )
-                )
-                .filter(Boolean);
+        }
 
+
+        /* -------------------------------------------
+           VALID QUESTION LIST
+        -------------------------------------------- */
 
         if (
             battleQuestions.length ===
@@ -1228,43 +1218,42 @@ function restoreBattle() {
         ) {
 
             currentQuestionIndex =
-                Number.isFinite(savedIndex)
+                Number.isInteger(
+                    savedIndex
+                ) &&
+                savedIndex >= 0 &&
+                savedIndex < TOTAL_QUESTIONS
+
                     ? savedIndex
+
                     : 0;
 
 
             round =
-                Number.isFinite(savedRound) &&
-                savedRound > 0
+                Number.isInteger(
+                    savedRound
+                ) &&
+                savedRound >= 1
+
                     ? savedRound
+
                     : 1;
-
-
-            if (
-                currentQuestionIndex >=
-                TOTAL_QUESTIONS
-            ) {
-
-                round++;
-
-                startNewRound();
-
-                return;
-
-            }
 
 
             displayQuestion();
 
             return;
-
         }
-
     }
 
 
-    startNewRound();
+    /* -----------------------------------------------
+       FIRST EVER LOGIN
+    ------------------------------------------------ */
 
+    round = 1;
+
+    startNewRound();
 }
 
 
@@ -1287,7 +1276,6 @@ function displayQuestion() {
         startNewRound();
 
         return;
-
     }
 
 
@@ -1332,53 +1320,43 @@ function displayQuestion() {
         percentage + "%";
 
 
-    promptInput.value =
-        "";
+    /* Clear previous answer */
 
+    promptInput.value = "";
 
-    imageInput.value =
-        "";
+    imageInput.value = "";
 
-
-    preview.src =
-        "";
-
+    preview.src = "";
 
     preview.style.display =
         "none";
 
-
     loading.innerText =
         "";
 
-
     submitStatus.innerText =
         "";
-
 
     submitStatus.style.display =
         "none";
 
 
+    /* Enable controls */
+
     submitBtn.disabled =
         false;
-
 
     generateBtn.disabled =
         false;
 
-
     imageInput.disabled =
         false;
-
 
     promptInput.disabled =
         false;
 
-
     submitBtn.innerText =
         "✅ Submit Answer";
-
 }
 
 
@@ -1403,7 +1381,6 @@ generateBtn.addEventListener(
             promptInput.focus();
 
             return;
-
         }
 
 
@@ -1420,7 +1397,6 @@ generateBtn.addEventListener(
 
         loading.innerText =
             "Canva AI opened in a new tab. Generate your design, download it, and upload the final artwork here.";
-
     }
 );
 
@@ -1443,7 +1419,6 @@ imageInput.addEventListener(
                 "none";
 
             return;
-
         }
 
 
@@ -1459,7 +1434,6 @@ imageInput.addEventListener(
                 "";
 
             return;
-
         }
 
 
@@ -1475,14 +1449,12 @@ imageInput.addEventListener(
 
                 preview.style.display =
                     "block";
-
             };
 
 
         reader.readAsDataURL(
             file
         );
-
     }
 );
 
@@ -1498,16 +1470,18 @@ submitBtn.addEventListener(
         const file =
             imageInput.files[0];
 
-
         const prompt =
             promptInput.value.trim();
-
 
         const challenge =
             battleQuestions[
                 currentQuestionIndex
             ];
 
+
+        /* -------------------------------------------
+           QUESTION CHECK
+        -------------------------------------------- */
 
         if (!challenge) {
 
@@ -1516,11 +1490,12 @@ submitBtn.addEventListener(
             );
 
             return;
-
         }
 
 
-        /* VALIDATION */
+        /* -------------------------------------------
+           PROMPT CHECK
+        -------------------------------------------- */
 
         if (!prompt) {
 
@@ -1531,9 +1506,12 @@ submitBtn.addEventListener(
             promptInput.focus();
 
             return;
-
         }
 
+
+        /* -------------------------------------------
+           IMAGE CHECK
+        -------------------------------------------- */
 
         if (!file) {
 
@@ -1542,11 +1520,12 @@ submitBtn.addEventListener(
             );
 
             return;
-
         }
 
 
-        /* TIMER */
+        /* -------------------------------------------
+           TIMER
+        -------------------------------------------- */
 
         const timerStart =
             Number(
@@ -1571,7 +1550,6 @@ submitBtn.addEventListener(
                 "login.html";
 
             return;
-
         }
 
 
@@ -1594,7 +1572,6 @@ submitBtn.addEventListener(
 
             timeUsedSeconds =
                 0;
-
         }
 
 
@@ -1605,7 +1582,6 @@ submitBtn.addEventListener(
 
             timeUsedSeconds =
                 20 * 60;
-
         }
 
 
@@ -1617,7 +1593,9 @@ submitBtn.addEventListener(
             );
 
 
-        /* DISABLE */
+        /* -------------------------------------------
+           DISABLE
+        -------------------------------------------- */
 
         submitBtn.disabled =
             true;
@@ -1637,9 +1615,9 @@ submitBtn.addEventListener(
 
         try {
 
-            /* ==========================================
+            /* ======================================
                CLOUDINARY
-            ========================================== */
+            ====================================== */
 
             const formData =
                 new FormData();
@@ -1680,13 +1658,12 @@ submitBtn.addEventListener(
                     uploadData.error?.message ||
                     "Cloudinary upload failed."
                 );
-
             }
 
 
-            /* ==========================================
+            /* ======================================
                FIRESTORE
-            ========================================== */
+            ====================================== */
 
             submitBtn.innerText =
                 "Saving answer...";
@@ -1758,13 +1735,12 @@ submitBtn.addEventListener(
             );
 
 
-            /* ==========================================
-               NEXT QUESTION
-            ========================================== */
+            /* ======================================
+               ANSWER SUCCESS
+            ====================================== */
 
             submitStatus.innerText =
-                "✅ Answer submitted successfully! Loading the next challenge...";
-
+                "✅ Answer submitted successfully!";
 
             submitStatus.style.display =
                 "block";
@@ -1779,39 +1755,110 @@ submitBtn.addEventListener(
             );
 
 
+            /* ======================================
+               MOVE TO NEXT QUESTION
+            ====================================== */
+
             currentQuestionIndex++;
 
 
-            /* ==========================================
-               15 QUESTIONS FINISHED
-            ========================================== */
+            /* ======================================
+               QUESTION 15 FINISHED
+            ====================================== */
 
             if (
                 currentQuestionIndex >=
                 TOTAL_QUESTIONS
             ) {
 
-                round++;
+                const completedRound =
+                    round;
+
+
+                round =
+                    round + 1;
+
+
+                /* ----------------------------------
+                   SAVE NEW ROUND
+                ----------------------------------- */
+
+                localStorage.setItem(
+                    "battleRound",
+                    String(round)
+                );
+
+
+                /* ----------------------------------
+                   CREATE NEW SHUFFLED QUESTIONS
+                ----------------------------------- */
+
+                battleQuestions =
+                    shuffle(challenges);
+
+
+                localStorage.setItem(
+                    "battleQuestions",
+                    JSON.stringify(
+                        battleQuestions.map(
+                            q => q.id
+                        )
+                    )
+                );
+
+
+                /* ----------------------------------
+                   QUESTION INDEX = 0
+                ----------------------------------- */
+
+                localStorage.setItem(
+                    "battleQuestionIndex",
+                    "0"
+                );
+
+
+                currentQuestionIndex =
+                    0;
+
 
                 alert(
                     "🎉 Round " +
-                    (round - 1) +
+                    completedRound +
                     " completed!\n\n" +
+
                     "All 15 challenges have been completed.\n\n" +
-                    "The questions will now be shuffled automatically for Round " +
+
+                    "The questions have been shuffled for Round " +
                     round +
                     "."
                 );
 
 
-                startNewRound();
+                /*
+                 * IMPORTANT:
+                 *
+                 * Do NOT delete battle state.
+                 * Do NOT delete timerStart.
+                 *
+                 * The participant can login again
+                 * and will receive Round 2 Question 1.
+                 */
+
+
+                logoutUser();
+
+
+                window.location.href =
+                    "login.html";
+
 
                 return;
-
             }
 
 
-            /* SAVE POSITION */
+            /* ======================================
+               SAVE NEXT QUESTION POSITION
+            ====================================== */
 
             localStorage.setItem(
                 "battleQuestionIndex",
@@ -1821,9 +1868,34 @@ submitBtn.addEventListener(
             );
 
 
-            /* DISPLAY NEXT */
+            localStorage.setItem(
+                "battleRound",
+                String(round)
+            );
 
-            displayQuestion();
+
+            /* ======================================
+               IMPORTANT:
+               LOGOUT ONLY PARTICIPANT SESSION
+            ====================================== */
+
+            logoutUser();
+
+
+            /*
+             * DO NOT REMOVE:
+             *
+             * battleQuestions
+             * battleQuestionIndex
+             * battleRound
+             * timerStart
+             *
+             * These are required for the next login.
+             */
+
+
+            window.location.href =
+                "login.html";
 
         }
 
@@ -1856,7 +1928,6 @@ submitBtn.addEventListener(
 
             submitBtn.innerText =
                 "✅ Submit Answer";
-
         }
 
     }
@@ -1864,10 +1935,121 @@ submitBtn.addEventListener(
 
 
 /* =====================================================
-   LOGOUT
+   LOGOUT USER
 ===================================================== */
 
 function logoutUser() {
+
+    /*
+     * ONLY remove the participant login session.
+     *
+     * DO NOT REMOVE:
+     *
+     * timerStart
+     * battleQuestions
+     * battleQuestionIndex
+     * battleRound
+     *
+     * Those values control the participant's
+     * competition progress.
+     */
+
+    localStorage.removeItem(
+        "currentUser"
+    );
+
+    localStorage.removeItem(
+        "currentEmail"
+    );
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+const TIMER_DURATION =
+    20 * 60 * 1000;
+
+
+let timerInterval =
+    null;
+
+
+let timerExpiredAlready =
+    false;
+
+
+/* =====================================================
+   TIMER EXPIRED
+===================================================== */
+
+function timeExpired() {
+
+    if (
+        timerExpiredAlready
+    ) {
+
+        return;
+    }
+
+
+    timerExpiredAlready =
+        true;
+
+
+    if (
+        timerInterval
+    ) {
+
+        clearInterval(
+            timerInterval
+        );
+    }
+
+
+    timerElement.innerText =
+        "00:00";
+
+
+    submitBtn.disabled =
+        true;
+
+    generateBtn.disabled =
+        true;
+
+    imageInput.disabled =
+        true;
+
+    promptInput.disabled =
+        true;
+
+
+    alert(
+        "⏰ Your 20-minute competition time is over!\n\n" +
+        "Thank you for participating in Prompt Forge. 🎨"
+    );
+
+
+    /*
+     * Competition is finished.
+     *
+     * Clear ALL battle state.
+     */
+
+    clearCompetitionState();
+
+
+    window.location.href =
+        "login.html";
+}
+
+
+/* =====================================================
+   CLEAR COMPLETE COMPETITION
+===================================================== */
+
+function clearCompetitionState() {
 
     localStorage.removeItem(
         "currentUser"
@@ -1892,82 +2074,12 @@ function logoutUser() {
     localStorage.removeItem(
         "battleRound"
     );
-
 }
 
 
 /* =====================================================
-   TIMER
+   UPDATE TIMER
 ===================================================== */
-
-const TIMER_DURATION =
-    20 * 60 * 1000;
-
-
-let timerInterval =
-    null;
-
-
-let timerExpiredAlready =
-    false;
-
-
-function timeExpired() {
-
-    if (
-        timerExpiredAlready
-    ) {
-
-        return;
-
-    }
-
-
-    timerExpiredAlready =
-        true;
-
-
-    if (
-        timerInterval
-    ) {
-
-        clearInterval(
-            timerInterval
-        );
-
-    }
-
-
-    timerElement.innerText =
-        "00:00";
-
-
-    submitBtn.disabled =
-        true;
-
-    generateBtn.disabled =
-        true;
-
-    imageInput.disabled =
-        true;
-
-    promptInput.disabled =
-        true;
-
-
-    alert(
-        "⏰ Your 20-minute competition time is over!\n\nThank you for participating in Prompt Forge. 🎨"
-    );
-
-
-    logoutUser();
-
-
-    window.location.href =
-        "login.html";
-
-}
-
 
 function updateTimer() {
 
@@ -1987,7 +2099,6 @@ function updateTimer() {
         timeExpired();
 
         return;
-
     }
 
 
@@ -2008,7 +2119,6 @@ function updateTimer() {
         timeExpired();
 
         return;
-
     }
 
 
@@ -2029,13 +2139,15 @@ function updateTimer() {
 
     timerElement.innerText =
         String(minutes)
-            .padStart(2,"0")
-        +
-        ":"
-        +
+            .padStart(2, "0") +
+        ":" +
         String(seconds)
-            .padStart(2,"0");
+            .padStart(2, "0");
 
+
+    /* -------------------------------------------
+       WARNING
+    -------------------------------------------- */
 
     if (
         remaining <=
@@ -2045,9 +2157,12 @@ function updateTimer() {
         timerElement.classList.add(
             "timer-warning"
         );
-
     }
 
+
+    /* -------------------------------------------
+       DANGER
+    -------------------------------------------- */
 
     if (
         remaining <=
@@ -2061,9 +2176,7 @@ function updateTimer() {
         timerElement.classList.add(
             "timer-danger"
         );
-
     }
-
 }
 
 
@@ -2073,9 +2186,7 @@ function updateTimer() {
 
 restoreBattle();
 
-
 updateTimer();
-
 
 timerInterval =
     setInterval(
