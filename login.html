@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +11,18 @@
 
     <style>
         body {
-            margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background:
-                radial-gradient(circle at top, #172554, #020617 55%);
+            margin: 0;
+
+            background: radial-gradient(
+                circle at top,
+                #172554,
+                #020617
+            );
+
             color: white;
             font-family: Arial, sans-serif;
         }
@@ -26,78 +31,144 @@
             width: 90%;
             max-width: 430px;
             padding: 40px;
+
             border-radius: 20px;
-            background: rgba(15, 23, 42, 0.92);
-            border: 1px solid rgba(34, 211, 238, 0.35);
+
+            background: rgba(15, 23, 42, 0.9);
+
+            border: 1px solid #22d3ee;
+
             box-shadow:
-                0 0 30px rgba(34, 211, 238, 0.15);
+                0 0 30px rgba(34, 211, 238, 0.25);
+
             text-align: center;
         }
 
-        .login-container h1 {
+        h1 {
             margin-bottom: 10px;
+
             color: #22d3ee;
+
             font-size: 32px;
         }
 
-        .login-container p {
+        p {
             color: #94a3b8;
-            margin-bottom: 30px;
+            line-height: 1.6;
         }
 
         input {
             width: 100%;
+            padding: 14px;
+
+            margin-top: 20px;
+
             box-sizing: border-box;
-            padding: 15px;
-            margin-bottom: 18px;
+
             border-radius: 10px;
+
             border: 1px solid #334155;
+
             background: #020617;
+
             color: white;
+
             font-size: 16px;
+
             outline: none;
         }
 
         input:focus {
             border-color: #22d3ee;
-            box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+
+            box-shadow:
+                0 0 10px rgba(34, 211, 238, 0.2);
         }
 
         button {
             width: 100%;
-            padding: 15px;
+
+            margin-top: 20px;
+
+            padding: 14px;
+
             border: none;
+
             border-radius: 10px;
+
             background: #22d3ee;
+
             color: #020617;
-            font-size: 17px;
+
+            font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
-            transition: 0.2s;
+
+            transition: 0.3s;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+
+            box-shadow:
+                0 0 20px rgba(34, 211, 238, 0.4);
         }
 
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
         #message {
-            margin-top: 20px;
-            min-height: 22px;
+            margin-top: 15px;
+
             color: #f87171;
+
+            font-size: 14px;
+        }
+
+        /* REGISTER OPTION */
+
+        .register-option {
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #1e293b;
+
+            color: #94a3b8;
+
+            font-size: 15px;
+        }
+
+        .register-option a {
+            color: #22d3ee;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .register-option a:hover {
+            text-decoration: underline;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 25px;
+
+            margin-top: 20px;
+
             color: #22d3ee;
+
             text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -116,7 +187,7 @@
     <input
         type="email"
         id="email"
-        placeholder="Enter registered email"
+        placeholder="Enter your registered email"
         autocomplete="email"
     >
 
@@ -125,6 +196,20 @@
     </button>
 
     <div id="message"></div>
+
+
+    <!-- REGISTER OPTION -->
+
+    <div class="register-option">
+
+        New participant?
+
+        <a href="register.html">
+            Register here
+        </a>
+
+    </div>
+
 
     <a href="index.html" class="back-link">
         ← Back to Home
@@ -148,487 +233,406 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-/*
-=====================================================
-ELEMENTS
-=====================================================
-*/
-
-const emailInput =
-    document.getElementById("email");
-
-const loginBtn =
-    document.getElementById("loginBtn");
-
-const message =
-    document.getElementById("message");
-
-
-/*
-=====================================================
-GLOBAL SETTINGS
-=====================================================
-*/
-
 const TOTAL_QUESTIONS = 15;
 
 
+const emailInput = document.getElementById("email");
+
+const loginBtn = document.getElementById("loginBtn");
+
+const message = document.getElementById("message");
+
+
 /*
-=====================================================
-ASSIGN QUESTION
-=====================================================
+    GLOBAL QUESTION ASSIGNMENT
 
-Participant order:
+    Participant 1  → Q1
+    Participant 2  → Q2
+    ...
+    Participant 15 → Q15
 
-1  -> Q1
-2  -> Q2
-3  -> Q3
-...
-15 -> Q15
-16 -> Round 2 Q1
-17 -> Round 2 Q2
+    Participant 16 → Round 2 Q1
+    Participant 17 → Round 2 Q2
 
-Existing participants keep their original question.
-
-Firestore transaction prevents two people from
-receiving the same slot at the same time.
-=====================================================
+    Re-login does NOT create a new assignment.
 */
+
 
 async function assignQuestionForParticipant(
     userDocId,
     userData
 ) {
 
-    const userRef =
-        doc(
-            db,
-            "users",
-            userDocId
-        );
+    const userRef = doc(
+        db,
+        "users",
+        userDocId
+    );
 
-    const eventRef =
-        doc(
-            db,
-            "eventState",
-            "promptForge"
-        );
+    const eventRef = doc(
+        db,
+        "eventState",
+        "promptForge"
+    );
 
 
-    const result =
-        await runTransaction(
-            db,
-            async (transaction) => {
+    return await runTransaction(
+        db,
+        async (transaction) => {
 
-                /*
-                -----------------------------------------
-                READ USER
-                -----------------------------------------
-                */
+            const userSnap =
+                await transaction.get(userRef);
 
-                const userSnapshot =
-                    await transaction.get(
-                        userRef
-                    );
+            const eventSnap =
+                await transaction.get(eventRef);
 
 
-                const currentUser =
-                    userSnapshot.exists()
-                        ? userSnapshot.data()
-                        : userData;
+            const currentUserData =
+                userSnap.data() || userData;
 
 
-                /*
-                -----------------------------------------
-                EXISTING ASSIGNMENT
-                -----------------------------------------
-                */
+            /*
+                USER ALREADY HAS ASSIGNMENT
 
-                if (
-                    currentUser.assignedQuestion &&
-                    currentUser.assignedRound
-                ) {
+                Do not consume another slot.
+            */
 
-                    return {
-                        question:
-                            Number(
-                                currentUser.assignedQuestion
-                            ),
-
-                        round:
-                            Number(
-                                currentUser.assignedRound
-                            ),
-
-                        existing: true
-                    };
-                }
-
-
-                /*
-                -----------------------------------------
-                READ EVENT STATE
-                -----------------------------------------
-                */
-
-                const eventSnapshot =
-                    await transaction.get(
-                        eventRef
-                    );
-
-
-                let nextSlot = 1;
-
-
-                if (
-                    eventSnapshot.exists()
-                ) {
-
-                    const eventData =
-                        eventSnapshot.data();
-
-
-                    nextSlot =
-                        Number(
-                            eventData.nextSlot || 1
-                        );
-                }
-
-
-                /*
-                -----------------------------------------
-                CALCULATE QUESTION
-                -----------------------------------------
-                */
-
-                const question =
-                    ((nextSlot - 1) %
-                        TOTAL_QUESTIONS) + 1;
-
-
-                const assignedRound =
-                    Math.floor(
-                        (nextSlot - 1) /
-                        TOTAL_QUESTIONS
-                    ) + 1;
-
-
-                /*
-                -----------------------------------------
-                UPDATE GLOBAL SLOT
-                -----------------------------------------
-                */
-
-                transaction.set(
-                    eventRef,
-                    {
-                        nextSlot:
-                            nextSlot + 1
-                    },
-                    {
-                        merge: true
-                    }
-                );
-
-
-                /*
-                -----------------------------------------
-                UPDATE PARTICIPANT
-                -----------------------------------------
-                */
-
-                transaction.update(
-                    userRef,
-                    {
-                        assignedQuestion:
-                            question,
-
-                        assignedRound:
-                            assignedRound,
-
-                        battleAssignedAt:
-                            Timestamp.now()
-                    }
-                );
-
+            if (
+                currentUserData.assignedQuestion &&
+                currentUserData.assignedRound
+            ) {
 
                 return {
+
                     question:
-                        question,
+                        Number(
+                            currentUserData.assignedQuestion
+                        ),
 
                     round:
-                        assignedRound,
+                        Number(
+                            currentUserData.assignedRound
+                        ),
 
-                    existing:
-                        false
+                    existing: true
+
                 };
 
             }
-        );
 
 
-    return result;
+            /*
+                GET NEXT GLOBAL SLOT
+            */
+
+            const eventData =
+                eventSnap.exists()
+                    ? eventSnap.data()
+                    : {};
+
+            const nextSlot =
+                Number(eventData.nextSlot || 1);
+
+
+            /*
+                CALCULATE QUESTION
+            */
+
+            const question =
+                ((nextSlot - 1) % TOTAL_QUESTIONS) + 1;
+
+
+            /*
+                CALCULATE ROUND
+            */
+
+            const assignedRound =
+                Math.floor(
+                    (nextSlot - 1) /
+                    TOTAL_QUESTIONS
+                ) + 1;
+
+
+            /*
+                RESERVE NEXT SLOT
+            */
+
+            transaction.set(
+                eventRef,
+                {
+                    nextSlot:
+                        nextSlot + 1
+                },
+                {
+                    merge: true
+                }
+            );
+
+
+            /*
+                SAVE ASSIGNMENT TO USER
+            */
+
+            transaction.update(
+                userRef,
+                {
+
+                    assignedQuestion:
+                        question,
+
+                    assignedRound:
+                        assignedRound,
+
+                    battleAssignedAt:
+                        Timestamp.now()
+
+                }
+            );
+
+
+            return {
+
+                question:
+                    question,
+
+                round:
+                    assignedRound,
+
+                existing:
+                    false
+
+            };
+
+        }
+    );
+
 }
 
 
 /*
-=====================================================
-LOGIN
-=====================================================
+    LOGIN
+*/
+
+async function loginParticipant() {
+
+    const email =
+        emailInput.value
+            .trim()
+            .toLowerCase();
+
+
+    message.innerText = "";
+
+
+    if (!email) {
+
+        message.innerText =
+            "Please enter your email.";
+
+        return;
+
+    }
+
+
+    loginBtn.disabled = true;
+
+    loginBtn.innerText =
+        "CHECKING...";
+
+
+    try {
+
+        /*
+            FIND REGISTERED USER
+        */
+
+        const usersRef =
+            collection(
+                db,
+                "users"
+            );
+
+
+        const userQuery =
+            query(
+                usersRef,
+                where(
+                    "email",
+                    "==",
+                    email
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                userQuery
+            );
+
+
+        if (snapshot.empty) {
+
+            message.innerText =
+                "Email not registered. Please register first.";
+
+            loginBtn.disabled = false;
+
+            loginBtn.innerText =
+                "LOGIN & START BATTLE";
+
+            return;
+
+        }
+
+
+        const userDoc =
+            snapshot.docs[0];
+
+
+        const userData =
+            userDoc.data();
+
+
+        /*
+            CHECK APPROVAL
+        */
+
+        if (
+            userData.emailApproved !== true
+        ) {
+
+            message.innerText =
+                "Your registration is waiting for admin approval.";
+
+            loginBtn.disabled = false;
+
+            loginBtn.innerText =
+                "LOGIN & START BATTLE";
+
+            return;
+
+        }
+
+
+        /*
+            ASSIGN GLOBAL QUESTION
+        */
+
+        const assignment =
+            await assignQuestionForParticipant(
+                userDoc.id,
+                userData
+            );
+
+
+        /*
+            SAVE SESSION DATA
+
+            Firebase remains the source of truth
+            for the question assignment.
+        */
+
+        localStorage.setItem(
+            "currentUser",
+            userData.fullName ||
+            "Participant"
+        );
+
+
+        localStorage.setItem(
+            "currentEmail",
+            userData.email ||
+            email
+        );
+
+
+        localStorage.setItem(
+            "assignedQuestion",
+            String(
+                assignment.question
+            )
+        );
+
+
+        localStorage.setItem(
+            "assignedRound",
+            String(
+                assignment.round
+            )
+        );
+
+
+        /*
+            IMPORTANT:
+
+            TIMER STARTS ONLY AFTER
+            SUCCESSFUL LOGIN.
+
+            It is reset here for the
+            new battle session.
+        */
+
+        localStorage.setItem(
+            "timerStart",
+            String(
+                Date.now()
+            )
+        );
+
+
+        /*
+            GO TO BATTLE
+        */
+
+        window.location.href =
+            "battle.html";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Login error:",
+            error
+        );
+
+
+        message.innerText =
+            "Login failed. Please try again.";
+
+        loginBtn.disabled = false;
+
+        loginBtn.innerText =
+            "LOGIN & START BATTLE";
+
+    }
+
+}
+
+
+/*
+    LOGIN BUTTON
 */
 
 loginBtn.addEventListener(
     "click",
-    async () => {
-
-        const email =
-            emailInput.value
-                .trim()
-                .toLowerCase();
-
-
-        /*
-        -----------------------------------------
-        VALIDATION
-        -----------------------------------------
-        */
-
-        if (!email) {
-
-            message.innerText =
-                "Please enter your registered email.";
-
-            return;
-        }
-
-
-        loginBtn.disabled = true;
-
-        loginBtn.innerText =
-            "CHECKING...";
-
-        message.innerText = "";
-
-
-        try {
-
-            /*
-            -----------------------------------------
-            FIND USER
-            -----------------------------------------
-            */
-
-            const usersRef =
-                collection(
-                    db,
-                    "users"
-                );
-
-
-            const userQuery =
-                query(
-                    usersRef,
-                    where(
-                        "email",
-                        "==",
-                        email
-                    )
-                );
-
-
-            const snapshot =
-                await getDocs(
-                    userQuery
-                );
-
-
-            /*
-            -----------------------------------------
-            USER NOT FOUND
-            -----------------------------------------
-            */
-
-            if (
-                snapshot.empty
-            ) {
-
-                message.innerText =
-                    "Email is not registered.";
-
-                loginBtn.disabled =
-                    false;
-
-                loginBtn.innerText =
-                    "LOGIN & START BATTLE";
-
-                return;
-            }
-
-
-            /*
-            -----------------------------------------
-            GET USER
-            -----------------------------------------
-            */
-
-            const userDoc =
-                snapshot.docs[0];
-
-
-            const userData =
-                userDoc.data();
-
-
-            /*
-            -----------------------------------------
-            APPROVAL CHECK
-            -----------------------------------------
-            */
-
-            if (
-                userData.emailApproved !== true
-            ) {
-
-                message.innerText =
-                    "Your registration has not been approved by the admin yet.";
-
-                loginBtn.disabled =
-                    false;
-
-                loginBtn.innerText =
-                    "LOGIN & START BATTLE";
-
-                return;
-            }
-
-
-            /*
-            -----------------------------------------
-            ASSIGN QUESTION
-            -----------------------------------------
-            */
-
-            const assignment =
-                await assignQuestionForParticipant(
-                    userDoc.id,
-                    userData
-                );
-
-
-            /*
-            -----------------------------------------
-            SAVE SESSION DATA
-            -----------------------------------------
-            */
-
-            localStorage.setItem(
-                "currentUser",
-                userData.fullName ||
-                "Participant"
-            );
-
-
-            localStorage.setItem(
-                "currentEmail",
-                userData.email ||
-                email
-            );
-
-
-            localStorage.setItem(
-                "assignedQuestion",
-                String(
-                    assignment.question
-                )
-            );
-
-
-            localStorage.setItem(
-                "assignedRound",
-                String(
-                    assignment.round
-                )
-            );
-
-
-            /*
-            =================================================
-            START TIMER HERE
-            =================================================
-
-            IMPORTANT:
-
-            Timer starts ONLY after successful login.
-
-            battle.html will NEVER create the timer.
-            =================================================
-            */
-
-            if (
-                !localStorage.getItem(
-                    "timerStart"
-                )
-            ) {
-
-                localStorage.setItem(
-                    "timerStart",
-                    String(
-                        Date.now()
-                    )
-                );
-            }
-
-
-            /*
-            -----------------------------------------
-            GO TO BATTLE
-            -----------------------------------------
-            */
-
-            window.location.href =
-                "battle.html";
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Login error:",
-                error
-            );
-
-
-            message.innerText =
-                "Login failed. Please try again.";
-
-
-            loginBtn.disabled =
-                false;
-
-
-            loginBtn.innerText =
-                "LOGIN & START BATTLE";
-        }
-
-    }
+    loginParticipant
 );
 
 
 /*
-=====================================================
-ENTER KEY LOGIN
-=====================================================
+    ENTER KEY
 */
 
 emailInput.addEventListener(
     "keydown",
-    (event) => {
+    function(event) {
 
         if (
             event.key === "Enter"
         ) {
 
-            loginBtn.click();
+            loginParticipant();
 
         }
 
@@ -639,4 +643,4 @@ emailInput.addEventListener(
 
 </body>
 </html>
-```
+
