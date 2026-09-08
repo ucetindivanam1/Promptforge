@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,11 +36,13 @@
         }
 
 
+
         .battle-container {
             width: 92%;
             max-width: 1100px;
             margin: 40px auto;
         }
+
 
 
         .battle-header {
@@ -52,16 +55,19 @@
         }
 
 
+
         .battle-header h1 {
             margin: 0;
             color: #22d3ee;
         }
 
 
+
         .participant-info {
             color: #94a3b8;
             margin-top: 8px;
         }
+
 
 
         .timer-box {
@@ -78,11 +84,13 @@
         }
 
 
+
         .timer-label {
             font-size: 12px;
             color: #94a3b8;
             margin-bottom: 5px;
         }
+
 
 
         #timer {
@@ -92,15 +100,18 @@
         }
 
 
+
         .timer-warning {
             color: #facc15 !important;
         }
+
 
 
         .timer-danger {
             color: #ef4444 !important;
             animation: timerPulse 1s infinite;
         }
+
 
 
         @keyframes timerPulse {
@@ -118,6 +129,7 @@
             }
 
         }
+
 
 
         .question-card {
@@ -147,11 +159,13 @@
         }
 
 
+
         .round-info {
             color: #22d3ee;
             font-weight: bold;
             margin-bottom: 10px;
         }
+
 
 
         #challengeTitle {
@@ -160,11 +174,13 @@
         }
 
 
+
         #challengeDescription {
             color: #cbd5e1;
             line-height: 1.7;
             margin-bottom: 25px;
         }
+
 
 
         textarea {
@@ -182,6 +198,7 @@
         }
 
 
+
         textarea:focus {
             border-color: #22d3ee;
             box-shadow:
@@ -195,12 +212,14 @@
         }
 
 
+
         .button-row {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             margin-top: 20px;
         }
+
 
 
         button {
@@ -214,9 +233,11 @@
         }
 
 
+
         button:hover {
             transform: translateY(-2px);
         }
+
 
 
         button:disabled {
@@ -226,16 +247,19 @@
         }
 
 
+
         #generateBtn {
             background: #a855f7;
             color: white;
         }
 
 
+
         #submitBtn {
             background: #22d3ee;
             color: #020617;
         }
+
 
 
         .upload-box {
@@ -246,9 +270,11 @@
         }
 
 
+
         .upload-box input {
             margin-top: 12px;
         }
+
 
 
         #imagePreview {
@@ -261,11 +287,13 @@
         }
 
 
+
         #status {
             margin-top: 20px;
             color: #22d3ee;
             min-height: 24px;
         }
+
 
 
         .challenge-progress {
@@ -279,10 +307,13 @@
 </head>
 
 
+
 <body>
 
 
+
 <div class="battle-container">
+
 
 
     <!-- =========================================
@@ -307,6 +338,7 @@
         </div>
 
 
+
         <div class="timer-box">
 
             <div class="timer-label">
@@ -322,11 +354,13 @@
     </div>
 
 
+
     <!-- =========================================
          QUESTION CARD
          ========================================= -->
 
     <div class="question-card">
+
 
 
         <div
@@ -337,14 +371,17 @@
         </div>
 
 
+
         <h2 id="challengeTitle">
             Loading challenge...
         </h2>
 
 
+
         <p id="challengeDescription">
             Please wait while your assigned challenge loads.
         </p>
+
 
 
         <div
@@ -353,6 +390,7 @@
         >
             Question
         </div>
+
 
 
         <!-- =====================================
@@ -364,10 +402,12 @@
         </h3>
 
 
+
         <textarea
             id="promptInput"
             placeholder="Write your best AI prompt here..."
         ></textarea>
+
 
 
         <!-- =====================================
@@ -387,11 +427,13 @@
             </p>
 
 
+
             <input
                 type="file"
                 id="imageInput"
                 accept="image/*"
             >
+
 
 
             <img
@@ -400,6 +442,7 @@
             >
 
         </div>
+
 
 
         <!-- =====================================
@@ -416,6 +459,7 @@
             </button>
 
 
+
             <button
                 id="submitBtn"
                 type="button"
@@ -426,12 +470,15 @@
         </div>
 
 
+
         <div id="status"></div>
+
 
 
     </div>
 
 </div>
+
 
 
 <script type="module">
@@ -754,12 +801,6 @@ LOAD ASSIGNED QUESTION
 
 async function loadAssignedQuestion() {
 
-    /*
-    -----------------------------------------
-    FIND CHALLENGE
-    -----------------------------------------
-    */
-
     currentChallenge =
         challenges.find(
             challenge =>
@@ -783,12 +824,6 @@ async function loadAssignedQuestion() {
     }
 
 
-    /*
-    -----------------------------------------
-    DISPLAY
-    -----------------------------------------
-    */
-
     roundInfo.innerText =
         "Round " +
         currentRound;
@@ -807,12 +842,6 @@ async function loadAssignedQuestion() {
         currentQuestion +
         " of 15";
 
-
-    /*
-    -----------------------------------------
-    SAVE GLOBAL VALUES
-    -----------------------------------------
-    */
 
     window.currentChallenge =
         currentChallenge;
@@ -848,23 +877,24 @@ UPDATE TIMER
 
 IMPORTANT:
 
-This function ONLY READS timerStart.
+This function DOES NOT create timerStart.
 
-It DOES NOT create timerStart.
+timerStart must already have been created
+by login.html after successful login.
 
-timerStart is created in login.html
-after successful login.
+Therefore:
+
+LOGIN
+   ↓
+timerStart created
+   ↓
+battle.html opens
+   ↓
+timer starts displaying/counting
 =====================================================
 */
 
 function updateTimer() {
-
-
-    /*
-    -----------------------------------------
-    GET LOGIN TIMER
-    -----------------------------------------
-    */
 
     const start =
         Number(
@@ -884,6 +914,11 @@ function updateTimer() {
         !start ||
         !Number.isFinite(start)
     ) {
+
+        clearInterval(
+            timerInterval
+        );
+
 
         timerElement.innerText =
             "20:00";
@@ -905,11 +940,6 @@ function updateTimer() {
             true;
 
 
-        clearInterval(
-            timerInterval
-        );
-
-
         alert(
             "Your competition timer was not started. Please login again."
         );
@@ -925,7 +955,7 @@ function updateTimer() {
 
     /*
     -----------------------------------------
-    CALCULATE ELAPSED
+    CALCULATE ELAPSED TIME
     -----------------------------------------
     */
 
@@ -936,7 +966,7 @@ function updateTimer() {
 
     /*
     -----------------------------------------
-    CALCULATE REMAINING
+    CALCULATE REMAINING TIME
     -----------------------------------------
     */
 
@@ -990,7 +1020,7 @@ function updateTimer() {
 
     /*
     -----------------------------------------
-    DISPLAY TIMER
+    DISPLAY
     -----------------------------------------
     */
 
@@ -1062,12 +1092,6 @@ function timeExpired() {
         "00:00";
 
 
-    /*
-    -----------------------------------------
-    DISABLE CONTROLS
-    -----------------------------------------
-    */
-
     submitBtn.disabled =
         true;
 
@@ -1091,7 +1115,7 @@ function timeExpired() {
 
     /*
     -----------------------------------------
-    CLEAR ACTIVE SESSION
+    CLEAR ACTIVE LOGIN SESSION
     -----------------------------------------
     */
 
@@ -1113,13 +1137,11 @@ function timeExpired() {
     /*
     IMPORTANT:
 
-    We DO NOT remove:
+    assignedQuestion and assignedRound
+    are intentionally NOT removed.
 
-        assignedQuestion
-        assignedRound
-
-    because Firebase is the source of truth
-    for the participant assignment.
+    The participant's assignment remains
+    stored in Firebase.
     */
 
 
@@ -1138,12 +1160,6 @@ generateBtn.addEventListener(
     "click",
     () => {
 
-        /*
-        -----------------------------------------
-        CHECK TIMER
-        -----------------------------------------
-        */
-
         const start =
             Number(
                 localStorage.getItem(
@@ -1153,7 +1169,8 @@ generateBtn.addEventListener(
 
 
         if (
-            !start
+            !start ||
+            !Number.isFinite(start)
         ) {
 
             alert(
@@ -1166,12 +1183,6 @@ generateBtn.addEventListener(
             return;
         }
 
-
-        /*
-        -----------------------------------------
-        GET PROMPT
-        -----------------------------------------
-        */
 
         const prompt =
             promptInput.value.trim();
@@ -1191,7 +1202,7 @@ generateBtn.addEventListener(
 
         /*
         -----------------------------------------
-        OPEN CANVA AI
+        CANVA AI
         -----------------------------------------
         */
 
@@ -1236,12 +1247,6 @@ imageInput.addEventListener(
         }
 
 
-        /*
-        -----------------------------------------
-        CHECK IMAGE
-        -----------------------------------------
-        */
-
         if (
             !file.type.startsWith(
                 "image/"
@@ -1255,15 +1260,13 @@ imageInput.addEventListener(
             imageInput.value =
                 "";
 
+
+            imagePreview.style.display =
+                "none";
+
             return;
         }
 
-
-        /*
-        -----------------------------------------
-        PREVIEW
-        -----------------------------------------
-        */
 
         const reader =
             new FileReader();
@@ -1301,7 +1304,7 @@ submitBtn.addEventListener(
 
         /*
         -----------------------------------------
-        CHECK TIMER
+        GET TIMER
         -----------------------------------------
         */
 
@@ -1398,7 +1401,7 @@ submitBtn.addEventListener(
 
         /*
         -----------------------------------------
-        DISABLE SUBMIT
+        DISABLE CONTROLS
         -----------------------------------------
         */
 
@@ -1472,7 +1475,7 @@ submitBtn.addEventListener(
 
             /*
             =========================================
-            CALCULATE TIME
+            SUBMISSION TIME
             =========================================
             */
 
@@ -1504,7 +1507,7 @@ submitBtn.addEventListener(
 
             /*
             =========================================
-            FIRESTORE SUBMISSION
+            FIRESTORE
             =========================================
             */
 
@@ -1605,14 +1608,12 @@ submitBtn.addEventListener(
 
 
             /*
-            IMPORTANT:
-
-            Assignment remains stored:
+            Assignment remains:
 
                 assignedQuestion
                 assignedRound
 
-            Firebase also retains the assignment.
+            Firebase also retains it.
             */
 
 
@@ -1652,6 +1653,7 @@ submitBtn.addEventListener(
             alert(
                 "There was a problem submitting your design."
             );
+
         }
 
     }
@@ -1668,7 +1670,7 @@ async function startBattle() {
 
     /*
     -----------------------------------------
-    LOAD QUESTION
+    LOAD ASSIGNED QUESTION
     -----------------------------------------
     */
 
@@ -1677,14 +1679,15 @@ async function startBattle() {
 
     /*
     -----------------------------------------
-    START TIMER DISPLAY
+    DISPLAY TIMER
     -----------------------------------------
 
     IMPORTANT:
 
-    updateTimer does NOT start the timer.
+    This does NOT create the timer.
 
-    login.html already started it.
+    The timer was created by login.html
+    after successful login.
     -----------------------------------------
     */
 
@@ -1710,5 +1713,8 @@ startBattle();
 
 </script>
 
+
 </body>
+
 </html>
+```
