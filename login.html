@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,15 +46,11 @@
 
         h1 {
             margin-bottom: 10px;
-
             color: #22d3ee;
-
-            font-size: 32px;
         }
 
         p {
             color: #94a3b8;
-            line-height: 1.6;
         }
 
         input {
@@ -123,24 +119,34 @@
 
         #message {
             margin-top: 15px;
-
             color: #f87171;
-
-            font-size: 14px;
         }
 
-        /* REGISTER OPTION */
+        .back-link {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color: #22d3ee;
+
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /*
+         * REGISTER LINK
+         * Uses the same old design style.
+         */
 
         .register-option {
-            margin-top: 25px;
-
-            padding-top: 20px;
-
-            border-top: 1px solid #1e293b;
+            margin-top: 20px;
 
             color: #94a3b8;
 
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .register-option a {
@@ -152,22 +158,6 @@
         }
 
         .register-option a:hover {
-            text-decoration: underline;
-        }
-
-        .back-link {
-            display: inline-block;
-
-            margin-top: 20px;
-
-            color: #22d3ee;
-
-            text-decoration: none;
-
-            font-size: 14px;
-        }
-
-        .back-link:hover {
             text-decoration: underline;
         }
     </style>
@@ -188,7 +178,6 @@
         type="email"
         id="email"
         placeholder="Enter your registered email"
-        autocomplete="email"
     >
 
     <button id="loginBtn">
@@ -197,26 +186,16 @@
 
     <div id="message"></div>
 
-
-    <!-- REGISTER OPTION -->
-
     <div class="register-option">
-
         New participant?
-
-        <a href="register.html">
-            Register here
-        </a>
-
+        <a href="register.html">Register here</a>
     </div>
-
 
     <a href="index.html" class="back-link">
         ← Back to Home
     </a>
 
 </div>
-
 
 <script type="module">
 
@@ -232,30 +211,16 @@ import {
     Timestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
 const TOTAL_QUESTIONS = 15;
 
+const emailInput =
+    document.getElementById("email");
 
-const emailInput = document.getElementById("email");
+const loginBtn =
+    document.getElementById("loginBtn");
 
-const loginBtn = document.getElementById("loginBtn");
-
-const message = document.getElementById("message");
-
-
-/*
-    GLOBAL QUESTION ASSIGNMENT
-
-    Participant 1  → Q1
-    Participant 2  → Q2
-    ...
-    Participant 15 → Q15
-
-    Participant 16 → Round 2 Q1
-    Participant 17 → Round 2 Q2
-
-    Re-login does NOT create a new assignment.
-*/
+const message =
+    document.getElementById("message");
 
 
 async function assignQuestionForParticipant(
@@ -263,18 +228,11 @@ async function assignQuestionForParticipant(
     userData
 ) {
 
-    const userRef = doc(
-        db,
-        "users",
-        userDocId
-    );
+    const userRef =
+        doc(db, "users", userDocId);
 
-    const eventRef = doc(
-        db,
-        "eventState",
-        "promptForge"
-    );
-
+    const eventRef =
+        doc(db, "eventState", "promptForge");
 
     return await runTransaction(
         db,
@@ -286,16 +244,8 @@ async function assignQuestionForParticipant(
             const eventSnap =
                 await transaction.get(eventRef);
 
-
             const currentUserData =
                 userSnap.data() || userData;
-
-
-            /*
-                USER ALREADY HAS ASSIGNMENT
-
-                Do not consume another slot.
-            */
 
             if (
                 currentUserData.assignedQuestion &&
@@ -303,7 +253,6 @@ async function assignQuestionForParticipant(
             ) {
 
                 return {
-
                     question:
                         Number(
                             currentUserData.assignedQuestion
@@ -315,15 +264,8 @@ async function assignQuestionForParticipant(
                         ),
 
                     existing: true
-
                 };
-
             }
-
-
-            /*
-                GET NEXT GLOBAL SLOT
-            */
 
             const eventData =
                 eventSnap.exists()
@@ -333,29 +275,15 @@ async function assignQuestionForParticipant(
             const nextSlot =
                 Number(eventData.nextSlot || 1);
 
-
-            /*
-                CALCULATE QUESTION
-            */
-
             const question =
-                ((nextSlot - 1) % TOTAL_QUESTIONS) + 1;
-
-
-            /*
-                CALCULATE ROUND
-            */
+                ((nextSlot - 1) %
+                    TOTAL_QUESTIONS) + 1;
 
             const assignedRound =
                 Math.floor(
                     (nextSlot - 1) /
                     TOTAL_QUESTIONS
                 ) + 1;
-
-
-            /*
-                RESERVE NEXT SLOT
-            */
 
             transaction.set(
                 eventRef,
@@ -368,15 +296,9 @@ async function assignQuestionForParticipant(
                 }
             );
 
-
-            /*
-                SAVE ASSIGNMENT TO USER
-            */
-
             transaction.update(
                 userRef,
                 {
-
                     assignedQuestion:
                         question,
 
@@ -385,33 +307,22 @@ async function assignQuestionForParticipant(
 
                     battleAssignedAt:
                         Timestamp.now()
-
                 }
             );
 
-
             return {
-
                 question:
                     question,
 
                 round:
                     assignedRound,
 
-                existing:
-                    false
-
+                existing: false
             };
-
         }
     );
-
 }
 
-
-/*
-    LOGIN
-*/
 
 async function loginParticipant() {
 
@@ -420,9 +331,7 @@ async function loginParticipant() {
             .trim()
             .toLowerCase();
 
-
     message.innerText = "";
-
 
     if (!email) {
 
@@ -430,45 +339,26 @@ async function loginParticipant() {
             "Please enter your email.";
 
         return;
-
     }
-
 
     loginBtn.disabled = true;
 
     loginBtn.innerText =
         "CHECKING...";
 
-
     try {
 
-        /*
-            FIND REGISTERED USER
-        */
-
         const usersRef =
-            collection(
-                db,
-                "users"
-            );
-
+            collection(db, "users");
 
         const userQuery =
             query(
                 usersRef,
-                where(
-                    "email",
-                    "==",
-                    email
-                )
+                where("email", "==", email)
             );
-
 
         const snapshot =
-            await getDocs(
-                userQuery
-            );
-
+            await getDocs(userQuery);
 
         if (snapshot.empty) {
 
@@ -481,21 +371,13 @@ async function loginParticipant() {
                 "LOGIN & START BATTLE";
 
             return;
-
         }
-
 
         const userDoc =
             snapshot.docs[0];
 
-
         const userData =
             userDoc.data();
-
-
-        /*
-            CHECK APPROVAL
-        */
 
         if (
             userData.emailApproved !== true
@@ -510,13 +392,7 @@ async function loginParticipant() {
                 "LOGIN & START BATTLE";
 
             return;
-
         }
-
-
-        /*
-            ASSIGN GLOBAL QUESTION
-        */
 
         const assignment =
             await assignQuestionForParticipant(
@@ -524,27 +400,17 @@ async function loginParticipant() {
                 userData
             );
 
-
-        /*
-            SAVE SESSION DATA
-
-            Firebase remains the source of truth
-            for the question assignment.
-        */
-
         localStorage.setItem(
             "currentUser",
             userData.fullName ||
             "Participant"
         );
 
-
         localStorage.setItem(
             "currentEmail",
             userData.email ||
             email
         );
-
 
         localStorage.setItem(
             "assignedQuestion",
@@ -553,7 +419,6 @@ async function loginParticipant() {
             )
         );
 
-
         localStorage.setItem(
             "assignedRound",
             String(
@@ -561,41 +426,26 @@ async function loginParticipant() {
             )
         );
 
-
         /*
-            IMPORTANT:
-
-            TIMER STARTS ONLY AFTER
-            SUCCESSFUL LOGIN.
-
-            It is reset here for the
-            new battle session.
-        */
+         * TIMER STARTS ONLY AFTER
+         * SUCCESSFUL LOGIN.
+         */
 
         localStorage.setItem(
             "timerStart",
-            String(
-                Date.now()
-            )
+            String(Date.now())
         );
-
-
-        /*
-            GO TO BATTLE
-        */
 
         window.location.href =
             "battle.html";
 
     }
-
     catch (error) {
 
         console.error(
             "Login error:",
             error
         );
-
 
         message.innerText =
             "Login failed. Please try again.";
@@ -604,15 +454,9 @@ async function loginParticipant() {
 
         loginBtn.innerText =
             "LOGIN & START BATTLE";
-
     }
-
 }
 
-
-/*
-    LOGIN BUTTON
-*/
 
 loginBtn.addEventListener(
     "click",
@@ -620,20 +464,12 @@ loginBtn.addEventListener(
 );
 
 
-/*
-    ENTER KEY
-*/
-
 emailInput.addEventListener(
     "keydown",
     function(event) {
 
-        if (
-            event.key === "Enter"
-        ) {
-
+        if (event.key === "Enter") {
             loginParticipant();
-
         }
 
     }
@@ -643,4 +479,4 @@ emailInput.addEventListener(
 
 </body>
 </html>
-
+```
