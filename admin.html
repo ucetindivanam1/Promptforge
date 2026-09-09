@@ -514,7 +514,7 @@
      FIREBASE
 ========================================= -->
 
-<script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/build/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.umd.cjs"></script>
 
 <script type="module">
 
@@ -2065,7 +2065,7 @@
                 }
             }
 
-            const document = new Document({
+            const wordDocument = new Document({
                 creator: "Prompt Forge",
                 title: "AI Prompt Battle 2026 - Submitted Designs",
                 description:
@@ -2078,7 +2078,7 @@
                 ]
             });
 
-            const blob = await Packer.toBlob(document);
+            const blob = await Packer.toBlob(wordDocument);
 
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
