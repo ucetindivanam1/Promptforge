@@ -514,7 +514,6 @@
      FIREBASE
 ========================================= -->
 
-<script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.umd.cjs"></script>
 
 <script type="module">
 
@@ -1702,12 +1701,6 @@
 
         try {
 
-            if (typeof docx === "undefined") {
-                throw new Error(
-                    "Word document library could not be loaded. Please check your internet connection and try again."
-                );
-            }
-
             if (exportButton) {
                 exportButton.disabled = true;
                 exportButton.innerText = "⏳ Exporting...";
@@ -1816,6 +1809,18 @@
                     (Number(b.questionNumber) || 999999)
                 );
             });
+
+            // Load the Word generator as a real browser ES module.
+            // This is more reliable on Netlify than loading the Node-oriented UMD/CJS entry.
+            let docx;
+            try {
+                docx = await import("https://esm.sh/docx@9.5.1?bundle");
+            } catch (libraryError) {
+                console.error("Could not load docx module:", libraryError);
+                throw new Error(
+                    "The Word export library could not be loaded. Please check that your internet connection is working and that your browser allows external modules."
+                );
+            }
 
             const {
                 Document,
