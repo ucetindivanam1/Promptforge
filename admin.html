@@ -1,66 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Prompt Forge Admin</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>Prompt Forge | Admin Dashboard</title>
 
     <style>
-        /* ==============================
-           ADMIN DASHBOARD
-        ============================== */
-
-        .admin-container {
-            width: 95%;
-            max-width: 1500px;
-            margin: 40px auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .admin-header {
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #1e1b4b, transparent 35%),
+                radial-gradient(circle at bottom right, #312e81, transparent 35%),
+                #050816;
+            color: white;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
-            flex-wrap: wrap;
             margin-bottom: 30px;
+            padding: 25px;
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            border-radius: 20px;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
         }
 
-        .admin-header h1 {
-            margin: 5px 0;
-        }
-
-        .admin-header p {
-            margin: 5px 0;
-            opacity: 0.8;
-        }
-
-        .admin-email {
-            margin-top: 10px;
+        header h1 {
             color: #22d3ee;
-            font-weight: bold;
+            font-size: 32px;
+            margin-bottom: 8px;
         }
 
-        .admin-actions {
+        header p {
+            color: #a5b4fc;
+        }
+
+        .header-buttons {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
-        .admin-btn {
+        button {
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 14px;
             font-weight: bold;
+            cursor: pointer;
             transition: 0.3s;
         }
 
         .refresh-btn {
-            background: #22d3ee;
+            background: #2563eb;
+            color: white;
+        }
+
+        .refresh-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .export-btn {
+            background: #a78bfa;
             color: #0f172a;
+        }
+
+        .export-btn:hover {
+            background: #c4b5fd;
+            transform: translateY(-2px);
         }
 
         .logout-btn {
@@ -68,212 +95,197 @@
             color: white;
         }
 
-        .admin-btn:hover {
+        .logout-btn:hover {
+            background: #dc2626;
             transform: translateY(-2px);
-            opacity: 0.9;
         }
 
-        /* ==============================
-           CARDS
-        ============================== */
-
-        .admin-card {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(34, 211, 238, 0.25);
-            border-radius: 15px;
-            padding: 25px;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
         }
 
-        .admin-card h2 {
-            margin-top: 0;
+        .stat-card {
+            padding: 25px;
+            border-radius: 18px;
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            backdrop-filter: blur(15px);
+        }
+
+        .stat-card h3 {
+            color: #818cf8;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
             color: #22d3ee;
+            font-size: 34px;
+            font-weight: bold;
         }
 
-        /* ==============================
-           TABLE
-        ============================== */
-
-        .table-wrapper {
-            width: 100%;
+        .section {
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            backdrop-filter: blur(15px);
             overflow-x: auto;
+        }
+
+        .section h2 {
+            color: #c4b5fd;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 900px;
-        }
-
-        th,
-        td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            vertical-align: middle;
+            min-width: 850px;
         }
 
         th {
+            text-align: left;
+            padding: 15px;
             color: #22d3ee;
-            font-weight: bold;
-            background: rgba(34, 211, 238, 0.05);
+            background: rgba(30, 41, 59, 0.8);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
         }
 
         td {
-            color: #e5e7eb;
+            padding: 15px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+            color: #e2e8f0;
+            vertical-align: middle;
         }
 
-        tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+        tr:hover td {
+            background: rgba(124, 58, 237, 0.08);
         }
 
-        /* ==============================
-           STATUS
-        ============================== */
-
-        .status-badge {
+        .badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
-            background: rgba(34, 211, 238, 0.12);
-            color: #22d3ee;
         }
 
         .approved {
             background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .pending {
             background: rgba(234, 179, 8, 0.15);
-            color: #eab308;
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
         }
 
-        /* ==============================
-           ACTION BUTTONS
-        ============================== */
+        .submitted {
+            background: rgba(34, 211, 238, 0.15);
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            margin: 2px;
+            font-size: 12px;
+        }
 
         .approve-btn {
             background: #22c55e;
             color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
-        .approve-btn:hover {
-            opacity: 0.85;
+        .reject-btn {
+            background: #ef4444;
+            color: white;
         }
 
         .delete-btn {
-            background: #ef4444;
+            background: #7f1d1d;
             color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
-        .delete-btn:hover {
-            opacity: 0.85;
-        }
-
-        .view-btn {
+        .image-link {
             display: inline-block;
-            background: #22d3ee;
-            color: #0f172a;
-            text-decoration: none;
-            padding: 8px 14px;
-            border-radius: 7px;
-            font-weight: bold;
-        }
-
-        .view-btn:hover {
-            opacity: 0.85;
-        }
-
-        /* ==============================
-           QUESTION DISPLAY
-        ============================== */
-
-        .question-number {
-            color: #22d3ee;
-            font-size: 16px;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .round-number {
-            color: #a78bfa;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .challenge-title {
-            color: #f8fafc;
-            font-weight: bold;
-            min-width: 150px;
-        }
-
-        .prompt-cell {
-            max-width: 300px;
-            min-width: 220px;
-            white-space: normal;
-            word-break: break-word;
-            line-height: 1.5;
-        }
-
-        /* ==============================
-           DESIGN IMAGE
-        ============================== */
-
-        .submission-image {
-            width: 100px;
-            height: 70px;
-            object-fit: cover;
+            padding: 7px 10px;
             border-radius: 8px;
-            border: 1px solid rgba(34, 211, 238, 0.3);
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
         }
 
-        /* ==============================
-           EMPTY / LOADING
-        ============================== */
+        .image-link:hover {
+            background: #1d4ed8;
+        }
 
-        .empty-message {
+        .empty {
             text-align: center;
+            color: #94a3b8;
             padding: 30px;
-            opacity: 0.7;
         }
 
         .loading {
             text-align: center;
-            padding: 25px;
+            padding: 30px;
             color: #22d3ee;
         }
 
-        /* ==============================
-           RESPONSIVE
-        ============================== */
+        .message {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            background: #1e293b;
+            color: white;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            display: none;
+            z-index: 1000;
+        }
 
-        @media (max-width: 768px) {
+        .message.show {
+            display: block;
+        }
 
-            .admin-container {
-                width: 92%;
-                margin: 20px auto;
+        .challenge-info {
+            color: #a5b4fc;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .admin-card {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
                 padding: 15px;
             }
 
-            .admin-header {
-                align-items: flex-start;
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 25px;
             }
         }
     </style>
@@ -281,1216 +293,1441 @@
 
 <body>
 
-<div class="admin-container">
+<div class="container">
 
-    <!-- =========================================
-         HEADER
-    ========================================== -->
-
-    <div class="admin-header">
-
+    <header>
         <div>
-            <div class="status-badge">
-                ADMIN PANEL
-            </div>
-
-            <h1>Prompt Forge Dashboard</h1>
-
-            <p>
-                Approve participants and review submitted AI designs.
-            </p>
-
-            <div class="admin-email">
-                Admin: promptforgeadmin@gmail.com
-            </div>
+            <h1>⚡ Prompt Forge</h1>
+            <p>AI Design Challenge 2026 — Admin Dashboard</p>
         </div>
 
-        <div class="admin-actions">
-
-            <button
-                class="admin-btn refresh-btn"
-                onclick="refreshData()">
+        <div class="header-buttons">
+            <button class="refresh-btn" onclick="loadDashboard()">
                 Refresh Data
             </button>
 
-            <button
-                class="admin-btn logout-btn"
-                onclick="logoutAdmin()">
-                Logout
+            <button class="export-btn" onclick="exportSubmissionsToWord()">
+                Export Word
             </button>
 
+            <button class="logout-btn" onclick="adminLogout()">
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <h3>Total Participants</h3>
+            <div class="number" id="totalUsers">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h3>Approved</h3>
+            <div class="number" id="approvedUsers">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h3>Pending</h3>
+            <div class="number" id="pendingUsers">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h3>Submissions</h3>
+            <div class="number" id="totalSubmissions">0</div>
         </div>
 
     </div>
 
 
-    <!-- =========================================
-         PARTICIPANT APPROVAL
-    ========================================== -->
+    <!-- PARTICIPANTS -->
 
-    <div class="admin-card">
+    <div class="section">
 
-        <h2>Participant Approval</h2>
+        <h2>👥 Participants</h2>
 
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Name</th>
-                        <th>College</th>
-                        <th>Department</th>
-                        <th>Email</th>
-
-                        <!-- NEW -->
-                        <th>Round</th>
-                        <th>Question</th>
-                        <th>Challenge</th>
-
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="usersTable">
-
-                    <tr>
-                        <td colspan="9" class="loading">
-                            Loading participants...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+        <div id="usersLoading" class="loading">
+            Loading participants...
         </div>
+
+        <table id="usersTable" style="display:none;">
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Round</th>
+                    <th>Question</th>
+                    <th>Challenge</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="usersBody"></tbody>
+
+        </table>
 
     </div>
 
 
-    <!-- =========================================
-         SUBMITTED DESIGNS
-    ========================================== -->
+    <!-- SUBMISSIONS -->
 
-    <div class="admin-card">
+    <div class="section">
 
-        <h2>Submitted Designs</h2>
+        <h2>🎨 Submitted Designs</h2>
 
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Participant</th>
-                        <th>Email</th>
-
-                        <!-- NEW -->
-                        <th>Round</th>
-                        <th>Question</th>
-                        <th>Challenge</th>
-
-                        <th>Time Used</th>
-                        <th>Submitted Date</th>
-                        <th>Status</th>
-                        <th>Prompt</th>
-                        <th>Design</th>
-                        <th>Action</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="submissionsTable">
-
-                    <tr>
-                        <td colspan="11" class="loading">
-                            Loading submissions...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+        <div id="submissionsLoading" class="loading">
+            Loading submissions...
         </div>
+
+        <table id="submissionsTable" style="display:none;">
+
+            <thead>
+                <tr>
+                    <th>Participant</th>
+                    <th>Email</th>
+                    <th>Round</th>
+                    <th>Question</th>
+                    <th>Challenge</th>
+                    <th>Prompt</th>
+                    <th>Time Used</th>
+                    <th>Submitted</th>
+                    <th>Design</th>
+                </tr>
+            </thead>
+
+            <tbody id="submissionsBody"></tbody>
+
+        </table>
 
     </div>
 
 </div>
 
 
-<!-- =========================================
-     FIREBASE
-========================================= -->
+<div id="message" class="message"></div>
+
 
 <script type="module">
 
-    import { auth, db }
-        from "./firebase.js";
+import { auth, db } from "./firebase.js";
 
-    import {
-        onAuthStateChanged,
-        signOut
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const ADMIN_EMAIL = "promptforgeadmin@gmail.com";
+
+const TOTAL_QUESTIONS = 15;
+
+
+/* =========================
+   CHALLENGES
+========================= */
+
+const challenges = [
+
+    {
+        id: 1,
+        title: "Future City",
+        description: "Design a futuristic smart city of 2050."
+    },
+
+    {
+        id: 2,
+        title: "AI in Education",
+        description: "Create a visual showing how AI transforms education."
+    },
+
+    {
+        id: 3,
+        title: "Eco-Friendly Product",
+        description: "Design an innovative eco-friendly product."
+    },
+
+    {
+        id: 4,
+        title: "Cybersecurity Awareness",
+        description: "Create a design promoting cybersecurity awareness."
+    },
+
+    {
+        id: 5,
+        title: "Festival Fusion",
+        description: "Combine traditional culture with futuristic technology."
+    },
+
+    {
+        id: 6,
+        title: "Space Exploration",
+        description: "Imagine humanity exploring deep space."
+    },
+
+    {
+        id: 7,
+        title: "Smart Campus",
+        description: "Design the university campus of the future."
+    },
+
+    {
+        id: 8,
+        title: "Save the Planet",
+        description: "Create a powerful visual promoting environmental protection."
+    },
+
+    {
+        id: 9,
+        title: "Tech Startup Logo",
+        description: "Create a futuristic logo for a technology startup."
+    },
+
+    {
+        id: 10,
+        title: "Historical Reimagining",
+        description: "Reimagine a historical moment using futuristic technology."
+    },
+
+    {
+        id: 11,
+        title: "Robot Assistant",
+        description: "Design a friendly AI robot assistant."
+    },
+
+    {
+        id: 12,
+        title: "Underwater City",
+        description: "Imagine a futuristic underwater civilization."
+    },
+
+    {
+        id: 13,
+        title: "Career of the Future",
+        description: "Visualize an exciting career in the future."
+    },
+
+    {
+        id: 14,
+        title: "Mystery Scene",
+        description: "Create a cinematic mysterious scene."
+    },
+
+    {
+        id: 15,
+        title: "One Prompt Challenge",
+        description: "Create the most impressive design using one powerful prompt."
     }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    import {
-        collection,
-        getDocs,
-        doc,
-        updateDoc,
-        deleteDoc
+];
+
+
+const challengeMap = new Map(
+    challenges.map(challenge => [challenge.id, challenge])
+);
+
+
+function getChallengeByQuestion(questionNumber) {
+
+    return challengeMap.get(
+        Number(questionNumber)
+    ) || null;
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(text) {
+
+    const message = document.getElementById("message");
+
+    message.textContent = text;
+
+    message.classList.add("show");
+
+    setTimeout(() => {
+
+        message.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "N/A";
     }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    try {
 
-    /* =========================================
-       ADMIN EMAIL
-    ========================================== */
-
-    const ADMIN_EMAIL = "promptforgeadmin@gmail.com";
-
-
-    /* =========================================
-       CHALLENGES
-       Same questions used in battle.html
-    ========================================== */
-
-    const challenges = [
-
-        {
-            id: 1,
-            title: "Future City",
-            description:
-                "Create a futuristic Indian city in 2050 with smart transport, green buildings, renewable energy and advanced technology."
-        },
-
-        {
-            id: 2,
-            title: "AI in Education",
-            description:
-                "Show how AI is transforming education with students, teachers, AI tools and a modern classroom."
-        },
-
-        {
-            id: 3,
-            title: "Eco-Friendly Product",
-            description:
-                "Create a realistic advertisement for a new eco-friendly reusable water bottle."
-        },
-
-        {
-            id: 4,
-            title: "Cybersecurity Awareness",
-            description:
-                "Create a college cybersecurity awareness campaign showing data protection, hackers, phishing and unsafe links."
-        },
-
-        {
-            id: 5,
-            title: "Festival Fusion",
-            description:
-                "Combine an Indian cultural festival with futuristic technology including holograms, drones and smart devices while respecting Indian culture."
-        },
-
-        {
-            id: 6,
-            title: "Space Exploration",
-            description:
-                "Show an Indian astronaut landing on Mars in 2045 with a Mars base, rover, Indian flag and Earth."
-        },
-
-        {
-            id: 7,
-            title: "Smart Campus",
-            description:
-                "Create a futuristic college campus with AI assistants, smart classrooms, digital boards, renewable energy and autonomous transport."
-        },
-
-        {
-            id: 8,
-            title: "Save the Planet",
-            description:
-                "Create an emotional environmental campaign showing a polluted Earth transforming into a restored green planet."
-        },
-
-        {
-            id: 9,
-            title: "Tech Startup Logo",
-            description:
-                "Create a modern logo for a fictional AI startup called NovaMind."
-        },
-
-        {
-            id: 10,
-            title: "Historical Reimagining",
-            description:
-                "Show an ancient Indian marketplace using sustainable modern technology such as solar lighting, digital payments and electric transport."
-        },
-
-        {
-            id: 11,
-            title: "Robot Assistant",
-            description:
-                "Create a friendly household robot helping an elderly person."
-        },
-
-        {
-            id: 12,
-            title: "Underwater City",
-            description:
-                "Create an underwater city in 2100 with transparent buildings, marine life, transportation, researchers and sustainable technology."
-        },
-
-        {
-            id: 13,
-            title: "Career of the Future",
-            description:
-                "Show students preparing for careers in AI, robotics, cybersecurity, data science and space exploration."
-        },
-
-        {
-            id: 14,
-            title: "Mystery Scene",
-            description:
-                "Create a cinematic mystery scene inside an abandoned futuristic laboratory at night."
-        },
-
-        {
-            id: 15,
-            title: "One Prompt Challenge",
-            description:
-                "Interpret 'Technology should make humans more human' creatively without using long text."
+        if (value.toDate) {
+            return value.toDate().toLocaleString();
         }
 
-    ];
+        return new Date(value).toLocaleString();
 
-    const challengeMap = new Map(
-        challenges.map((challenge) => [challenge.id, challenge])
-    );
+    } catch {
 
-    function getChallengeByQuestion(questionNumber) {
-        const id = Number(questionNumber);
-        return challengeMap.get(id) || null;
+        return "N/A";
+
     }
 
+}
 
-    /* =========================================
-       AUTHENTICATION CHECK
-    ========================================== */
 
-    onAuthStateChanged(auth, async (user) => {
+/* =========================
+   FORMAT TIME
+========================= */
+
+function formatTime(seconds) {
+
+    if (seconds === undefined || seconds === null) {
+        return "N/A";
+    }
+
+    seconds = Number(seconds);
+
+    if (isNaN(seconds)) {
+        return "N/A";
+    }
+
+    const minutes = Math.floor(seconds / 60);
+
+    const secs = seconds % 60;
+
+    return `${minutes}:${String(secs).padStart(2, "0")}`;
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   ESCAPE ATTRIBUTE
+========================= */
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
+
+}
+
+
+/* =========================
+   LOAD DASHBOARD
+========================= */
+
+window.loadDashboard = async function() {
+
+    await loadUsers();
+
+    await loadSubmissions();
+
+};
+
+
+/* =========================
+   LOAD USERS
+========================= */
+
+async function loadUsers() {
+
+    const loading =
+        document.getElementById("usersLoading");
+
+    const table =
+        document.getElementById("usersTable");
+
+    const body =
+        document.getElementById("usersBody");
+
+    loading.style.display = "block";
+
+    table.style.display = "none";
+
+    body.innerHTML = "";
+
+    try {
+
+        const snapshot =
+            await getDocs(collection(db, "users"));
+
+        const users = [];
+
+        snapshot.forEach(docSnap => {
+
+            users.push({
+                id: docSnap.id,
+                ...docSnap.data()
+            });
+
+        });
+
+
+        users.sort((a, b) => {
+
+            const roundA = Number(a.assignedRound || 999);
+
+            const roundB = Number(b.assignedRound || 999);
+
+            if (roundA !== roundB) {
+                return roundA - roundB;
+            }
+
+            const questionA =
+                Number(a.assignedQuestion || 999);
+
+            const questionB =
+                Number(b.assignedQuestion || 999);
+
+            return questionA - questionB;
+
+        });
+
+
+        document.getElementById("totalUsers").textContent =
+            users.length;
+
+
+        const approved =
+            users.filter(user => user.approved === true).length;
+
+        const pending =
+            users.filter(user => user.approved !== true).length;
+
+
+        document.getElementById("approvedUsers").textContent =
+            approved;
+
+        document.getElementById("pendingUsers").textContent =
+            pending;
+
+
+        if (users.length === 0) {
+
+            body.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty">
+                        No participants found.
+                    </td>
+                </tr>
+            `;
+
+        } else {
+
+            users.forEach(user => {
+
+                const question =
+                    Number(user.assignedQuestion || 0);
+
+                const round =
+                    Number(user.assignedRound || 0);
+
+                const challenge =
+                    getChallengeByQuestion(question);
+
+
+                const status =
+                    user.approved === true
+                        ? `<span class="badge approved">Approved</span>`
+                        : `<span class="badge pending">Pending</span>`;
+
+
+                const approveButton =
+                    user.approved === true
+                        ? ""
+                        : `
+                            <button
+                                class="action-btn approve-btn"
+                                onclick="approveUser('${escapeAttribute(user.id)}')">
+                                Approve
+                            </button>
+                        `;
+
+
+                body.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            ${escapeHTML(user.fullName || "N/A")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(user.email || "N/A")}
+                        </td>
+
+                        <td>
+                            ${round || "N/A"}
+                        </td>
+
+                        <td>
+                            ${question || "N/A"}
+                        </td>
+
+                        <td>
+                            <div class="challenge-info">
+                                ${
+                                    challenge
+                                        ? escapeHTML(challenge.title)
+                                        : "N/A"
+                                }
+                            </div>
+                        </td>
+
+                        <td>
+                            ${status}
+                        </td>
+
+                        <td>
+
+                            ${approveButton}
+
+                            <button
+                                class="action-btn reject-btn"
+                                onclick="rejectUser('${escapeAttribute(user.id)}')">
+                                Reject
+                            </button>
+
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteUser('${escapeAttribute(user.id)}')">
+                                Delete
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+
+        loading.style.display = "none";
+
+        table.style.display = "table";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        loading.textContent =
+            "Failed to load participants.";
+
+    }
+
+}
+
+
+/* =========================
+   APPROVE USER
+========================= */
+
+window.approveUser = async function(userId) {
+
+    try {
+
+        await updateDoc(
+            doc(db, "users", userId),
+            {
+                approved: true
+            }
+        );
+
+        showMessage("Participant approved.");
+
+        await loadUsers();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage("Failed to approve participant.");
+
+    }
+
+};
+
+
+/* =========================
+   REJECT USER
+========================= */
+
+window.rejectUser = async function(userId) {
+
+    try {
+
+        await updateDoc(
+            doc(db, "users", userId),
+            {
+                approved: false
+            }
+        );
+
+        showMessage("Participant rejected.");
+
+        await loadUsers();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage("Failed to reject participant.");
+
+    }
+
+};
+
+
+/* =========================
+   DELETE USER
+========================= */
+
+window.deleteUser = async function(userId) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this participant?"
+        );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        await deleteDoc(
+            doc(db, "users", userId)
+        );
+
+        showMessage("Participant deleted.");
+
+        await loadUsers();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage("Failed to delete participant.");
+
+    }
+
+};
+
+
+/* =========================
+   LOAD SUBMISSIONS
+========================= */
+
+async function loadSubmissions() {
+
+    const loading =
+        document.getElementById("submissionsLoading");
+
+    const table =
+        document.getElementById("submissionsTable");
+
+    const body =
+        document.getElementById("submissionsBody");
+
+    loading.style.display = "block";
+
+    table.style.display = "none";
+
+    body.innerHTML = "";
+
+
+    try {
+
+        const submissionSnapshot =
+            await getDocs(
+                collection(db, "submissions")
+            );
+
+
+        const userSnapshot =
+            await getDocs(
+                collection(db, "users")
+            );
+
+
+        const usersByEmail = new Map();
+
+
+        userSnapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+            if (data.email) {
+
+                usersByEmail.set(
+                    String(data.email).toLowerCase(),
+                    data
+                );
+
+            }
+
+        });
+
+
+        const submissions = [];
+
+
+        submissionSnapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+
+            const email =
+                String(data.email || "").toLowerCase();
+
+
+            const user =
+                usersByEmail.get(email) || {};
+
+
+            const question =
+                Number(
+                    data.questionNumber ||
+                    data.challengeId ||
+                    user.assignedQuestion ||
+                    0
+                );
+
+
+            const round =
+                Number(
+                    data.round ||
+                    user.assignedRound ||
+                    0
+                );
+
+
+            const challenge =
+                getChallengeByQuestion(question);
+
+
+            submissions.push({
+
+                id: docSnap.id,
+
+                ...data,
+
+                round,
+
+                questionNumber: question,
+
+                challengeTitle:
+                    data.challengeTitle ||
+                    (challenge
+                        ? challenge.title
+                        : "Unknown Challenge"),
+
+                challengeDescription:
+                    data.challengeDescription ||
+                    (challenge
+                        ? challenge.description
+                        : "")
+
+            });
+
+        });
+
+
+        submissions.sort((a, b) => {
+
+            const roundA = Number(a.round || 999);
+
+            const roundB = Number(b.round || 999);
+
+            if (roundA !== roundB) {
+                return roundA - roundB;
+            }
+
+            const questionA =
+                Number(a.questionNumber || 999);
+
+            const questionB =
+                Number(b.questionNumber || 999);
+
+            return questionA - questionB;
+
+        });
+
+
+        document.getElementById("totalSubmissions").textContent =
+            submissions.length;
+
+
+        if (submissions.length === 0) {
+
+            body.innerHTML = `
+                <tr>
+                    <td colspan="9" class="empty">
+                        No submitted designs yet.
+                    </td>
+                </tr>
+            `;
+
+        } else {
+
+            submissions.forEach(submission => {
+
+                const image =
+                    submission.image ||
+                    submission.imageUrl ||
+                    submission.designUrl ||
+                    "";
+
+
+                const imageButton =
+                    image
+                        ? `
+                            <a
+                                class="image-link"
+                                href="${escapeAttribute(image)}"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                View Design
+                            </a>
+                        `
+                        : "N/A";
+
+
+                body.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            ${escapeHTML(
+                                submission.participant || "N/A"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                submission.email || "N/A"
+                            )}
+                        </td>
+
+                        <td>
+                            ${submission.round || "N/A"}
+                        </td>
+
+                        <td>
+                            ${submission.questionNumber || "N/A"}
+                        </td>
+
+                        <td>
+
+                            <div>
+                                <strong>
+                                    ${escapeHTML(
+                                        submission.challengeTitle
+                                    )}
+                                </strong>
+                            </div>
+
+                            <div class="challenge-info">
+                                ${escapeHTML(
+                                    submission.challengeDescription
+                                )}
+                            </div>
+
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                submission.prompt || "N/A"
+                            )}
+                        </td>
+
+                        <td>
+                            ${formatTime(
+                                submission.timeUsed
+                            )}
+                        </td>
+
+                        <td>
+                            ${formatDate(
+                                submission.submittedAt
+                            )}
+                        </td>
+
+                        <td>
+                            ${imageButton}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+
+        loading.style.display = "none";
+
+        table.style.display = "table";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        loading.textContent =
+            "Failed to load submissions.";
+
+    }
+
+}
+
+
+/* =========================
+   EXPORT WORD DOCUMENT
+========================= */
+
+window.exportSubmissionsToWord = async function() {
+
+    try {
+
+        showMessage("Preparing Word document...");
+
+
+        const submissionSnapshot =
+            await getDocs(
+                collection(db, "submissions")
+            );
+
+
+        const userSnapshot =
+            await getDocs(
+                collection(db, "users")
+            );
+
+
+        const usersByEmail = new Map();
+
+
+        userSnapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+            if (data.email) {
+
+                usersByEmail.set(
+                    String(data.email).toLowerCase(),
+                    data
+                );
+
+            }
+
+        });
+
+
+        const submissions = [];
+
+
+        submissionSnapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+
+            const email =
+                String(data.email || "").toLowerCase();
+
+
+            const user =
+                usersByEmail.get(email) || {};
+
+
+            const question =
+                Number(
+                    data.questionNumber ||
+                    data.challengeId ||
+                    user.assignedQuestion ||
+                    0
+                );
+
+
+            const round =
+                Number(
+                    data.round ||
+                    user.assignedRound ||
+                    0
+                );
+
+
+            const challenge =
+                getChallengeByQuestion(question);
+
+
+            submissions.push({
+
+                participant:
+                    data.participant ||
+                    user.fullName ||
+                    "N/A",
+
+                email:
+                    data.email ||
+                    user.email ||
+                    "N/A",
+
+                round,
+
+                questionNumber:
+                    question,
+
+                challengeTitle:
+                    data.challengeTitle ||
+                    (challenge
+                        ? challenge.title
+                        : "Unknown Challenge"),
+
+                challengeDescription:
+                    data.challengeDescription ||
+                    (challenge
+                        ? challenge.description
+                        : ""),
+
+                prompt:
+                    data.prompt ||
+                    "N/A",
+
+                timeUsed:
+                    data.timeUsed,
+
+                submittedAt:
+                    data.submittedAt,
+
+                image:
+                    data.image ||
+                    data.imageUrl ||
+                    data.designUrl ||
+                    ""
+
+            });
+
+        });
+
+
+        submissions.sort((a, b) => {
+
+            const roundA =
+                Number(a.round || 999);
+
+            const roundB =
+                Number(b.round || 999);
+
+
+            if (roundA !== roundB) {
+
+                return roundA - roundB;
+
+            }
+
+
+            return (
+                Number(a.questionNumber || 999) -
+                Number(b.questionNumber || 999)
+            );
+
+        });
+
+
+        if (submissions.length === 0) {
+
+            showMessage("No submissions to export.");
+
+            return;
+
+        }
+
+
+        let rows = "";
+
+
+        submissions.forEach((submission, index) => {
+
+            const imageHTML =
+                submission.image
+                    ? `
+                        <p>
+                            <b>Submitted Design:</b><br>
+                            <a href="${escapeAttribute(
+                                submission.image
+                            )}">
+                                Open Submitted Design
+                            </a>
+                        </p>
+                    `
+                    : `
+                        <p>
+                            <b>Submitted Design:</b>
+                            Not available
+                        </p>
+                    `;
+
+
+            rows += `
+
+                <div class="submission">
+
+                    <h2>
+                        Submission ${index + 1}
+                    </h2>
+
+                    <table>
+
+                        <tr>
+                            <td><b>Participant</b></td>
+                            <td>
+                                ${escapeHTML(
+                                    submission.participant
+                                )}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Email</b></td>
+                            <td>
+                                ${escapeHTML(
+                                    submission.email
+                                )}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Round</b></td>
+                            <td>
+                                ${submission.round || "N/A"}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Question</b></td>
+                            <td>
+                                ${
+                                    submission.questionNumber ||
+                                    "N/A"
+                                }
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Challenge</b></td>
+                            <td>
+                                ${escapeHTML(
+                                    submission.challengeTitle
+                                )}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Challenge Description</b></td>
+                            <td>
+                                ${escapeHTML(
+                                    submission.challengeDescription
+                                )}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Prompt</b></td>
+                            <td>
+                                ${escapeHTML(
+                                    submission.prompt
+                                )}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Time Used</b></td>
+                            <td>
+                                ${formatTime(
+                                    submission.timeUsed
+                                )}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Submitted At</b></td>
+                            <td>
+                                ${formatDate(
+                                    submission.submittedAt
+                                )}
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    ${imageHTML}
+
+                </div>
+
+            `;
+
+        });
+
+
+        const documentHTML = `
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Prompt Forge Submitted Designs</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 30px;
+    color: #111827;
+}
+
+h1 {
+    text-align: center;
+    color: #4c1d95;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #312e81;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.submission {
+    margin-bottom: 40px;
+    page-break-inside: avoid;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+td {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    vertical-align: top;
+}
+
+td:first-child {
+    width: 220px;
+    background: #f3f4f6;
+}
+
+a {
+    color: #2563eb;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #6b7280;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+AI PROMPT BATTLE 2026<br>
+Submitted Designs
+</h1>
+
+<p>
+<b>Total Submissions:</b>
+${submissions.length}
+</p>
+
+${rows}
+
+<div class="footer">
+Generated by Prompt Forge Admin Dashboard
+</div>
+
+</body>
+
+</html>
+
+`;
+
+
+        const blob =
+            new Blob(
+                [
+                    "\ufeff",
+                    documentHTML
+                ],
+                {
+                    type:
+                        "application/msword"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        const link =
+            document.createElement("a");
+
+
+        link.href = url;
+
+        link.download =
+            "Prompt_Forge_Submitted_Designs.doc";
+
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+
+        URL.revokeObjectURL(url);
+
+
+        showMessage(
+            "Word document exported successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Word export error:",
+            error
+        );
+
+        showMessage(
+            "Failed to export Word document."
+        );
+
+    }
+
+};
+
+
+/* =========================
+   ADMIN LOGOUT
+========================= */
+
+window.adminLogout = async function() {
+
+    try {
+
+        await signOut(auth);
+
+        window.location.href =
+            "admin-login.html";
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage("Logout failed.");
+
+    }
+
+};
+
+
+/* =========================
+   AUTH CHECK
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
         if (!user) {
 
-            window.location.href = "admin-login.html";
+            window.location.href =
+                "admin-login.html";
 
             return;
+
         }
 
 
-        if (user.email !== ADMIN_EMAIL) {
+        if (
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
 
             await signOut(auth);
 
-            window.location.href = "admin-login.html";
+            window.location.href =
+                "admin-login.html";
 
             return;
+
         }
 
 
-        await refreshData();
-
-    });
-
-
-    /* =========================================
-       LOAD USERS
-    ========================================== */
-
-    async function loadUsers() {
-
-        const usersTable =
-            document.getElementById("usersTable");
-
-        usersTable.innerHTML = `
-            <tr>
-                <td colspan="9" class="loading">
-                    Loading participants...
-                </td>
-            </tr>
-        `;
-
-
-        try {
-
-            const snapshot =
-                await getDocs(collection(db, "users"));
-
-
-            if (snapshot.empty) {
-
-                usersTable.innerHTML = `
-                    <tr>
-                        <td colspan="9" class="empty-message">
-                            No participants found.
-                        </td>
-                    </tr>
-                `;
-
-                return;
-            }
-
-
-            let users = [];
-
-
-            snapshot.forEach((docSnap) => {
-
-                users.push({
-                    id: docSnap.id,
-                    ...docSnap.data()
-                });
-
-            });
-
-
-            /*
-             * Sort participants by assigned round/question.
-             * Users without an assignment are placed at the end.
-             */
-
-            users.sort((a, b) => {
-
-                const roundA =
-                    Number(a.assignedRound) || 999999;
-
-                const roundB =
-                    Number(b.assignedRound) || 999999;
-
-                if (roundA !== roundB) {
-
-                    return roundA - roundB;
-
-                }
-
-
-                const questionA =
-                    Number(a.assignedQuestion) || 999999;
-
-                const questionB =
-                    Number(b.assignedQuestion) || 999999;
-
-                return questionA - questionB;
-
-            });
-
-
-            usersTable.innerHTML = "";
-
-
-            users.forEach((u) => {
-
-                const assignedQuestion =
-                    Number(u.assignedQuestion) || 0;
-
-                const assignedRound =
-                    Number(u.assignedRound) || 0;
-
-
-                const challenge =
-                    getChallengeByQuestion(assignedQuestion);
-
-
-                const row =
-                    document.createElement("tr");
-
-
-                row.innerHTML = `
-
-                    <td>
-                        ${escapeHTML(
-                            u.fullName ||
-                            u.name ||
-                            "N/A"
-                        )}
-                    </td>
-
-
-                    <td>
-                        ${escapeHTML(
-                            u.college ||
-                            "N/A"
-                        )}
-                    </td>
-
-
-                    <td>
-                        ${escapeHTML(
-                            u.department ||
-                            "N/A"
-                        )}
-                    </td>
-
-
-                    <td>
-                        ${escapeHTML(
-                            u.email ||
-                            "N/A"
-                        )}
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            assignedRound
-                                ? `<span class="round-number">
-                                    Round ${assignedRound}
-                                   </span>`
-                                : `<span class="status-badge">
-                                    Not assigned
-                                   </span>`
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            assignedQuestion
-                                ? `<span class="question-number">
-                                    Q${assignedQuestion}
-                                   </span>`
-                                : `<span class="status-badge">
-                                    Not assigned
-                                   </span>`
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            challenge
-                                ? `<span class="challenge-title">
-                                    ${escapeHTML(
-                                        challenge.title
-                                    )}
-                                   </span>`
-                                : "Not assigned"
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            u.emailApproved === true
-                                ? `<span class="status-badge approved">
-                                    Approved
-                                   </span>`
-                                : `<span class="status-badge pending">
-                                    Pending
-                                   </span>`
-                        }
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            u.emailApproved === true
-
-                                ? `<span class="status-badge approved">
-                                    Approved
-                                   </span>`
-
-                                : `<button
-                                    class="approve-btn"
-                                    onclick="approveUser('${escapeAttribute(u.id)}')">
-                                    Approve
-                                   </button>`
-                        }
-
-                    </td>
-
-                `;
-
-
-                usersTable.appendChild(row);
-
-            });
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Error loading users:",
-                error
-            );
-
-
-            usersTable.innerHTML = `
-                <tr>
-                    <td colspan="9" class="empty-message">
-                        Failed to load participants.
-                    </td>
-                </tr>
-            `;
-
-        }
+        await loadDashboard();
 
     }
-
-
-    /* =========================================
-       APPROVE USER
-    ========================================== */
-
-    window.approveUser = async function(userId) {
-
-        try {
-
-            await updateDoc(
-                doc(db, "users", userId),
-                {
-                    emailApproved: true
-                }
-            );
-
-
-            alert(
-                "Participant approved successfully."
-            );
-
-
-            await loadUsers();
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Approval error:",
-                error
-            );
-
-            alert(
-                "Failed to approve participant."
-            );
-
-        }
-
-    };
-
-
-    /* =========================================
-       LOAD SUBMISSIONS
-    ========================================== */
-
-    async function loadSubmissions() {
-
-        const submissionsTable =
-            document.getElementById(
-                "submissionsTable"
-            );
-
-
-        submissionsTable.innerHTML = `
-            <tr>
-                <td colspan="11" class="loading">
-                    Loading submissions...
-                </td>
-            </tr>
-        `;
-
-
-        try {
-
-            const [snapshot, usersSnapshot] =
-                await Promise.all([
-                    getDocs(collection(db, "submissions")),
-                    getDocs(collection(db, "users"))
-                ]);
-
-            const usersByEmail = new Map();
-
-            usersSnapshot.forEach((userDoc) => {
-                const userData = userDoc.data();
-                if (userData.email) {
-                    usersByEmail.set(
-                        String(userData.email).trim().toLowerCase(),
-                        userData
-                    );
-                }
-            });
-
-
-            if (snapshot.empty) {
-
-                submissionsTable.innerHTML = `
-                    <tr>
-                        <td colspan="11" class="empty-message">
-                            No submissions yet.
-                        </td>
-                    </tr>
-                `;
-
-                return;
-            }
-
-
-            let submissions = [];
-
-
-            snapshot.forEach((docSnap) => {
-
-                const data = docSnap.data();
-                const participantEmail = String(data.email || "").trim().toLowerCase();
-                const userData = usersByEmail.get(participantEmail) || {};
-
-                // Support both new submissions and older submissions
-                // that were saved before round/question/challenge fields existed.
-                const questionNumber =
-                    Number(
-                        data.questionNumber ??
-                        data.assignedQuestion ??
-                        userData.assignedQuestion
-                    ) || 0;
-
-                const round =
-                    Number(
-                        data.round ??
-                        data.assignedRound ??
-                        userData.assignedRound
-                    ) || 0;
-
-                const challenge = getChallengeByQuestion(questionNumber);
-
-                submissions.push({
-                    id: docSnap.id,
-                    ...data,
-                    round,
-                    questionNumber,
-                    challengeId: Number(data.challengeId) || questionNumber,
-                    challengeTitle:
-                        data.challengeTitle ||
-                        challenge?.title ||
-                        "Not assigned"
-                });
-
-            });
-
-
-            /*
-             * Sort by round and question.
-             */
-
-            submissions.sort((a, b) => {
-
-                const roundA =
-                    Number(a.round) || 999999;
-
-                const roundB =
-                    Number(b.round) || 999999;
-
-
-                if (roundA !== roundB) {
-
-                    return roundA - roundB;
-
-                }
-
-
-                const questionA =
-                    Number(a.questionNumber) || 999999;
-
-                const questionB =
-                    Number(b.questionNumber) || 999999;
-
-
-                return questionA - questionB;
-
-            });
-
-
-            submissionsTable.innerHTML = "";
-
-
-            submissions.forEach((data) => {
-
-                const row =
-                    document.createElement("tr");
-
-
-                /*
-                 * IMPORTANT:
-                 *
-                 * questionNumber
-                 * challengeTitle
-                 * round
-                 *
-                 * are already saved by battle.html.
-                 */
-
-
-                row.innerHTML = `
-
-                    <td>
-                        ${escapeHTML(
-                            data.participant ||
-                            "Unknown"
-                        )}
-                    </td>
-
-
-                    <td>
-                        ${escapeHTML(
-                            data.email ||
-                            "N/A"
-                        )}
-                    </td>
-
-
-                    <!-- PARTICIPANT ROUND -->
-
-                    <td>
-
-                        ${
-                            data.round
-                                ? `<span class="round-number">
-                                    Round ${escapeHTML(
-                                        String(data.round)
-                                    )}
-                                   </span>`
-                                : "N/A"
-                        }
-
-                    </td>
-
-
-                    <!-- PARTICIPANT QUESTION -->
-
-                    <td>
-
-                        ${
-                            data.questionNumber
-                                ? `<span class="question-number">
-                                    Q${escapeHTML(
-                                        String(
-                                            data.questionNumber
-                                        )
-                                    )}
-                                   </span>`
-                                : "N/A"
-                        }
-
-                    </td>
-
-
-                    <!-- QUESTION / CHALLENGE -->
-
-                    <td>
-
-                        <span class="challenge-title">
-
-                            ${escapeHTML(
-                                data.challengeTitle ||
-                                "N/A"
-                            )}
-
-                        </span>
-
-                    </td>
-
-
-                    <!-- TIME USED -->
-
-                    <td>
-
-                        ${escapeHTML(
-                            formatTime(
-                                data.timeUsedSeconds
-                            )
-                        )}
-
-                    </td>
-
-
-                    <!-- SUBMITTED DATE -->
-
-                    <td>
-
-                        ${escapeHTML(
-                            formatDate(
-                                data.submittedAt
-                            )
-                        )}
-
-                    </td>
-
-
-                    <!-- STATUS -->
-
-                    <td>
-
-                        <span class="status-badge">
-
-                            ${escapeHTML(
-                                data.status ||
-                                "Submitted"
-                            )}
-
-                        </span>
-
-                    </td>
-
-
-                    <!-- PROMPT -->
-
-                    <td class="prompt-cell">
-
-                        ${escapeHTML(
-                            data.prompt ||
-                            "No prompt"
-                        )}
-
-                    </td>
-
-
-                    <!-- DESIGN -->
-
-                    <td>
-
-                        ${
-                            data.image
-
-                                ? `
-                                    <a
-                                        href="${escapeAttribute(
-                                            data.image
-                                        )}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="view-btn">
-                                        View Design
-                                    </a>
-                                  `
-
-                                : "No Image"
-                        }
-
-                    </td>
-
-
-                    <!-- DELETE -->
-
-                    <td>
-
-                        <button
-                            class="delete-btn"
-                            onclick="deleteSubmission('${escapeAttribute(data.id)}')">
-                            Delete
-                        </button>
-
-                    </td>
-
-                `;
-
-
-                submissionsTable.appendChild(row);
-
-            });
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Error loading submissions:",
-                error
-            );
-
-
-            submissionsTable.innerHTML = `
-                <tr>
-                    <td colspan="11" class="empty-message">
-                        Failed to load submissions.
-                    </td>
-                </tr>
-            `;
-
-        }
-
-    }
-
-
-    /* =========================================
-       DELETE SUBMISSION
-    ========================================== */
-
-    window.deleteSubmission =
-        async function(submissionId) {
-
-            const confirmed =
-                confirm(
-                    "Are you sure you want to delete this submission?"
-                );
-
-
-            if (!confirmed) {
-
-                return;
-
-            }
-
-
-            try {
-
-                await deleteDoc(
-                    doc(
-                        db,
-                        "submissions",
-                        submissionId
-                    )
-                );
-
-
-                alert(
-                    "Submission deleted successfully."
-                );
-
-
-                await loadSubmissions();
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Delete error:",
-                    error
-                );
-
-
-                alert(
-                    "Failed to delete submission."
-                );
-
-            }
-
-        };
-
-
-    /* =========================================
-       REFRESH DATA
-    ========================================== */
-
-    window.refreshData =
-        async function() {
-
-            await loadUsers();
-
-            await loadSubmissions();
-
-        };
-
-
-    /* =========================================
-       LOGOUT ADMIN
-    ========================================== */
-
-    window.logoutAdmin =
-        async function() {
-
-            try {
-
-                await signOut(auth);
-
-                window.location.href =
-                    "admin-login.html";
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-            }
-
-        };
-
-
-    /* =========================================
-       FORMAT TIME
-    ========================================== */
-
-    function formatTime(seconds) {
-
-        if (
-            seconds === undefined ||
-            seconds === null ||
-            isNaN(Number(seconds))
-        ) {
-
-            return "N/A";
-
-        }
-
-
-        seconds =
-            Number(seconds);
-
-
-        const minutes =
-            Math.floor(seconds / 60);
-
-
-        const remainingSeconds =
-            seconds % 60;
-
-
-        return `${minutes}m ${remainingSeconds}s`;
-
-    }
-
-
-    /* =========================================
-       FORMAT DATE
-    ========================================== */
-
-    function formatDate(timestamp) {
-
-        if (!timestamp) {
-
-            return "N/A";
-
-        }
-
-
-        try {
-
-            let date;
-
-
-            if (
-                timestamp &&
-                typeof timestamp.toDate === "function"
-            ) {
-
-                date =
-                    timestamp.toDate();
-
-            }
-
-            else if (
-                timestamp &&
-                timestamp.seconds
-            ) {
-
-                date =
-                    new Date(
-                        timestamp.seconds * 1000
-                    );
-
-            }
-
-            else {
-
-                date =
-                    new Date(timestamp);
-
-            }
-
-
-            if (isNaN(date.getTime())) {
-
-                return "N/A";
-
-            }
-
-
-            return date.toLocaleString();
-
-        }
-
-        catch (error) {
-
-            return "N/A";
-
-        }
-
-    }
-
-
-    /* =========================================
-       ESCAPE HTML
-    ========================================== */
-
-    function escapeHTML(value) {
-
-        if (
-            value === undefined ||
-            value === null
-        ) {
-
-            return "";
-
-        }
-
-
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-
-    }
-
-
-    /* =========================================
-       ESCAPE ATTRIBUTE
-    ========================================== */
-
-    function escapeAttribute(value) {
-
-        if (
-            value === undefined ||
-            value === null
-        ) {
-
-            return "";
-
-        }
-
-
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-
-    }
+);
 
 </script>
 
 </body>
 </html>
+
