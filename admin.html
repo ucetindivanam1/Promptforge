@@ -1,9 +1,10 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Prompt Forge | Admin Dashboard</title>
 
     <style>
@@ -16,10 +17,20 @@
         body {
             font-family: Arial, sans-serif;
             min-height: 100vh;
+
             background:
-                radial-gradient(circle at top left, #1e1b4b, transparent 35%),
-                radial-gradient(circle at bottom right, #312e81, transparent 35%),
+                radial-gradient(
+                    circle at top left,
+                    #1e1b4b,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #312e81,
+                    transparent 35%
+                ),
                 #050816;
+
             color: white;
             padding: 30px;
         }
@@ -30,18 +41,28 @@
             margin: auto;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
+
             margin-bottom: 30px;
             padding: 25px;
+
             border: 1px solid rgba(139, 92, 246, 0.35);
             border-radius: 20px;
+
             background: rgba(15, 23, 42, 0.72);
+
             backdrop-filter: blur(15px);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
+
+            box-shadow:
+                0 0 30px rgba(124, 58, 237, 0.15);
         }
 
         header h1 {
@@ -63,11 +84,19 @@
         button {
             border: none;
             border-radius: 10px;
+
             padding: 12px 18px;
+
             font-size: 14px;
             font-weight: bold;
+
             cursor: pointer;
+
             transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
         }
 
         .refresh-btn {
@@ -77,7 +106,6 @@
 
         .refresh-btn:hover {
             background: #1d4ed8;
-            transform: translateY(-2px);
         }
 
         .export-btn {
@@ -87,7 +115,6 @@
 
         .export-btn:hover {
             background: #c4b5fd;
-            transform: translateY(-2px);
         }
 
         .logout-btn {
@@ -97,70 +124,110 @@
 
         .logout-btn:hover {
             background: #dc2626;
-            transform: translateY(-2px);
         }
+
+        /* =========================
+           STATS
+        ========================= */
 
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+
             gap: 20px;
+
             margin-bottom: 30px;
         }
 
         .stat-card {
             padding: 25px;
+
             border-radius: 18px;
+
             background: rgba(15, 23, 42, 0.72);
+
             border: 1px solid rgba(139, 92, 246, 0.3);
+
             backdrop-filter: blur(15px);
         }
 
         .stat-card h3 {
             color: #818cf8;
+
             font-size: 14px;
+
             margin-bottom: 10px;
         }
 
         .stat-card .number {
             color: #22d3ee;
+
             font-size: 34px;
+
             font-weight: bold;
         }
 
+        /* =========================
+           SECTION
+        ========================= */
+
         .section {
             margin-bottom: 30px;
+
             padding: 25px;
+
             border-radius: 20px;
+
             background: rgba(15, 23, 42, 0.72);
+
             border: 1px solid rgba(139, 92, 246, 0.3);
+
             backdrop-filter: blur(15px);
+
             overflow-x: auto;
         }
 
         .section h2 {
             color: #c4b5fd;
+
             margin-bottom: 20px;
+
             font-size: 24px;
         }
 
+        /* =========================
+           TABLE
+        ========================= */
+
         table {
             width: 100%;
+
             border-collapse: collapse;
-            min-width: 850px;
+
+            min-width: 900px;
         }
 
         th {
             text-align: left;
+
             padding: 15px;
+
             color: #22d3ee;
+
             background: rgba(30, 41, 59, 0.8);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+
+            border-bottom:
+                1px solid rgba(139, 92, 246, 0.3);
         }
 
         td {
             padding: 15px;
-            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+
+            border-bottom:
+                1px solid rgba(139, 92, 246, 0.15);
+
             color: #e2e8f0;
+
             vertical-align: middle;
         }
 
@@ -168,60 +235,108 @@
             background: rgba(124, 58, 237, 0.08);
         }
 
+        /* =========================
+           BADGES
+        ========================= */
+
         .badge {
             display: inline-block;
+
             padding: 6px 10px;
+
             border-radius: 20px;
+
             font-size: 12px;
+
             font-weight: bold;
         }
 
         .approved {
             background: rgba(34, 197, 94, 0.15);
+
             color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+
+            border:
+                1px solid rgba(34, 197, 94, 0.3);
         }
 
         .pending {
             background: rgba(234, 179, 8, 0.15);
+
             color: #facc15;
-            border: 1px solid rgba(234, 179, 8, 0.3);
+
+            border:
+                1px solid rgba(234, 179, 8, 0.3);
         }
 
         .submitted {
             background: rgba(34, 211, 238, 0.15);
+
             color: #22d3ee;
-            border: 1px solid rgba(34, 211, 238, 0.3);
+
+            border:
+                1px solid rgba(34, 211, 238, 0.3);
         }
+
+        /* =========================
+           ACTION BUTTONS
+        ========================= */
 
         .action-btn {
             padding: 8px 12px;
+
             margin: 2px;
+
             font-size: 12px;
         }
 
         .approve-btn {
             background: #22c55e;
+
             color: white;
+        }
+
+        .approve-btn:hover {
+            background: #16a34a;
         }
 
         .reject-btn {
             background: #ef4444;
+
             color: white;
+        }
+
+        .reject-btn:hover {
+            background: #dc2626;
         }
 
         .delete-btn {
             background: #7f1d1d;
+
             color: white;
         }
 
+        .delete-btn:hover {
+            background: #991b1b;
+        }
+
+        /* =========================
+           IMAGE LINK
+        ========================= */
+
         .image-link {
             display: inline-block;
+
             padding: 7px 10px;
+
             border-radius: 8px;
+
             background: #2563eb;
+
             color: white;
+
             text-decoration: none;
+
             font-size: 12px;
         }
 
@@ -229,53 +344,82 @@
             background: #1d4ed8;
         }
 
+        /* =========================
+           OTHER
+        ========================= */
+
         .empty {
             text-align: center;
+
             color: #94a3b8;
+
             padding: 30px;
         }
 
         .loading {
             text-align: center;
+
             padding: 30px;
+
             color: #22d3ee;
+        }
+
+        .challenge-info {
+            color: #a5b4fc;
+
+            font-size: 12px;
+
+            line-height: 1.5;
         }
 
         .message {
             position: fixed;
+
             right: 25px;
+
             bottom: 25px;
+
             padding: 15px 20px;
+
             border-radius: 12px;
+
             background: #1e293b;
+
             color: white;
-            border: 1px solid rgba(139, 92, 246, 0.4);
+
+            border:
+                1px solid rgba(139, 92, 246, 0.4);
+
             display: none;
+
             z-index: 1000;
+
+            max-width: 400px;
         }
 
         .message.show {
             display: block;
         }
 
-        .challenge-info {
-            color: #a5b4fc;
-            font-size: 12px;
-            line-height: 1.5;
-        }
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 900px) {
+
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
 
             header {
                 flex-direction: column;
+
                 align-items: flex-start;
             }
         }
 
         @media (max-width: 600px) {
+
             body {
                 padding: 15px;
             }
@@ -291,79 +435,201 @@
     </style>
 </head>
 
+
 <body>
 
 <div class="container">
 
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
     <header>
+
         <div>
-            <h1>⚡ Prompt Forge</h1>
-            <p>AI Design Challenge 2026 — Admin Dashboard</p>
+
+            <h1>
+                ⚡ Prompt Forge
+            </h1>
+
+            <p>
+                AI Design Challenge 2026 — Admin Dashboard
+            </p>
+
         </div>
+
 
         <div class="header-buttons">
-            <button class="refresh-btn" onclick="loadDashboard()">
+
+            <button
+                class="refresh-btn"
+                onclick="loadDashboard()">
+
                 Refresh Data
+
             </button>
 
-            <button class="export-btn" onclick="exportSubmissionsToWord()">
+
+            <button
+                class="export-btn"
+                onclick="exportSubmissionsToWord()">
+
                 Export Word
+
             </button>
 
-            <button class="logout-btn" onclick="adminLogout()">
+
+            <button
+                class="logout-btn"
+                onclick="adminLogout()">
+
                 Logout
+
             </button>
+
         </div>
+
     </header>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================= -->
 
     <div class="stats">
 
-        <div class="stat-card">
-            <h3>Total Participants</h3>
-            <div class="number" id="totalUsers">0</div>
-        </div>
 
         <div class="stat-card">
-            <h3>Approved</h3>
-            <div class="number" id="approvedUsers">0</div>
+
+            <h3>
+                Total Participants
+            </h3>
+
+            <div
+                class="number"
+                id="totalUsers">
+
+                0
+
+            </div>
+
         </div>
 
-        <div class="stat-card">
-            <h3>Pending</h3>
-            <div class="number" id="pendingUsers">0</div>
-        </div>
 
         <div class="stat-card">
-            <h3>Submissions</h3>
-            <div class="number" id="totalSubmissions">0</div>
+
+            <h3>
+                Approved
+            </h3>
+
+            <div
+                class="number"
+                id="approvedUsers">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                Pending
+            </h3>
+
+            <div
+                class="number"
+                id="pendingUsers">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                Submissions
+            </h3>
+
+            <div
+                class="number"
+                id="totalSubmissions">
+
+                0
+
+            </div>
+
         </div>
 
     </div>
 
 
-    <!-- PARTICIPANTS -->
+    <!-- =========================
+         PARTICIPANTS
+    ========================= -->
 
     <div class="section">
 
-        <h2>👥 Participants</h2>
+        <h2>
+            👥 Participants
+        </h2>
 
-        <div id="usersLoading" class="loading">
+
+        <div
+            id="usersLoading"
+            class="loading">
+
             Loading participants...
+
         </div>
 
-        <table id="usersTable" style="display:none;">
+
+        <table
+            id="usersTable"
+            style="display: none;">
 
             <thead>
+
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Round</th>
-                    <th>Question</th>
-                    <th>Challenge</th>
-                    <th>Status</th>
-                    <th>Action</th>
+
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Round
+                    </th>
+
+                    <th>
+                        Question
+                    </th>
+
+                    <th>
+                        Challenge
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
                 </tr>
+
             </thead>
+
 
             <tbody id="usersBody"></tbody>
 
@@ -372,31 +638,74 @@
     </div>
 
 
-    <!-- SUBMISSIONS -->
+    <!-- =========================
+         SUBMISSIONS
+    ========================= -->
 
     <div class="section">
 
-        <h2>🎨 Submitted Designs</h2>
+        <h2>
+            🎨 Submitted Designs
+        </h2>
 
-        <div id="submissionsLoading" class="loading">
+
+        <div
+            id="submissionsLoading"
+            class="loading">
+
             Loading submissions...
+
         </div>
 
-        <table id="submissionsTable" style="display:none;">
+
+        <table
+            id="submissionsTable"
+            style="display: none;">
 
             <thead>
+
                 <tr>
-                    <th>Participant</th>
-                    <th>Email</th>
-                    <th>Round</th>
-                    <th>Question</th>
-                    <th>Challenge</th>
-                    <th>Prompt</th>
-                    <th>Time Used</th>
-                    <th>Submitted</th>
-                    <th>Design</th>
+
+                    <th>
+                        Participant
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Round
+                    </th>
+
+                    <th>
+                        Question
+                    </th>
+
+                    <th>
+                        Challenge
+                    </th>
+
+                    <th>
+                        Prompt
+                    </th>
+
+                    <th>
+                        Time Used
+                    </th>
+
+                    <th>
+                        Submitted
+                    </th>
+
+                    <th>
+                        Design
+                    </th>
+
                 </tr>
+
             </thead>
+
 
             <tbody id="submissionsBody"></tbody>
 
@@ -407,10 +716,18 @@
 </div>
 
 
-<div id="message" class="message"></div>
+<div
+    id="message"
+    class="message">
+</div>
+
 
 
 <script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
 
 import { auth, db } from "./firebase.js";
 
@@ -424,117 +741,144 @@ import {
     getDocs,
     doc,
     updateDoc,
-    deleteDoc
+    deleteDoc,
+    Timestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const ADMIN_EMAIL = "promptforgeadmin@gmail.com";
+/* =========================================================
+   ADMIN SETTINGS
+========================================================= */
+
+const ADMIN_EMAIL =
+    "promptforgeadmin@gmail.com";
 
 const TOTAL_QUESTIONS = 15;
 
 
-/* =========================
+/* =========================================================
    CHALLENGES
-========================= */
+========================================================= */
 
 const challenges = [
 
     {
         id: 1,
         title: "Future City",
-        description: "Design a futuristic smart city of 2050."
+        description:
+            "Design a futuristic smart city of 2050."
     },
 
     {
         id: 2,
         title: "AI in Education",
-        description: "Create a visual showing how AI transforms education."
+        description:
+            "Create a visual showing how AI transforms education."
     },
 
     {
         id: 3,
         title: "Eco-Friendly Product",
-        description: "Design an innovative eco-friendly product."
+        description:
+            "Design an innovative eco-friendly product."
     },
 
     {
         id: 4,
         title: "Cybersecurity Awareness",
-        description: "Create a design promoting cybersecurity awareness."
+        description:
+            "Create a design promoting cybersecurity awareness."
     },
 
     {
         id: 5,
         title: "Festival Fusion",
-        description: "Combine traditional culture with futuristic technology."
+        description:
+            "Combine traditional culture with futuristic technology."
     },
 
     {
         id: 6,
         title: "Space Exploration",
-        description: "Imagine humanity exploring deep space."
+        description:
+            "Imagine humanity exploring deep space."
     },
 
     {
         id: 7,
         title: "Smart Campus",
-        description: "Design the university campus of the future."
+        description:
+            "Design the university campus of the future."
     },
 
     {
         id: 8,
         title: "Save the Planet",
-        description: "Create a powerful visual promoting environmental protection."
+        description:
+            "Create a powerful visual promoting environmental protection."
     },
 
     {
         id: 9,
         title: "Tech Startup Logo",
-        description: "Create a futuristic logo for a technology startup."
+        description:
+            "Create a futuristic logo for a technology startup."
     },
 
     {
         id: 10,
         title: "Historical Reimagining",
-        description: "Reimagine a historical moment using futuristic technology."
+        description:
+            "Reimagine a historical moment using futuristic technology."
     },
 
     {
         id: 11,
         title: "Robot Assistant",
-        description: "Design a friendly AI robot assistant."
+        description:
+            "Design a friendly AI robot assistant."
     },
 
     {
         id: 12,
         title: "Underwater City",
-        description: "Imagine a futuristic underwater civilization."
+        description:
+            "Imagine a futuristic underwater civilization."
     },
 
     {
         id: 13,
         title: "Career of the Future",
-        description: "Visualize an exciting career in the future."
+        description:
+            "Visualize an exciting career in the future."
     },
 
     {
         id: 14,
         title: "Mystery Scene",
-        description: "Create a cinematic mysterious scene."
+        description:
+            "Create a cinematic mysterious scene."
     },
 
     {
         id: 15,
         title: "One Prompt Challenge",
-        description: "Create the most impressive design using one powerful prompt."
+        description:
+            "Create the most impressive design using one powerful prompt."
     }
 
 ];
 
 
-const challengeMap = new Map(
-    challenges.map(challenge => [challenge.id, challenge])
-);
+const challengeMap =
+    new Map(
+        challenges.map(
+            challenge => [
+                challenge.id,
+                challenge
+            ]
+        )
+    );
 
 
 function getChallengeByQuestion(questionNumber) {
@@ -546,30 +890,32 @@ function getChallengeByQuestion(questionNumber) {
 }
 
 
-/* =========================
+/* =========================================================
    MESSAGE
-========================= */
+========================================================= */
 
 function showMessage(text) {
 
-    const message = document.getElementById("message");
+    const message =
+        document.getElementById("message");
 
     message.textContent = text;
 
     message.classList.add("show");
 
+
     setTimeout(() => {
 
         message.classList.remove("show");
 
-    }, 3000);
+    }, 4000);
 
 }
 
 
-/* =========================
+/* =========================================================
    FORMAT DATE
-========================= */
+========================================================= */
 
 function formatDate(value) {
 
@@ -577,15 +923,25 @@ function formatDate(value) {
         return "N/A";
     }
 
+
     try {
 
-        if (value.toDate) {
-            return value.toDate().toLocaleString();
+        if (
+            value &&
+            typeof value.toDate === "function"
+        ) {
+
+            return value
+                .toDate()
+                .toLocaleString();
+
         }
 
-        return new Date(value).toLocaleString();
 
-    } catch {
+        return new Date(value)
+            .toLocaleString();
+
+    } catch (error) {
 
         return "N/A";
 
@@ -594,54 +950,82 @@ function formatDate(value) {
 }
 
 
-/* =========================
+/* =========================================================
    FORMAT TIME
-========================= */
+========================================================= */
 
 function formatTime(seconds) {
 
-    if (seconds === undefined || seconds === null) {
+    if (
+        seconds === undefined ||
+        seconds === null
+    ) {
+
         return "N/A";
+
     }
 
-    seconds = Number(seconds);
 
-    if (isNaN(seconds)) {
+    const value =
+        Number(seconds);
+
+
+    if (Number.isNaN(value)) {
+
         return "N/A";
+
     }
 
-    const minutes = Math.floor(seconds / 60);
 
-    const secs = seconds % 60;
+    const minutes =
+        Math.floor(value / 60);
 
-    return `${minutes}:${String(secs).padStart(2, "0")}`;
+
+    const secs =
+        value % 60;
+
+
+    return (
+        `${minutes}:${String(secs).padStart(2, "0")}`
+    );
 
 }
 
 
-/* =========================
+/* =========================================================
    ESCAPE HTML
-========================= */
+========================================================= */
 
 function escapeHTML(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
+
     }
 
+
     return String(value)
+
         .replace(/&/g, "&amp;")
+
         .replace(/</g, "&lt;")
+
         .replace(/>/g, "&gt;")
+
         .replace(/"/g, "&quot;")
+
         .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================
+/* =========================================================
    ESCAPE ATTRIBUTE
-========================= */
+========================================================= */
 
 function escapeAttribute(value) {
 
@@ -650,33 +1034,52 @@ function escapeAttribute(value) {
 }
 
 
-/* =========================
+/* =========================================================
    LOAD DASHBOARD
-========================= */
+========================================================= */
 
-window.loadDashboard = async function() {
+window.loadDashboard =
+    async function() {
 
-    await loadUsers();
+        try {
 
-    await loadSubmissions();
+            await loadUsers();
 
-};
+            await loadSubmissions();
+
+        } catch (error) {
+
+            console.error(
+                "Dashboard error:",
+                error
+            );
+
+        }
+
+    };
 
 
-/* =========================
+/* =========================================================
    LOAD USERS
-========================= */
+========================================================= */
 
 async function loadUsers() {
 
     const loading =
-        document.getElementById("usersLoading");
+        document.getElementById(
+            "usersLoading"
+        );
 
     const table =
-        document.getElementById("usersTable");
+        document.getElementById(
+            "usersTable"
+        );
 
     const body =
-        document.getElementById("usersBody");
+        document.getElementById(
+            "usersBody"
+        );
+
 
     loading.style.display = "block";
 
@@ -684,101 +1087,190 @@ async function loadUsers() {
 
     body.innerHTML = "";
 
+
     try {
 
         const snapshot =
-            await getDocs(collection(db, "users"));
+            await getDocs(
+                collection(
+                    db,
+                    "users"
+                )
+            );
+
 
         const users = [];
 
-        snapshot.forEach(docSnap => {
 
-            users.push({
-                id: docSnap.id,
-                ...docSnap.data()
-            });
+        snapshot.forEach(
+            docSnap => {
 
-        });
+                users.push({
 
+                    id: docSnap.id,
 
-        users.sort((a, b) => {
+                    ...docSnap.data()
 
-            const roundA = Number(a.assignedRound || 999);
+                });
 
-            const roundB = Number(b.assignedRound || 999);
-
-            if (roundA !== roundB) {
-                return roundA - roundB;
             }
-
-            const questionA =
-                Number(a.assignedQuestion || 999);
-
-            const questionB =
-                Number(b.assignedQuestion || 999);
-
-            return questionA - questionB;
-
-        });
+        );
 
 
-        document.getElementById("totalUsers").textContent =
+        /* SORT BY ROUND + QUESTION */
+
+        users.sort(
+            (a, b) => {
+
+                const roundA =
+                    Number(
+                        a.assignedRound || 999
+                    );
+
+                const roundB =
+                    Number(
+                        b.assignedRound || 999
+                    );
+
+
+                if (roundA !== roundB) {
+
+                    return roundA - roundB;
+
+                }
+
+
+                const questionA =
+                    Number(
+                        a.assignedQuestion || 999
+                    );
+
+                const questionB =
+                    Number(
+                        b.assignedQuestion || 999
+                    );
+
+
+                return (
+                    questionA - questionB
+                );
+
+            }
+        );
+
+
+        /* STATISTICS */
+
+        document.getElementById(
+            "totalUsers"
+        ).textContent =
             users.length;
 
 
         const approved =
-            users.filter(user => user.approved === true).length;
+            users.filter(
+                user =>
+                    user.approved === true
+            ).length;
+
 
         const pending =
-            users.filter(user => user.approved !== true).length;
+            users.length - approved;
 
 
-        document.getElementById("approvedUsers").textContent =
+        document.getElementById(
+            "approvedUsers"
+        ).textContent =
             approved;
 
-        document.getElementById("pendingUsers").textContent =
+
+        document.getElementById(
+            "pendingUsers"
+        ).textContent =
             pending;
 
+
+        /* EMPTY */
 
         if (users.length === 0) {
 
             body.innerHTML = `
+
                 <tr>
-                    <td colspan="7" class="empty">
+
+                    <td
+                        colspan="7"
+                        class="empty">
+
                         No participants found.
+
                     </td>
+
                 </tr>
+
             `;
 
-        } else {
+        }
 
-            users.forEach(user => {
+
+        /* USERS */
+
+        users.forEach(
+            user => {
 
                 const question =
-                    Number(user.assignedQuestion || 0);
+                    Number(
+                        user.assignedQuestion || 0
+                    );
+
 
                 const round =
-                    Number(user.assignedRound || 0);
+                    Number(
+                        user.assignedRound || 0
+                    );
+
 
                 const challenge =
-                    getChallengeByQuestion(question);
+                    getChallengeByQuestion(
+                        question
+                    );
+
+
+                const isApproved =
+                    user.approved === true;
 
 
                 const status =
-                    user.approved === true
-                        ? `<span class="badge approved">Approved</span>`
-                        : `<span class="badge pending">Pending</span>`;
+                    isApproved
+
+                        ? `
+                            <span class="badge approved">
+                                Approved
+                            </span>
+                        `
+
+                        : `
+                            <span class="badge pending">
+                                Pending
+                            </span>
+                        `;
 
 
                 const approveButton =
-                    user.approved === true
+                    isApproved
+
                         ? ""
+
                         : `
+
                             <button
                                 class="action-btn approve-btn"
                                 onclick="approveUser('${escapeAttribute(user.id)}')">
+
                                 Approve
+
                             </button>
+
                         `;
 
 
@@ -787,49 +1279,82 @@ async function loadUsers() {
                     <tr>
 
                         <td>
-                            ${escapeHTML(user.fullName || "N/A")}
+                            ${escapeHTML(
+                                user.fullName ||
+                                user.name ||
+                                "N/A"
+                            )}
                         </td>
 
-                        <td>
-                            ${escapeHTML(user.email || "N/A")}
-                        </td>
 
                         <td>
-                            ${round || "N/A"}
+                            ${escapeHTML(
+                                user.email ||
+                                "N/A"
+                            )}
                         </td>
 
-                        <td>
-                            ${question || "N/A"}
-                        </td>
 
                         <td>
+                            ${
+                                round ||
+                                "N/A"
+                            }
+                        </td>
+
+
+                        <td>
+                            ${
+                                question ||
+                                "N/A"
+                            }
+                        </td>
+
+
+                        <td>
+
                             <div class="challenge-info">
+
                                 ${
                                     challenge
-                                        ? escapeHTML(challenge.title)
+
+                                        ? escapeHTML(
+                                            challenge.title
+                                        )
+
                                         : "N/A"
                                 }
+
                             </div>
+
                         </td>
+
 
                         <td>
                             ${status}
                         </td>
 
+
                         <td>
 
                             ${approveButton}
 
+
                             <button
                                 class="action-btn reject-btn"
                                 onclick="rejectUser('${escapeAttribute(user.id)}')">
+
                                 Reject
+
                             </button>
+
 
                             <button
                                 class="action-btn delete-btn"
                                 onclick="deleteUser('${escapeAttribute(user.id)}')">
+
                                 Delete
+
                             </button>
 
                         </td>
@@ -838,9 +1363,8 @@ async function loadUsers() {
 
                 `;
 
-            });
-
-        }
+            }
+        );
 
 
         loading.style.display = "none";
@@ -850,126 +1374,281 @@ async function loadUsers() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "LOAD USERS ERROR:",
+            error
+        );
+
 
         loading.textContent =
-            "Failed to load participants.";
+            "Failed to load participants: " +
+            error.message;
 
     }
 
 }
 
 
-/* =========================
+/* =========================================================
    APPROVE USER
-========================= */
+========================================================= */
 
-window.approveUser = async function(userId) {
+window.approveUser =
+    async function(userId) {
 
-    try {
+        try {
 
-        await updateDoc(
-            doc(db, "users", userId),
-            {
-                approved: true
+            console.log(
+                "Approving user:",
+                userId
+            );
+
+
+            if (!userId) {
+
+                throw new Error(
+                    "Participant ID is missing."
+                );
+
             }
-        );
-
-        showMessage("Participant approved.");
-
-        await loadUsers();
-
-    } catch (error) {
-
-        console.error(error);
-
-        showMessage("Failed to approve participant.");
-
-    }
-
-};
 
 
-/* =========================
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    userId
+                );
+
+
+            /*
+             * THIS UPDATES THE FIRESTORE USER DOCUMENT.
+             */
+
+            await updateDoc(
+                userRef,
+                {
+
+                    approved: true,
+
+                    approvalStatus:
+                        "approved",
+
+                    approvedAt:
+                        Timestamp.now()
+
+                }
+            );
+
+
+            console.log(
+                "Participant approved successfully."
+            );
+
+
+            showMessage(
+                "✅ Participant approved successfully!"
+            );
+
+
+            /*
+             * RELOAD TABLE
+             */
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            console.error(
+                "APPROVE ERROR:",
+                error
+            );
+
+
+            alert(
+                "Approval failed!\n\n" +
+                error.message
+            );
+
+
+            showMessage(
+                "❌ Approval failed: " +
+                error.message
+            );
+
+        }
+
+    };
+
+
+/* =========================================================
    REJECT USER
-========================= */
+========================================================= */
 
-window.rejectUser = async function(userId) {
+window.rejectUser =
+    async function(userId) {
 
-    try {
+        try {
 
-        await updateDoc(
-            doc(db, "users", userId),
-            {
-                approved: false
+            if (!userId) {
+
+                throw new Error(
+                    "Participant ID is missing."
+                );
+
             }
-        );
-
-        showMessage("Participant rejected.");
-
-        await loadUsers();
-
-    } catch (error) {
-
-        console.error(error);
-
-        showMessage("Failed to reject participant.");
-
-    }
-
-};
 
 
-/* =========================
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    userId
+                );
+
+
+            await updateDoc(
+                userRef,
+                {
+
+                    approved: false,
+
+                    approvalStatus:
+                        "rejected",
+
+                    rejectedAt:
+                        Timestamp.now()
+
+                }
+            );
+
+
+            showMessage(
+                "Participant rejected."
+            );
+
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            console.error(
+                "REJECT ERROR:",
+                error
+            );
+
+
+            alert(
+                "Rejection failed!\n\n" +
+                error.message
+            );
+
+
+            showMessage(
+                "❌ Rejection failed: " +
+                error.message
+            );
+
+        }
+
+    };
+
+
+/* =========================================================
    DELETE USER
-========================= */
+========================================================= */
 
-window.deleteUser = async function(userId) {
+window.deleteUser =
+    async function(userId) {
 
-    const confirmDelete =
-        confirm(
-            "Are you sure you want to delete this participant?"
-        );
-
-    if (!confirmDelete) {
-        return;
-    }
-
-    try {
-
-        await deleteDoc(
-            doc(db, "users", userId)
-        );
-
-        showMessage("Participant deleted.");
-
-        await loadUsers();
-
-    } catch (error) {
-
-        console.error(error);
-
-        showMessage("Failed to delete participant.");
-
-    }
-
-};
+        const confirmed =
+            confirm(
+                "Are you sure you want to delete this participant?"
+            );
 
 
-/* =========================
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        try {
+
+            if (!userId) {
+
+                throw new Error(
+                    "Participant ID is missing."
+                );
+
+            }
+
+
+            await deleteDoc(
+                doc(
+                    db,
+                    "users",
+                    userId
+                )
+            );
+
+
+            showMessage(
+                "Participant deleted."
+            );
+
+
+            await loadUsers();
+
+
+        } catch (error) {
+
+            console.error(
+                "DELETE ERROR:",
+                error
+            );
+
+
+            alert(
+                "Delete failed!\n\n" +
+                error.message
+            );
+
+
+            showMessage(
+                "❌ Delete failed: " +
+                error.message
+            );
+
+        }
+
+    };
+
+
+/* =========================================================
    LOAD SUBMISSIONS
-========================= */
+========================================================= */
 
 async function loadSubmissions() {
 
     const loading =
-        document.getElementById("submissionsLoading");
+        document.getElementById(
+            "submissionsLoading"
+        );
 
     const table =
-        document.getElementById("submissionsTable");
+        document.getElementById(
+            "submissionsTable"
+        );
 
     const body =
-        document.getElementById("submissionsBody");
+        document.getElementById(
+            "submissionsBody"
+        );
+
 
     loading.style.display = "block";
 
@@ -982,156 +1661,247 @@ async function loadSubmissions() {
 
         const submissionSnapshot =
             await getDocs(
-                collection(db, "submissions")
+                collection(
+                    db,
+                    "submissions"
+                )
             );
 
 
         const userSnapshot =
             await getDocs(
-                collection(db, "users")
+                collection(
+                    db,
+                    "users"
+                )
             );
 
 
-        const usersByEmail = new Map();
+        const usersByEmail =
+            new Map();
 
 
-        userSnapshot.forEach(docSnap => {
+        userSnapshot.forEach(
+            docSnap => {
 
-            const data = docSnap.data();
+                const data =
+                    docSnap.data();
 
-            if (data.email) {
 
-                usersByEmail.set(
-                    String(data.email).toLowerCase(),
-                    data
-                );
+                if (data.email) {
+
+                    usersByEmail.set(
+
+                        String(
+                            data.email
+                        ).toLowerCase(),
+
+                        data
+
+                    );
+
+                }
 
             }
-
-        });
+        );
 
 
         const submissions = [];
 
 
-        submissionSnapshot.forEach(docSnap => {
+        submissionSnapshot.forEach(
+            docSnap => {
 
-            const data = docSnap.data();
-
-
-            const email =
-                String(data.email || "").toLowerCase();
+                const data =
+                    docSnap.data();
 
 
-            const user =
-                usersByEmail.get(email) || {};
+                const email =
+                    String(
+                        data.email || ""
+                    ).toLowerCase();
 
 
-            const question =
-                Number(
-                    data.questionNumber ||
-                    data.challengeId ||
-                    user.assignedQuestion ||
-                    0
-                );
+                const user =
+                    usersByEmail.get(
+                        email
+                    ) || {};
 
 
-            const round =
-                Number(
-                    data.round ||
-                    user.assignedRound ||
-                    0
-                );
+                const question =
+                    Number(
+
+                        data.questionNumber ||
+
+                        data.challengeId ||
+
+                        user.assignedQuestion ||
+
+                        0
+
+                    );
 
 
-            const challenge =
-                getChallengeByQuestion(question);
+                const round =
+                    Number(
+
+                        data.round ||
+
+                        user.assignedRound ||
+
+                        0
+
+                    );
 
 
-            submissions.push({
-
-                id: docSnap.id,
-
-                ...data,
-
-                round,
-
-                questionNumber: question,
-
-                challengeTitle:
-                    data.challengeTitle ||
-                    (challenge
-                        ? challenge.title
-                        : "Unknown Challenge"),
-
-                challengeDescription:
-                    data.challengeDescription ||
-                    (challenge
-                        ? challenge.description
-                        : "")
-
-            });
-
-        });
+                const challenge =
+                    getChallengeByQuestion(
+                        question
+                    );
 
 
-        submissions.sort((a, b) => {
+                submissions.push({
 
-            const roundA = Number(a.round || 999);
+                    id:
+                        docSnap.id,
 
-            const roundB = Number(b.round || 999);
+                    ...data,
 
-            if (roundA !== roundB) {
-                return roundA - roundB;
+                    round,
+
+                    questionNumber:
+                        question,
+
+                    challengeTitle:
+
+                        data.challengeTitle ||
+
+                        (
+                            challenge
+                                ? challenge.title
+                                : "Unknown Challenge"
+                        ),
+
+                    challengeDescription:
+
+                        data.challengeDescription ||
+
+                        (
+                            challenge
+                                ? challenge.description
+                                : ""
+                        )
+
+                });
+
             }
-
-            const questionA =
-                Number(a.questionNumber || 999);
-
-            const questionB =
-                Number(b.questionNumber || 999);
-
-            return questionA - questionB;
-
-        });
+        );
 
 
-        document.getElementById("totalSubmissions").textContent =
+        submissions.sort(
+            (a, b) => {
+
+                const roundA =
+                    Number(
+                        a.round || 999
+                    );
+
+                const roundB =
+                    Number(
+                        b.round || 999
+                    );
+
+
+                if (
+                    roundA !== roundB
+                ) {
+
+                    return (
+                        roundA - roundB
+                    );
+
+                }
+
+
+                return (
+
+                    Number(
+                        a.questionNumber ||
+                        999
+                    )
+
+                    -
+
+                    Number(
+                        b.questionNumber ||
+                        999
+                    )
+
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "totalSubmissions"
+        ).textContent =
             submissions.length;
 
 
-        if (submissions.length === 0) {
+        if (
+            submissions.length === 0
+        ) {
 
             body.innerHTML = `
+
                 <tr>
-                    <td colspan="9" class="empty">
+
+                    <td
+                        colspan="9"
+                        class="empty">
+
                         No submitted designs yet.
+
                     </td>
+
                 </tr>
+
             `;
 
-        } else {
+        }
 
-            submissions.forEach(submission => {
+
+        submissions.forEach(
+            submission => {
 
                 const image =
                     submission.image ||
+
                     submission.imageUrl ||
+
                     submission.designUrl ||
+
                     "";
 
 
                 const imageButton =
                     image
+
                         ? `
+
                             <a
                                 class="image-link"
                                 href="${escapeAttribute(image)}"
                                 target="_blank"
                                 rel="noopener noreferrer">
+
                                 View Design
+
                             </a>
+
                         `
+
                         : "N/A";
 
 
@@ -1140,72 +1910,112 @@ async function loadSubmissions() {
                     <tr>
 
                         <td>
+
                             ${escapeHTML(
-                                submission.participant || "N/A"
+                                submission.participant ||
+                                "N/A"
                             )}
+
                         </td>
 
+
                         <td>
+
                             ${escapeHTML(
-                                submission.email || "N/A"
+                                submission.email ||
+                                "N/A"
                             )}
+
                         </td>
 
-                        <td>
-                            ${submission.round || "N/A"}
-                        </td>
 
                         <td>
-                            ${submission.questionNumber || "N/A"}
+
+                            ${
+                                submission.round ||
+                                "N/A"
+                            }
+
                         </td>
+
+
+                        <td>
+
+                            ${
+                                submission.questionNumber ||
+                                "N/A"
+                            }
+
+                        </td>
+
 
                         <td>
 
                             <div>
+
                                 <strong>
+
                                     ${escapeHTML(
                                         submission.challengeTitle
                                     )}
+
                                 </strong>
+
                             </div>
 
-                            <div class="challenge-info">
+
+                            <div
+                                class="challenge-info">
+
                                 ${escapeHTML(
                                     submission.challengeDescription
                                 )}
+
                             </div>
 
                         </td>
 
-                        <td>
-                            ${escapeHTML(
-                                submission.prompt || "N/A"
-                            )}
-                        </td>
 
                         <td>
+
+                            ${escapeHTML(
+                                submission.prompt ||
+                                "N/A"
+                            )}
+
+                        </td>
+
+
+                        <td>
+
                             ${formatTime(
                                 submission.timeUsed
                             )}
+
                         </td>
 
+
                         <td>
+
                             ${formatDate(
                                 submission.submittedAt
                             )}
+
                         </td>
 
+
                         <td>
+
                             ${imageButton}
+
                         </td>
 
                     </tr>
 
                 `;
 
-            });
-
-        }
+            }
+        );
 
 
         loading.style.display = "none";
@@ -1215,486 +2025,779 @@ async function loadSubmissions() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "LOAD SUBMISSIONS ERROR:",
+            error
+        );
+
 
         loading.textContent =
-            "Failed to load submissions.";
+            "Failed to load submissions: " +
+            error.message;
 
     }
 
 }
 
 
-/* =========================
-   EXPORT WORD DOCUMENT
-========================= */
+/* =========================================================
+   EXPORT WORD
+========================================================= */
 
-window.exportSubmissionsToWord = async function() {
+window.exportSubmissionsToWord =
+    async function() {
 
-    try {
+        try {
 
-        showMessage("Preparing Word document...");
-
-
-        const submissionSnapshot =
-            await getDocs(
-                collection(db, "submissions")
+            showMessage(
+                "Preparing Word document..."
             );
 
 
-        const userSnapshot =
-            await getDocs(
-                collection(db, "users")
-            );
-
-
-        const usersByEmail = new Map();
-
-
-        userSnapshot.forEach(docSnap => {
-
-            const data = docSnap.data();
-
-            if (data.email) {
-
-                usersByEmail.set(
-                    String(data.email).toLowerCase(),
-                    data
-                );
-
-            }
-
-        });
-
-
-        const submissions = [];
-
-
-        submissionSnapshot.forEach(docSnap => {
-
-            const data = docSnap.data();
-
-
-            const email =
-                String(data.email || "").toLowerCase();
-
-
-            const user =
-                usersByEmail.get(email) || {};
-
-
-            const question =
-                Number(
-                    data.questionNumber ||
-                    data.challengeId ||
-                    user.assignedQuestion ||
-                    0
+            const submissionSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "submissions"
+                    )
                 );
 
 
-            const round =
-                Number(
-                    data.round ||
-                    user.assignedRound ||
-                    0
+            const userSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "users"
+                    )
                 );
 
 
-            const challenge =
-                getChallengeByQuestion(question);
+            const usersByEmail =
+                new Map();
 
 
-            submissions.push({
+            userSnapshot.forEach(
+                docSnap => {
 
-                participant:
-                    data.participant ||
-                    user.fullName ||
-                    "N/A",
+                    const data =
+                        docSnap.data();
 
-                email:
-                    data.email ||
-                    user.email ||
-                    "N/A",
 
-                round,
+                    if (data.email) {
 
-                questionNumber:
-                    question,
+                        usersByEmail.set(
 
-                challengeTitle:
-                    data.challengeTitle ||
-                    (challenge
-                        ? challenge.title
-                        : "Unknown Challenge"),
+                            String(
+                                data.email
+                            ).toLowerCase(),
 
-                challengeDescription:
-                    data.challengeDescription ||
-                    (challenge
-                        ? challenge.description
-                        : ""),
+                            data
 
-                prompt:
-                    data.prompt ||
-                    "N/A",
+                        );
 
-                timeUsed:
-                    data.timeUsed,
+                    }
 
-                submittedAt:
-                    data.submittedAt,
-
-                image:
-                    data.image ||
-                    data.imageUrl ||
-                    data.designUrl ||
-                    ""
-
-            });
-
-        });
-
-
-        submissions.sort((a, b) => {
-
-            const roundA =
-                Number(a.round || 999);
-
-            const roundB =
-                Number(b.round || 999);
-
-
-            if (roundA !== roundB) {
-
-                return roundA - roundB;
-
-            }
-
-
-            return (
-                Number(a.questionNumber || 999) -
-                Number(b.questionNumber || 999)
-            );
-
-        });
-
-
-        if (submissions.length === 0) {
-
-            showMessage("No submissions to export.");
-
-            return;
-
-        }
-
-
-        let rows = "";
-
-
-        submissions.forEach((submission, index) => {
-
-            const imageHTML =
-                submission.image
-                    ? `
-                        <p>
-                            <b>Submitted Design:</b><br>
-                            <a href="${escapeAttribute(
-                                submission.image
-                            )}">
-                                Open Submitted Design
-                            </a>
-                        </p>
-                    `
-                    : `
-                        <p>
-                            <b>Submitted Design:</b>
-                            Not available
-                        </p>
-                    `;
-
-
-            rows += `
-
-                <div class="submission">
-
-                    <h2>
-                        Submission ${index + 1}
-                    </h2>
-
-                    <table>
-
-                        <tr>
-                            <td><b>Participant</b></td>
-                            <td>
-                                ${escapeHTML(
-                                    submission.participant
-                                )}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Email</b></td>
-                            <td>
-                                ${escapeHTML(
-                                    submission.email
-                                )}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Round</b></td>
-                            <td>
-                                ${submission.round || "N/A"}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Question</b></td>
-                            <td>
-                                ${
-                                    submission.questionNumber ||
-                                    "N/A"
-                                }
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Challenge</b></td>
-                            <td>
-                                ${escapeHTML(
-                                    submission.challengeTitle
-                                )}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Challenge Description</b></td>
-                            <td>
-                                ${escapeHTML(
-                                    submission.challengeDescription
-                                )}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Prompt</b></td>
-                            <td>
-                                ${escapeHTML(
-                                    submission.prompt
-                                )}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Time Used</b></td>
-                            <td>
-                                ${formatTime(
-                                    submission.timeUsed
-                                )}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Submitted At</b></td>
-                            <td>
-                                ${formatDate(
-                                    submission.submittedAt
-                                )}
-                            </td>
-                        </tr>
-
-                    </table>
-
-                    ${imageHTML}
-
-                </div>
-
-            `;
-
-        });
-
-
-        const documentHTML = `
-
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>Prompt Forge Submitted Designs</title>
-
-<style>
-
-body {
-    font-family: Arial, sans-serif;
-    padding: 30px;
-    color: #111827;
-}
-
-h1 {
-    text-align: center;
-    color: #4c1d95;
-    margin-bottom: 30px;
-}
-
-h2 {
-    color: #312e81;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 8px;
-}
-
-.submission {
-    margin-bottom: 40px;
-    page-break-inside: avoid;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-td {
-    border: 1px solid #d1d5db;
-    padding: 10px;
-    vertical-align: top;
-}
-
-td:first-child {
-    width: 220px;
-    background: #f3f4f6;
-}
-
-a {
-    color: #2563eb;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 40px;
-    color: #6b7280;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<h1>
-AI PROMPT BATTLE 2026<br>
-Submitted Designs
-</h1>
-
-<p>
-<b>Total Submissions:</b>
-${submissions.length}
-</p>
-
-${rows}
-
-<div class="footer">
-Generated by Prompt Forge Admin Dashboard
-</div>
-
-</body>
-
-</html>
-
-`;
-
-
-        const blob =
-            new Blob(
-                [
-                    "\ufeff",
-                    documentHTML
-                ],
-                {
-                    type:
-                        "application/msword"
                 }
             );
 
 
-        const url =
-            URL.createObjectURL(blob);
+            const submissions = [];
 
 
-        const link =
-            document.createElement("a");
+            submissionSnapshot.forEach(
+                docSnap => {
+
+                    const data =
+                        docSnap.data();
 
 
-        link.href = url;
-
-        link.download =
-            "Prompt_Forge_Submitted_Designs.doc";
-
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        document.body.removeChild(link);
+                    const email =
+                        String(
+                            data.email || ""
+                        ).toLowerCase();
 
 
-        URL.revokeObjectURL(url);
+                    const user =
+                        usersByEmail.get(
+                            email
+                        ) || {};
 
 
-        showMessage(
-            "Word document exported successfully."
-        );
+                    const question =
+                        Number(
+
+                            data.questionNumber ||
+
+                            data.challengeId ||
+
+                            user.assignedQuestion ||
+
+                            0
+
+                        );
 
 
-    } catch (error) {
+                    const round =
+                        Number(
 
-        console.error(
-            "Word export error:",
-            error
-        );
+                            data.round ||
 
-        showMessage(
-            "Failed to export Word document."
-        );
+                            user.assignedRound ||
 
-    }
+                            0
 
-};
+                        );
 
 
-/* =========================
+                    const challenge =
+                        getChallengeByQuestion(
+                            question
+                        );
+
+
+                    submissions.push({
+
+                        participant:
+
+                            data.participant ||
+
+                            user.fullName ||
+
+                            "N/A",
+
+                        email:
+
+                            data.email ||
+
+                            user.email ||
+
+                            "N/A",
+
+                        round,
+
+                        questionNumber:
+                            question,
+
+                        challengeTitle:
+
+                            data.challengeTitle ||
+
+                            (
+                                challenge
+                                    ? challenge.title
+                                    : "Unknown Challenge"
+                            ),
+
+                        challengeDescription:
+
+                            data.challengeDescription ||
+
+                            (
+                                challenge
+                                    ? challenge.description
+                                    : ""
+                            ),
+
+                        prompt:
+
+                            data.prompt ||
+
+                            "N/A",
+
+                        timeUsed:
+                            data.timeUsed,
+
+                        submittedAt:
+                            data.submittedAt,
+
+                        image:
+
+                            data.image ||
+
+                            data.imageUrl ||
+
+                            data.designUrl ||
+
+                            ""
+
+                    });
+
+                }
+            );
+
+
+            submissions.sort(
+                (a, b) => {
+
+                    const roundA =
+                        Number(
+                            a.round || 999
+                        );
+
+                    const roundB =
+                        Number(
+                            b.round || 999
+                        );
+
+
+                    if (
+                        roundA !== roundB
+                    ) {
+
+                        return (
+                            roundA - roundB
+                        );
+
+                    }
+
+
+                    return (
+
+                        Number(
+                            a.questionNumber ||
+                            999
+                        )
+
+                        -
+
+                        Number(
+                            b.questionNumber ||
+                            999
+                        )
+
+                    );
+
+                }
+            );
+
+
+            if (
+                submissions.length === 0
+            ) {
+
+                showMessage(
+                    "No submissions to export."
+                );
+
+                return;
+
+            }
+
+
+            let rows = "";
+
+
+            submissions.forEach(
+                (submission, index) => {
+
+                    const imageHTML =
+
+                        submission.image
+
+                            ? `
+
+                                <p>
+
+                                    <b>
+                                        Submitted Design:
+                                    </b>
+
+                                    <br>
+
+                                    <a
+                                        href="${escapeAttribute(
+                                            submission.image
+                                        )}">
+
+                                        Open Submitted Design
+
+                                    </a>
+
+                                </p>
+
+                            `
+
+                            : `
+
+                                <p>
+
+                                    <b>
+                                        Submitted Design:
+                                    </b>
+
+                                    Not available
+
+                                </p>
+
+                            `;
+
+
+                    rows += `
+
+                        <div class="submission">
+
+                            <h2>
+                                Submission ${index + 1}
+                            </h2>
+
+
+                            <table>
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Participant
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            submission.participant
+                                        )}
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Email
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            submission.email
+                                        )}
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Round
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${
+                                            submission.round ||
+                                            "N/A"
+                                        }
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Question
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${
+                                            submission.questionNumber ||
+                                            "N/A"
+                                        }
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Challenge
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            submission.challengeTitle
+                                        )}
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Challenge Description
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            submission.challengeDescription
+                                        )}
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Prompt
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            submission.prompt
+                                        )}
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Time Used
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${formatTime(
+                                            submission.timeUsed
+                                        )}
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        <b>
+                                            Submitted At
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        ${formatDate(
+                                            submission.submittedAt
+                                        )}
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+                            ${imageHTML}
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            const documentHTML = `
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <title>
+                        Prompt Forge Submitted Designs
+                    </title>
+
+
+                    <style>
+
+                        body {
+
+                            font-family:
+                                Arial,
+                                sans-serif;
+
+                            padding: 30px;
+
+                            color: #111827;
+
+                        }
+
+
+                        h1 {
+
+                            text-align: center;
+
+                            color: #4c1d95;
+
+                            margin-bottom: 30px;
+
+                        }
+
+
+                        h2 {
+
+                            color: #312e81;
+
+                            border-bottom:
+                                2px solid #ddd;
+
+                            padding-bottom: 8px;
+
+                        }
+
+
+                        .submission {
+
+                            margin-bottom: 40px;
+
+                            page-break-inside:
+                                avoid;
+
+                        }
+
+
+                        table {
+
+                            width: 100%;
+
+                            border-collapse:
+                                collapse;
+
+                            margin-top: 15px;
+
+                        }
+
+
+                        td {
+
+                            border:
+                                1px solid #d1d5db;
+
+                            padding: 10px;
+
+                            vertical-align:
+                                top;
+
+                        }
+
+
+                        td:first-child {
+
+                            width: 220px;
+
+                            background:
+                                #f3f4f6;
+
+                        }
+
+
+                        a {
+
+                            color: #2563eb;
+
+                        }
+
+
+                        .footer {
+
+                            text-align: center;
+
+                            margin-top: 40px;
+
+                            color: #6b7280;
+
+                        }
+
+                    </style>
+
+                </head>
+
+
+                <body>
+
+
+                    <h1>
+
+                        AI PROMPT BATTLE 2026
+
+                        <br>
+
+                        Submitted Designs
+
+                    </h1>
+
+
+                    <p>
+
+                        <b>
+                            Total Submissions:
+                        </b>
+
+                        ${submissions.length}
+
+                    </p>
+
+
+                    ${rows}
+
+
+                    <div class="footer">
+
+                        Generated by
+                        Prompt Forge Admin Dashboard
+
+                    </div>
+
+
+                </body>
+
+                </html>
+
+            `;
+
+
+            const blob =
+                new Blob(
+
+                    [
+                        "\ufeff",
+                        documentHTML
+                    ],
+
+                    {
+                        type:
+                            "application/msword"
+                    }
+
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href = url;
+
+
+            link.download =
+                "Prompt_Forge_Submitted_Designs.doc";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            document.body.removeChild(
+                link
+            );
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+
+            showMessage(
+                "✅ Word document exported successfully!"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "WORD EXPORT ERROR:",
+                error
+            );
+
+
+            alert(
+                "Word export failed!\n\n" +
+                error.message
+            );
+
+
+            showMessage(
+                "❌ Word export failed."
+            );
+
+        }
+
+    };
+
+
+/* =========================================================
    ADMIN LOGOUT
-========================= */
+========================================================= */
 
-window.adminLogout = async function() {
+window.adminLogout =
+    async function() {
 
-    try {
+        try {
 
-        await signOut(auth);
+            await signOut(auth);
 
-        window.location.href =
-            "admin-login.html";
+            window.location.href =
+                "admin-login.html";
 
-    } catch (error) {
+        } catch (error) {
 
-        console.error(error);
-
-        showMessage("Logout failed.");
-
-    }
-
-};
+            console.error(
+                "LOGOUT ERROR:",
+                error
+            );
 
 
-/* =========================
-   AUTH CHECK
-========================= */
+            showMessage(
+                "Logout failed."
+            );
+
+        }
+
+    };
+
+
+/* =========================================================
+   ADMIN AUTH CHECK
+========================================================= */
 
 onAuthStateChanged(
     auth,
-    async (user) => {
+    async user => {
+
+        console.log(
+            "Auth state:",
+            user
+        );
+
 
         if (!user) {
 
@@ -1707,11 +2810,19 @@ onAuthStateChanged(
 
 
         if (
+            !user.email ||
+
             user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
         ) {
 
+            alert(
+                "You are not authorized to access the Admin Dashboard."
+            );
+
+
             await signOut(auth);
+
 
             window.location.href =
                 "admin-login.html";
@@ -1719,6 +2830,11 @@ onAuthStateChanged(
             return;
 
         }
+
+
+        console.log(
+            "Admin authenticated:"
+        );
 
 
         await loadDashboard();
@@ -1730,4 +2846,4 @@ onAuthStateChanged(
 
 </body>
 </html>
-
+```
