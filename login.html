@@ -169,7 +169,8 @@ body::after {
             transparent 1px
         );
 
-    background-size: 40px 40px;
+    background-size:
+        40px 40px;
 
     pointer-events: none;
 
@@ -245,7 +246,7 @@ body::after {
 }
 
 /* =========================================
-   LEFT INFORMATION SECTION
+   LEFT INFORMATION
 ========================================= */
 
 .login-info {
@@ -827,7 +828,6 @@ body::after {
 @media (max-width: 950px) {
 
     body {
-
         padding: 20px;
     }
 
@@ -840,19 +840,16 @@ body::after {
     }
 
     .login-info {
-
         padding:
             50px 40px;
     }
 
     .login-panel {
-
         padding:
             40px;
     }
 
     .login-info h1 {
-
         font-size: 48px;
     }
 }
@@ -898,12 +895,10 @@ body::after {
     }
 
     .logo-mark {
-
         margin-bottom: 18px;
     }
 
     .event-badge {
-
         margin-bottom: 16px;
     }
 
@@ -944,7 +939,6 @@ body::after {
     }
 
     .login-card-header h2 {
-
         font-size: 28px;
     }
 }
@@ -956,29 +950,24 @@ body::after {
 @media (max-width: 450px) {
 
     body {
-
         padding: 12px;
     }
 
     .login-wrapper {
-
         border-radius: 18px;
     }
 
     .login-info {
-
         padding:
             30px 22px 25px;
     }
 
     .login-panel {
-
         padding:
             30px 22px 35px;
     }
 
     .login-info h1 {
-
         font-size: 38px;
     }
 
@@ -991,7 +980,6 @@ body::after {
     }
 
     .feature {
-
         font-size: 13px;
     }
 
@@ -1003,7 +991,6 @@ body::after {
     }
 
     .login-card-header h2 {
-
         font-size: 25px;
     }
 }
@@ -1014,23 +1001,9 @@ body::after {
 
 <body>
 
-<!-- =========================================
-     BACKGROUND
-========================================= -->
-
 <div class="background-grid"></div>
 
-
-<!-- =========================================
-     MAIN LOGIN WRAPPER
-========================================= -->
-
 <div class="login-wrapper">
-
-
-    <!-- =====================================
-         LEFT INFORMATION
-    ====================================== -->
 
     <section class="login-info">
 
@@ -1095,11 +1068,6 @@ body::after {
 
     </section>
 
-
-    <!-- =====================================
-         RIGHT LOGIN
-    ====================================== -->
-
     <section class="login-panel">
 
         <div class="login-card">
@@ -1116,9 +1084,6 @@ body::after {
                 </p>
 
             </div>
-
-
-            <!-- EMAIL -->
 
             <div class="input-group">
 
@@ -1144,18 +1109,12 @@ body::after {
 
             </div>
 
-
-            <!-- LOGIN -->
-
             <button
                 id="loginBtn"
                 type="button"
             >
                 Enter Competition →
             </button>
-
-
-            <!-- REGISTER -->
 
             <p class="register-text">
 
@@ -1167,9 +1126,6 @@ body::after {
 
             </p>
 
-
-            <!-- SECURITY -->
-
             <div class="security-note">
 
                 🔒 Your email must be registered
@@ -1177,9 +1133,6 @@ body::after {
                 administrator.
 
             </div>
-
-
-            <!-- FOOTER -->
 
             <div class="footer-text">
 
@@ -1193,10 +1146,6 @@ body::after {
 
 </div>
 
-
-<!-- =========================================
-     FIREBASE LOGIN SCRIPT
-========================================= -->
 
 <script type="module">
 
@@ -1253,25 +1202,26 @@ async function assignQuestion(userDocId) {
             "promptForge"
         );
 
+
     return await runTransaction(
         db,
         async (transaction) => {
 
-            /*
-             * READ USER
-             */
 
             const userSnapshot =
                 await transaction.get(
                     userRef
                 );
 
+
             if (!userSnapshot.exists()) {
 
                 throw new Error(
                     "Participant account not found."
                 );
+
             }
+
 
             const user =
                 userSnapshot.data();
@@ -1279,10 +1229,6 @@ async function assignQuestion(userDocId) {
 
             /*
              * EXISTING ASSIGNMENT
-             *
-             * If participant already has
-             * a question, NEVER allocate
-             * another question.
              */
 
             if (
@@ -1302,9 +1248,16 @@ async function assignQuestion(userDocId) {
                         user.assignedRound
                     );
 
+
                 if (
+                    Number.isInteger(
+                        existingQuestion
+                    ) &&
                     existingQuestion >= 1 &&
                     existingQuestion <= TOTAL_QUESTIONS &&
+                    Number.isInteger(
+                        existingRound
+                    ) &&
                     existingRound >= 1
                 ) {
 
@@ -1324,7 +1277,7 @@ async function assignQuestion(userDocId) {
 
 
             /*
-             * READ GLOBAL EVENT STATE
+             * GLOBAL EVENT STATE
              */
 
             const eventSnapshot =
@@ -1332,7 +1285,9 @@ async function assignQuestion(userDocId) {
                     eventRef
                 );
 
+
             let nextSlot = 1;
+
 
             if (
                 eventSnapshot.exists()
@@ -1341,6 +1296,7 @@ async function assignQuestion(userDocId) {
                 const eventData =
                     eventSnapshot.data();
 
+
                 nextSlot =
                     Number(
                         eventData.nextSlot || 1
@@ -1348,10 +1304,6 @@ async function assignQuestion(userDocId) {
 
             }
 
-
-            /*
-             * SAFETY CHECK
-             */
 
             if (
                 !Number.isInteger(nextSlot) ||
@@ -1365,12 +1317,6 @@ async function assignQuestion(userDocId) {
 
             /*
              * QUESTION
-             *
-             * Slot 1  -> Q1
-             * Slot 2  -> Q2
-             * ...
-             * Slot 15 -> Q15
-             * Slot 16 -> Q1 Round 2
              */
 
             const question =
@@ -1394,7 +1340,7 @@ async function assignQuestion(userDocId) {
 
 
             /*
-             * UPDATE GLOBAL SLOT
+             * INCREMENT GLOBAL SLOT
              */
 
             transaction.set(
@@ -1419,7 +1365,7 @@ async function assignQuestion(userDocId) {
 
 
             /*
-             * SAVE PARTICIPANT ASSIGNMENT
+             * SAVE USER ASSIGNMENT
              */
 
             transaction.update(
@@ -1442,10 +1388,6 @@ async function assignQuestion(userDocId) {
             );
 
 
-            /*
-             * RETURN ASSIGNMENT
-             */
-
             return {
 
                 question:
@@ -1463,10 +1405,12 @@ async function assignQuestion(userDocId) {
 
 
 /* =========================================
-   FIND PARTICIPANT
+   FIND USER
 ========================================= */
 
-async function findParticipant(email) {
+async function findParticipant(
+    email
+) {
 
     const usersRef =
         collection(
@@ -1476,21 +1420,17 @@ async function findParticipant(email) {
 
 
     /*
-     * FIRST:
-     * Exact lowercase email query.
+     * First exact search.
      */
 
     const exactQuery =
         query(
-
             usersRef,
-
             where(
                 "email",
                 "==",
                 email
             )
-
         );
 
 
@@ -1510,59 +1450,10 @@ async function findParticipant(email) {
 
 
     /*
-     * SECOND:
-     * Try original entered email.
+     * Fallback.
      *
-     * This helps if the database contains
-     * uppercase characters.
-     */
-
-    const originalEmail =
-        emailInput.value.trim();
-
-
-    if (
-        originalEmail &&
-        originalEmail !== email
-    ) {
-
-        const originalQuery =
-            query(
-
-                usersRef,
-
-                where(
-                    "email",
-                    "==",
-                    originalEmail
-                )
-
-            );
-
-
-        const originalSnapshot =
-            await getDocs(
-                originalQuery
-            );
-
-
-        if (
-            !originalSnapshot.empty
-        ) {
-
-            return originalSnapshot.docs[0];
-
-        }
-
-    }
-
-
-    /*
-     * THIRD:
-     * Fallback scan.
-     *
-     * This handles email capitalization
-     * differences.
+     * This handles capitalization
+     * differences in stored email.
      */
 
     const allUsersSnapshot =
@@ -1578,6 +1469,7 @@ async function findParticipant(email) {
 
         const data =
             userDoc.data();
+
 
         const storedEmail =
             String(
@@ -1604,39 +1496,6 @@ async function findParticipant(email) {
 
 
 /* =========================================
-   CLEAR OLD SESSION
-========================================= */
-
-function clearBattleSession() {
-
-    localStorage.removeItem(
-        "currentUser"
-    );
-
-    localStorage.removeItem(
-        "currentEmail"
-    );
-
-    localStorage.removeItem(
-        "assignedQuestion"
-    );
-
-    localStorage.removeItem(
-        "assignedRound"
-    );
-
-    localStorage.removeItem(
-        "timerStart"
-    );
-
-    localStorage.removeItem(
-        "submissionCompleted"
-    );
-
-}
-
-
-/* =========================================
    LOGIN
 ========================================= */
 
@@ -1647,10 +1506,6 @@ async function loginParticipant() {
             .trim()
             .toLowerCase();
 
-
-    /*
-     * EMPTY EMAIL
-     */
 
     if (!email) {
 
@@ -1664,10 +1519,6 @@ async function loginParticipant() {
 
     }
 
-
-    /*
-     * BASIC EMAIL VALIDATION
-     */
 
     if (
         !email.includes("@") ||
@@ -1685,11 +1536,9 @@ async function loginParticipant() {
     }
 
 
-    /*
-     * DISABLE BUTTON
-     */
+    loginBtn.disabled =
+        true;
 
-    loginBtn.disabled = true;
 
     loginBtn.textContent =
         "Checking...";
@@ -1697,11 +1546,11 @@ async function loginParticipant() {
 
     try {
 
+
         /*
-         * Clear only the old temporary
-         * session data.
+         * Clear temporary browser session.
          *
-         * Firestore assignment is NOT deleted.
+         * DO NOT clear Firestore assignment.
          */
 
         localStorage.removeItem(
@@ -1710,6 +1559,10 @@ async function loginParticipant() {
 
         localStorage.removeItem(
             "currentEmail"
+        );
+
+        localStorage.removeItem(
+            "currentUserId"
         );
 
         localStorage.removeItem(
@@ -1730,7 +1583,7 @@ async function loginParticipant() {
 
 
         /*
-         * FIND USER
+         * FIND PARTICIPANT
          */
 
         loginBtn.textContent =
@@ -1743,17 +1596,14 @@ async function loginParticipant() {
             );
 
 
-        /*
-         * USER NOT FOUND
-         */
-
         if (!userDoc) {
 
             alert(
                 "This email is not registered. Please register first."
             );
 
-            loginBtn.disabled = false;
+            loginBtn.disabled =
+                false;
 
             loginBtn.textContent =
                 "Enter Competition →";
@@ -1772,27 +1622,22 @@ async function loginParticipant() {
 
 
         /*
-         * APPROVAL CHECK
-         *
-         * Main field:
-         * emailApproved === true
-         *
-         * Also accept approved === true
-         * when older registrations exist.
+         * APPROVAL
          */
 
-        const isApproved =
+        const approved =
             userData.emailApproved === true ||
             userData.approved === true;
 
 
-        if (!isApproved) {
+        if (!approved) {
 
             alert(
-                "Your registration has not been approved by the administrator yet."
+                "Your registration has not been approved by the competition administrator yet."
             );
 
-            loginBtn.disabled = false;
+            loginBtn.disabled =
+                false;
 
             loginBtn.textContent =
                 "Enter Competition →";
@@ -1803,13 +1648,14 @@ async function loginParticipant() {
 
 
         /*
-         * REJECTED USERS
+         * REJECTED
          */
 
         if (
             String(
                 userData.approvalStatus || ""
-            ).toLowerCase()
+            )
+            .toLowerCase()
             ===
             "rejected"
         ) {
@@ -1818,7 +1664,8 @@ async function loginParticipant() {
                 "Your registration has been rejected by the administrator."
             );
 
-            loginBtn.disabled = false;
+            loginBtn.disabled =
+                false;
 
             loginBtn.textContent =
                 "Enter Competition →";
@@ -1829,7 +1676,7 @@ async function loginParticipant() {
 
 
         /*
-         * ASSIGN CHALLENGE
+         * ASSIGN
          */
 
         loginBtn.textContent =
@@ -1842,139 +1689,136 @@ async function loginParticipant() {
             );
 
 
-        /*
-         * VERIFY ASSIGNMENT
-         */
-
-        const assignedQuestion =
+        const question =
             Number(
                 assignment.question
             );
 
-        const assignedRound =
+
+        const round =
             Number(
                 assignment.round
             );
 
 
         if (
-            !Number.isInteger(
-                assignedQuestion
-            ) ||
-            assignedQuestion < 1 ||
-            assignedQuestion > TOTAL_QUESTIONS
+            !Number.isInteger(question) ||
+            question < 1 ||
+            question > TOTAL_QUESTIONS
         ) {
 
             throw new Error(
-                "Invalid challenge number received from Firebase."
+                "Invalid question assignment."
             );
 
         }
 
 
         if (
-            !Number.isInteger(
-                assignedRound
-            ) ||
-            assignedRound < 1
+            !Number.isInteger(round) ||
+            round < 1
         ) {
 
             throw new Error(
-                "Invalid competition round received from Firebase."
+                "Invalid round assignment."
             );
 
         }
 
 
         /*
-         * =================================
-         * SAVE SESSION
-         * =================================
+         * =====================================
+         * SAVE PARTICIPANT FIRESTORE ID
+         * =====================================
+         *
+         * THIS IS THE IMPORTANT FIX.
          */
 
-        const participantName =
+        localStorage.setItem(
+            "currentUserId",
+            userDoc.id
+        );
+
+
+        /*
+         * PARTICIPANT NAME
+         */
+
+        localStorage.setItem(
+
+            "currentUser",
+
             String(
                 userData.fullName ||
                 userData.name ||
                 "Participant"
-            );
+            )
+
+        );
 
 
-        const participantEmail =
+        /*
+         * EMAIL
+         */
+
+        localStorage.setItem(
+
+            "currentEmail",
+
             String(
                 userData.email ||
                 email
             )
             .trim()
-            .toLowerCase();
+            .toLowerCase()
 
-
-        /*
-         * Participant name
-         */
-
-        localStorage.setItem(
-            "currentUser",
-            participantName
         );
 
 
         /*
-         * Participant email
+         * QUESTION
          */
 
         localStorage.setItem(
-            "currentEmail",
-            participantEmail
-        );
 
-
-        /*
-         * Assigned question
-         */
-
-        localStorage.setItem(
             "assignedQuestion",
+
             String(
-                assignedQuestion
+                question
             )
+
         );
 
 
         /*
-         * Assigned round
+         * ROUND
          */
 
         localStorage.setItem(
+
             "assignedRound",
+
             String(
-                assignedRound
+                round
             )
+
         );
 
 
         /*
-         * Timer starts ONLY HERE.
-         *
-         * It does NOT start merely because
-         * battle.html loads.
+         * TIMER
          */
-
-        const timerStart =
-            Date.now();
-
 
         localStorage.setItem(
+
             "timerStart",
+
             String(
-                timerStart
+                Date.now()
             )
+
         );
 
-
-        /*
-         * New battle session
-         */
 
         localStorage.removeItem(
             "submissionCompleted"
@@ -1982,130 +1826,108 @@ async function loginParticipant() {
 
 
         /*
-         * =================================
-         * FINAL VERIFICATION
-         * =================================
-         *
-         * Make sure browser storage really
-         * contains the assignment before
-         * redirecting.
+         * VERIFY
          */
 
-        const savedQuestion =
+        if (
+            localStorage.getItem(
+                "currentUserId"
+            ) !== userDoc.id
+        ) {
+
+            throw new Error(
+                "Unable to save participant session."
+            );
+
+        }
+
+
+        if (
             localStorage.getItem(
                 "assignedQuestion"
+            ) !== String(question)
+        ) {
+
+            throw new Error(
+                "Unable to save question assignment."
             );
 
-        const savedRound =
+        }
+
+
+        if (
             localStorage.getItem(
                 "assignedRound"
+            ) !== String(round)
+        ) {
+
+            throw new Error(
+                "Unable to save round assignment."
             );
 
-        const savedEmail =
-            localStorage.getItem(
-                "currentEmail"
-            );
+        }
 
-        const savedTimer =
-            localStorage.getItem(
+
+        if (
+            !localStorage.getItem(
                 "timerStart"
-            );
-
-
-        if (
-            savedQuestion !==
-            String(assignedQuestion)
+            )
         ) {
 
             throw new Error(
-                "Unable to save the assigned question on this computer."
-            );
-
-        }
-
-
-        if (
-            savedRound !==
-            String(assignedRound)
-        ) {
-
-            throw new Error(
-                "Unable to save the assigned round on this computer."
-            );
-
-        }
-
-
-        if (
-            !savedEmail
-        ) {
-
-            throw new Error(
-                "Unable to save participant email."
-            );
-
-        }
-
-
-        if (
-            !savedTimer
-        ) {
-
-            throw new Error(
-                "Unable to start the competition timer."
+                "Unable to start competition timer."
             );
 
         }
 
 
         /*
-         * Console information.
-         *
-         * Useful for checking the lab PC.
+         * DEBUG INFORMATION
          */
 
         console.log(
-            "================================="
+            "========== PROMPT FORGE =========="
         );
 
         console.log(
-            "PROMPT FORGE LOGIN SUCCESS"
+            "User ID:",
+            userDoc.id
         );
 
         console.log(
             "Participant:",
-            participantName
+            userData.fullName
         );
 
         console.log(
             "Email:",
-            participantEmail
+            userData.email
         );
 
         console.log(
             "Question:",
-            assignedQuestion
+            question
         );
 
         console.log(
             "Round:",
-            assignedRound
+            round
         );
 
         console.log(
             "Timer:",
-            timerStart
+            localStorage.getItem(
+                "timerStart"
+            )
         );
 
         console.log(
-            "================================="
+            "==================================="
         );
 
 
         /*
-         * =================================
-         * GO TO BATTLE
-         * =================================
+         * ENTER BATTLE
          */
 
         loginBtn.textContent =
@@ -2114,7 +1936,6 @@ async function loginParticipant() {
 
         window.location.href =
             "battle.html";
-
 
     }
     catch (error) {
@@ -2125,47 +1946,16 @@ async function loginParticipant() {
         );
 
 
-        /*
-         * IMPORTANT:
-         * Do not delete Firestore assignment.
-         *
-         * Only temporary browser session
-         * data is cleared.
-         */
-
-        localStorage.removeItem(
-            "currentUser"
-        );
-
-        localStorage.removeItem(
-            "currentEmail"
-        );
-
-        localStorage.removeItem(
-            "assignedQuestion"
-        );
-
-        localStorage.removeItem(
-            "assignedRound"
-        );
-
-        localStorage.removeItem(
-            "timerStart"
-        );
-
-
         alert(
             "Unable to enter the competition.\n\n"
             +
-            (
-                error.message ||
-                "Unknown error occurred."
-            )
+            error.message
         );
 
 
         loginBtn.disabled =
             false;
+
 
         loginBtn.textContent =
             "Enter Competition →";
@@ -2176,7 +1966,7 @@ async function loginParticipant() {
 
 
 /* =========================================
-   BUTTON LOGIN
+   BUTTON
 ========================================= */
 
 loginBtn.addEventListener(
@@ -2186,7 +1976,7 @@ loginBtn.addEventListener(
 
 
 /* =========================================
-   ENTER KEY LOGIN
+   ENTER KEY
 ========================================= */
 
 emailInput.addEventListener(
