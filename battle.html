@@ -1,717 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prompt Forge | AI Design Workspace</title>
-
   <link rel="stylesheet" href="style.css">
 
   <style>
-
-    /* =====================================================
-       RESET
-    ===================================================== */
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(
-          circle at top left,
-          #1e1b4b,
-          transparent 35%
-        ),
-
-        radial-gradient(
-          circle at bottom right,
-          #312e81,
-          transparent 35%
-        ),
-
+        radial-gradient(circle at top left, #1e1b4b, transparent 35%),
+        radial-gradient(circle at bottom right, #312e81, transparent 35%),
         #080b16;
-
       color: #ffffff;
     }
-
-
-    /* =====================================================
-       MAIN CONTAINER
-    ===================================================== */
 
     .container {
-
       width: 100%;
-
       max-width: 1200px;
-
       margin: auto;
-
-      padding:
-        30px
-        20px
-        60px;
-
+      padding: 30px 20px 60px;
     }
-
-
-    /* =====================================================
-       TIMER
-    ===================================================== */
 
     .timer-box {
-
       width: 100%;
-
       max-width: 420px;
-
-      margin:
-        0 auto 30px;
-
-      padding:
-        18px 25px;
-
+      margin: 0 auto 30px;
+      padding: 18px 25px;
       text-align: center;
-
-      background:
-        rgba(
-          17,
-          24,
-          39,
-          0.95
-        );
-
-      border:
-        1px solid
-        rgba(
-          139,
-          92,
-          246,
-          0.5
-        );
-
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid rgba(139, 92, 246, 0.5);
       border-radius: 18px;
-
       box-shadow:
-        0 10px 40px
-        rgba(
-          0,
-          0,
-          0,
-          0.35
-        ),
-
-        0 0 25px
-        rgba(
-          124,
-          58,
-          237,
-          0.15
-        );
-
+        0 10px 40px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(124, 58, 237, 0.15);
     }
-
 
     .timer-label {
-
       font-size: 13px;
-
       text-transform: uppercase;
-
       letter-spacing: 2px;
-
       color: #a5b4fc;
-
       margin-bottom: 6px;
-
     }
-
 
     #timer {
-
       font-size: 42px;
-
       font-weight: 800;
-
       letter-spacing: 3px;
-
     }
 
-
-    .timer-warning {
-
-      color:
-        #fbbf24 !important;
-
-    }
-
+    .timer-warning { color: #fbbf24 !important; }
 
     .timer-danger {
-
-      color:
-        #ef4444 !important;
-
-      animation:
-        timerPulse
-        1s infinite;
-
+      color: #ef4444 !important;
+      animation: timerPulse 1s infinite;
     }
-
 
     @keyframes timerPulse {
-
-      50% {
-
-        opacity: 0.5;
-
-      }
-
+      50% { opacity: 0.5; }
     }
-
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
 
     .workspace-header {
-
       display: flex;
-
       align-items: center;
-
-      justify-content:
-        space-between;
-
+      justify-content: space-between;
       gap: 30px;
-
       padding: 30px;
-
       margin-bottom: 30px;
-
-      background:
-        rgba(
-          15,
-          23,
-          42,
-          0.88
-        );
-
-      border:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.08
-        );
-
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 22px;
-
-      box-shadow:
-        0 15px 50px
-        rgba(
-          0,
-          0,
-          0,
-          0.25
-        );
-
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
     }
-
 
     .badge {
-
       display: inline-block;
-
-      padding:
-        7px 14px;
-
+      padding: 7px 14px;
       border-radius: 50px;
-
-      background:
-        rgba(
-          124,
-          58,
-          237,
-          0.18
-        );
-
-      border:
-        1px solid
-        rgba(
-          167,
-          139,
-          250,
-          0.4
-        );
-
-      color:
-        #c4b5fd;
-
+      background: rgba(124, 58, 237, 0.18);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      color: #c4b5fd;
       font-size: 12px;
-
       font-weight: 700;
-
-      text-transform:
-        uppercase;
-
+      text-transform: uppercase;
       letter-spacing: 1px;
-
     }
-
 
     .workspace-header h1 {
-
-      margin:
-        12px 0 0;
-
-      font-size:
-        clamp(
-          36px,
-          5vw,
-          58px
-        );
-
+      margin: 12px 0 0;
+      font-size: clamp(36px, 5vw, 58px);
       line-height: 1;
-
-      background:
-        linear-gradient(
-          90deg,
-          #ffffff,
-          #a78bfa,
-          #60a5fa
-        );
-
-      -webkit-background-clip:
-        text;
-
-      -webkit-text-fill-color:
-        transparent;
-
+      background: linear-gradient(90deg, #ffffff, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
 
     .workspace-header p {
-
       margin-top: 12px;
-
       max-width: 650px;
-
-      color:
-        #94a3b8;
-
+      color: #94a3b8;
       font-size: 15px;
-
       line-height: 1.6;
-
     }
-
-
-    /* =====================================================
-       PARTICIPANT
-    ===================================================== */
 
     .participant-chip {
-
       min-width: 190px;
-
-      padding:
-        15px 20px;
-
+      padding: 15px 20px;
       border-radius: 15px;
-
-      background:
-        rgba(
-          30,
-          41,
-          59,
-          0.8
-        );
-
-      border:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.08
-        );
-
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       text-align: center;
-
     }
-
 
     .participant-chip span {
-
       display: block;
-
       font-size: 11px;
-
-      text-transform:
-        uppercase;
-
+      text-transform: uppercase;
       letter-spacing: 1px;
-
-      color:
-        #64748b;
-
+      color: #64748b;
       margin-bottom: 5px;
-
     }
-
 
     .participant-chip strong {
-
       display: block;
-
-      color:
-        #ffffff;
-
-      font-size: 16px;
-
-      word-break:
-        break-word;
-
-    }
-
-
-    /* =====================================================
-       WORKSPACE GRID
-    ===================================================== */
-
-    .workspace-grid {
-
-      display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-      gap: 25px;
-
-      align-items:
-        stretch;
-
-    }
-
-
-    /* =====================================================
-       PANELS
-    ===================================================== */
-
-    .workspace-panel {
-
-      display: flex;
-
-      flex-direction:
-        column;
-
-      padding: 28px;
-
-      min-height:
-        420px;
-
-      background:
-        rgba(
-          15,
-          23,
-          42,
-          0.88
-        );
-
-      border:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.08
-        );
-
-      border-radius: 22px;
-
-      box-shadow:
-        0 15px 50px
-        rgba(
-          0,
-          0,
-          0,
-          0.22
-        );
-
-    }
-
-
-    .workspace-panel h2 {
-
-      margin: 0;
-
-      font-size: 20px;
-
-    }
-
-
-    /* =====================================================
-       PROMPT
-    ===================================================== */
-
-    #prompt {
-
-      width: 100%;
-
-      min-height:
-        240px;
-
-      resize: vertical;
-
-      margin-top: 15px;
-
-      padding: 18px;
-
-      border-radius: 15px;
-
-      border:
-        1px solid
-        #334155;
-
-      background:
-        #020617;
-
-      color:
-        #ffffff;
-
-      outline: none;
-
-      font-family:
-        inherit;
-
-      font-size: 14px;
-
-      line-height: 1.6;
-
-    }
-
-
-    #prompt:focus {
-
-      border-color:
-        #8b5cf6;
-
-      box-shadow:
-        0 0 0 3px
-        rgba(
-          139,
-          92,
-          246,
-          0.12
-        );
-
-    }
-
-
-    #prompt::placeholder {
-
-      color:
-        #64748b;
-
-    }
-
-
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-
-    .btn {
-
-      width: 100%;
-
-      margin-top: 18px;
-
-      padding:
-        14px 20px;
-
-      border: none;
-
-      border-radius: 12px;
-
-      font-size: 15px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-      transition:
-        0.2s ease;
-
-    }
-
-
-    .btn-primary {
-
       color: #ffffff;
-
-      background:
-        linear-gradient(
-          135deg,
-          #7c3aed,
-          #2563eb
-        );
-
-      box-shadow:
-        0 8px 25px
-        rgba(
-          79,
-          70,
-          229,
-          0.25
-        );
-
+      font-size: 16px;
+      word-break: break-word;
     }
-
-
-    .btn-primary:hover {
-
-      transform:
-        translateY(-2px);
-
-      box-shadow:
-        0 12px 30px
-        rgba(
-          79,
-          70,
-          229,
-          0.4
-        );
-
-    }
-
-
-    .btn:disabled {
-
-      opacity:
-        0.55;
-
-      cursor:
-        not-allowed;
-
-      transform:
-        none;
-
-    }
-
-
-    /* =====================================================
-       UPLOAD
-    ===================================================== */
-
-    .upload-box {
-
-      width: 100%;
-
-      min-height:
-        280px;
-
-      margin-top: 15px;
-
-      padding: 20px;
-
-      border:
-        2px dashed
-        #334155;
-
-      border-radius: 18px;
-
-      background:
-        #020617;
-
-      display: flex;
-
-      flex-direction:
-        column;
-
-      justify-content:
-        center;
-
-      align-items:
-        center;
-
-      overflow:
-        hidden;
-
-    }
-
-
-    #imageUpload {
-
-      width: 100%;
-
-      padding: 10px;
-
-      color:
-        #cbd5e1;
-
-      font-size: 13px;
-
-    }
-
-
-    .preview-image {
-
-      width: 100%;
-
-      max-height:
-        280px;
-
-      object-fit:
-        contain;
-
-      margin-top: 15px;
-
-      border-radius:
-        12px;
-
-    }
-
-
-    /* =====================================================
-       HELPER
-    ===================================================== */
-
-    .helper-text {
-
-      margin-top: 12px;
-
-      color:
-        #64748b;
-
-      font-size: 12px;
-
-      line-height: 1.5;
-
-    }
-
-
-    /* =====================================================
-       ASSIGNED CHALLENGE
-    ===================================================== */
 
     .challenge-card {
       margin: 0 0 25px;
@@ -754,1430 +175,702 @@
       line-height: 1.7;
     }
 
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media (max-width: 800px) {
-
-      .container {
-
-        padding:
-          20px
-          15px
-          40px;
-
-      }
-
-
-      .workspace-header {
-
-        flex-direction:
-          column;
-
-        align-items:
-          stretch;
-
-      }
-
-
-      .participant-chip {
-
-        width: 100%;
-
-      }
-
-
-      .workspace-grid {
-
-        grid-template-columns:
-          1fr;
-
-      }
-
-
-      .workspace-panel {
-
-        min-height:
-          auto;
-
-      }
-
-
-      #timer {
-
-        font-size:
-          36px;
-
-      }
-
+    .challenge-error {
+      color: #fca5a5 !important;
     }
 
-  </style>
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: stretch;
+    }
 
+    .workspace-panel {
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      min-height: 420px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.22);
+    }
+
+    .workspace-panel h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    #prompt {
+      width: 100%;
+      min-height: 240px;
+      resize: vertical;
+      margin-top: 15px;
+      padding: 18px;
+      border-radius: 15px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: #ffffff;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #prompt:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+    }
+
+    #prompt::placeholder { color: #64748b; }
+
+    .btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .upload-box {
+      width: 100%;
+      min-height: 280px;
+      margin-top: 15px;
+      padding: 20px;
+      border: 2px dashed #334155;
+      border-radius: 18px;
+      background: #020617;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #imageUpload {
+      width: 100%;
+      padding: 10px;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .preview-image {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      margin-top: 15px;
+      border-radius: 12px;
+    }
+
+    .helper-text {
+      margin-top: 12px;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 800px) {
+      .container { padding: 20px 15px 40px; }
+      .workspace-header { flex-direction: column; align-items: stretch; }
+      .participant-chip { width: 100%; }
+      .workspace-grid { grid-template-columns: 1fr; }
+      .workspace-panel { min-height: auto; }
+      #timer { font-size: 36px; }
+    }
+  </style>
 </head>
 
-
 <body>
+  <div class="container">
 
-<div class="container">
-
-
-  <!-- =====================================================
-       TIMER
-  ===================================================== -->
-
-  <div
-    class="timer-box"
-    id="timerBox"
-  >
-
-    <div class="timer-label">
-      Time Remaining
+    <div class="timer-box" id="timerBox">
+      <div class="timer-label">Time Remaining</div>
+      <div id="timer">20:00</div>
     </div>
 
-    <div id="timer">
-      20:00
+    <div class="workspace-header">
+      <div>
+        <span class="badge">AI Design Workspace</span>
+        <h1>Prompt Forge</h1>
+        <p>
+          Create your design using Canva AI and submit your final artwork.
+          Make every prompt count and showcase your creativity.
+        </p>
+      </div>
+
+      <div class="participant-chip">
+        <span>Participant</span>
+        <strong id="user">Guest</strong>
+      </div>
     </div>
 
-  </div>
-
-
-  <!-- =====================================================
-       HEADER
-  ===================================================== -->
-
-  <div class="workspace-header">
-
-    <div>
-
-      <span class="badge">
-        AI Design Workspace
-      </span>
-
-
-      <h1>
-        Prompt Forge
-      </h1>
-
-
-      <p>
-
-        Create your design using Canva AI and submit
-        your final artwork. Make every prompt count
-        and showcase your creativity.
-
-      </p>
-
+    <div class="challenge-card" id="challengeCard">
+      <div class="challenge-meta">
+        <span class="challenge-tag" id="roundDisplay">LOADING...</span>
+        <span class="challenge-tag" id="questionDisplay">LOADING...</span>
+      </div>
+      <h2 id="challengeTitle">Loading your challenge...</h2>
+      <p id="challengeDescription">Your assigned challenge will appear here.</p>
     </div>
 
+    <div class="workspace-grid">
+      <div class="workspace-panel">
+        <h2>Design Prompt</h2>
 
-    <div class="participant-chip">
-
-      <span>
-        Participant
-      </span>
-
-
-      <strong id="user">
-        Guest
-      </strong>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       ASSIGNED CHALLENGE
-  ===================================================== -->
-
-  <div class="challenge-card" id="challengeCard">
-    <div class="challenge-meta">
-      <span class="challenge-tag" id="roundDisplay">ROUND 1</span>
-      <span class="challenge-tag" id="questionDisplay">QUESTION 1</span>
-    </div>
-    <h2 id="challengeTitle">Loading your challenge...</h2>
-    <p id="challengeDescription">Your assigned challenge will appear here.</p>
-  </div>
-
-  <!-- =====================================================
-       WORKSPACE
-  ===================================================== -->
-
-  <div class="workspace-grid">
-
-
-    <!-- =================================================
-         PROMPT PANEL
-    ================================================= -->
-
-    <div class="workspace-panel">
-
-      <h2>
-        Design Prompt
-      </h2>
-
-
-      <textarea
-        id="prompt"
-        placeholder="Describe your poster, logo, banner, or creative concept...
+        <textarea
+          id="prompt"
+          placeholder="Describe your poster, logo, banner, or creative concept...
 
 Example:
 Design a premium A3 vertical college symposium poster for Prompt Forge with futuristic AI visuals, blue and purple neon lighting, bold typography, holographic interface elements, and a professional tech event aesthetic."
-      ></textarea>
+        ></textarea>
 
+        <button id="generateBtn" class="btn btn-primary">
+          🚀 Launch Canva AI
+        </button>
 
-      <button
-        id="generateBtn"
-        class="btn btn-primary"
-      >
-
-        🚀 Launch Canva AI
-
-      </button>
-
-
-      <p
-        id="loading"
-        class="helper-text"
-      ></p>
-
-    </div>
-
-
-    <!-- =================================================
-         UPLOAD PANEL
-    ================================================= -->
-
-    <div class="workspace-panel">
-
-      <h2>
-        Upload Final Design
-      </h2>
-
-
-      <div class="upload-box">
-
-        <input
-          type="file"
-          id="imageUpload"
-          accept="
-            image/png,
-            image/jpeg,
-            image/jpg,
-            image/webp
-          "
-        >
-
-
-        <img
-          id="preview"
-          class="preview-image"
-          style="display:none;"
-          alt="Design preview"
-        >
-
+        <p id="loading" class="helper-text"></p>
       </div>
 
+      <div class="workspace-panel">
+        <h2>Upload Final Design</h2>
 
-      <button
-        id="submitBtn"
-        class="btn btn-primary"
-      >
+        <div class="upload-box">
+          <input
+            type="file"
+            id="imageUpload"
+            accept="image/png,image/jpeg,image/jpg,image/webp"
+          >
 
-        ✅ Submit Design
+          <img
+            id="preview"
+            class="preview-image"
+            style="display:none;"
+            alt="Design preview"
+          >
+        </div>
 
-      </button>
+        <button id="submitBtn" class="btn btn-primary">
+          ✅ Submit Design
+        </button>
 
-
-      <p class="helper-text">
-
-        Only your final Canva-generated design
-        should be submitted.
-
-        After submission, your session will end
-        automatically.
-
-      </p>
-
+        <p class="helper-text">
+          Only your final Canva-generated design should be submitted.
+          After submission, your session will end automatically.
+        </p>
+      </div>
     </div>
-
   </div>
 
-</div>
+  <script type="module">
+    import { db } from "./firebase.js";
 
+    import {
+      collection,
+      addDoc,
+      Timestamp,
+      getDocs,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<!-- =====================================================
-     FIREBASE + APPLICATION SCRIPT
-===================================================== -->
+    /* =====================================================
+       PARTICIPANT INFORMATION
+    ===================================================== */
+    const currentUser = localStorage.getItem("currentUser") || "Guest";
+    const currentEmail = (localStorage.getItem("currentEmail") || "").trim().toLowerCase();
 
-<script type="module">
+    document.getElementById("user").innerText = currentUser;
 
+    /* =====================================================
+       CHALLENGES
+    ===================================================== */
+    const challenges = [
+      { id: 1, title: "Future City", description: "Create an image of a futuristic Indian city in 2050, showing smart transport, green buildings, renewable energy, and people using advanced technology. Make it realistic and visually detailed." },
+      { id: 2, title: "AI in Education", description: "Generate a creative poster showing how artificial intelligence can transform education. Include students, teachers, AI tools, and a modern classroom. The design should look professional and inspiring." },
+      { id: 3, title: "Eco-Friendly Product", description: "Design a realistic advertisement for a new eco-friendly reusable water bottle. Show the product in a clean natural environment and communicate sustainability without using excessive text." },
+      { id: 4, title: "Cybersecurity Awareness", description: "Create a powerful cybersecurity awareness poster for college students. Show a student protecting personal data from hackers, phishing, and unsafe links. Use a modern technology-themed visual style." },
+      { id: 5, title: "Festival Fusion", description: "Create a vibrant scene combining traditional Indian culture with futuristic technology. Show people celebrating a festival while using holograms, drones, and smart devices. Keep the cultural elements respectful." },
+      { id: 6, title: "Space Exploration", description: "Imagine the first Indian astronaut landing on Mars in the year 2045. Create a cinematic, realistic scene with a Mars base, rover, Indian flag, and Earth visible in the sky." },
+      { id: 7, title: "Smart Campus", description: "Design a futuristic college campus where AI assistants, smart classrooms, digital notice boards, renewable energy, and autonomous transport are used. Make it look realistic and welcoming." },
+      { id: 8, title: "Save the Planet", description: "Create an emotional environmental campaign image showing a clear contrast between a polluted Earth and a restored green Earth. The image should strongly communicate the importance of protecting nature." },
+      { id: 9, title: "Tech Startup Logo", description: "Create a modern logo concept for a fictional AI startup called 'NovaMind'. The logo should be simple, memorable, professional, and suitable for a technology company website." },
+      { id: 10, title: "Historical Reimagining", description: "Create a realistic scene showing an ancient Indian historical marketplace enhanced with modern sustainable technology such as solar lighting, digital payments, and electric transport." },
+      { id: 11, title: "Robot Assistant", description: "Design a friendly household robot helping an elderly person at home. Show the robot assisting with daily tasks while maintaining a warm, human-centered atmosphere." },
+      { id: 12, title: "Underwater City", description: "Imagine a fully functioning underwater city in 2100. Show transparent buildings, marine life, transportation systems, researchers, and sustainable technology in a cinematic realistic style." },
+      { id: 13, title: "Career of the Future", description: "Create an inspirational visual showing students preparing for future careers in AI, robotics, cybersecurity, data science, and space technology. Make it suitable for a college career-awareness campaign." },
+      { id: 14, title: "Mystery Scene", description: "Create a cinematic mystery scene inside an abandoned futuristic laboratory at night. Include clues, unusual machines, dramatic lighting, and an atmosphere that makes viewers curious about what happened." },
+      { id: 15, title: "One Prompt Challenge", description: "Create an original image based only on this idea: 'Technology should make humans more human.' Interpret the concept creatively and communicate the message visually without relying on long text." }
+    ];
 
-/* =====================================================
-   FIREBASE
-===================================================== */
+    let assignedQuestion = 0;
+    let assignedRound = 0;
+    let assignedChallenge = null;
 
-import {
-  db
-} from "./firebase.js";
+    const roundDisplay = document.getElementById("roundDisplay");
+    const questionDisplay = document.getElementById("questionDisplay");
+    const challengeTitle = document.getElementById("challengeTitle");
+    const challengeDescription = document.getElementById("challengeDescription");
 
+    /* =====================================================
+       LOAD ASSIGNMENT
+       Firebase is the source of truth.
+       LocalStorage is only a backup.
+    ===================================================== */
+    async function loadAssignedChallenge() {
+      roundDisplay.innerText = "LOADING...";
+      questionDisplay.innerText = "LOADING...";
+      challengeTitle.innerText = "Loading your challenge...";
+      challengeDescription.innerText = "Checking your assigned question...";
+      challengeDescription.classList.remove("challenge-error");
 
-import {
-  collection,
-  addDoc,
-  Timestamp,
-  getDocs,
-  query,
-  where
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-/* =====================================================
-   PARTICIPANT INFORMATION
-===================================================== */
-
-const currentUser =
-  localStorage.getItem(
-    "currentUser"
-  ) || "Guest";
-
-
-const currentEmail =
-  localStorage.getItem(
-    "currentEmail"
-  ) || "";
-
-
-document.getElementById(
-  "user"
-).innerText =
-  currentUser;
-
-
-/* =====================================================
-   CHALLENGES
-   Same 15 challenges used for participant assignment
-===================================================== */
-
-const challenges = [
-  { id: 1, title: "Future City", description: "Create an image of a futuristic Indian city in 2050, showing smart transport, green buildings, renewable energy, and people using advanced technology. Make it realistic and visually detailed." },
-  { id: 2, title: "AI in Education", description: "Generate a creative poster showing how artificial intelligence can transform education. Include students, teachers, AI tools, and a modern classroom. The design should look professional and inspiring." },
-  { id: 3, title: "Eco-Friendly Product", description: "Design a realistic advertisement for a new eco-friendly reusable water bottle. Show the product in a clean natural environment and communicate sustainability without using excessive text." },
-  { id: 4, title: "Cybersecurity Awareness", description: "Create a powerful cybersecurity awareness poster for college students. Show a student protecting personal data from hackers, phishing, and unsafe links. Use a modern technology-themed visual style." },
-  { id: 5, title: "Festival Fusion", description: "Create a vibrant scene combining traditional Indian culture with futuristic technology. Show people celebrating a festival while using holograms, drones, and smart devices. Keep the cultural elements respectful." },
-  { id: 6, title: "Space Exploration", description: "Imagine the first Indian astronaut landing on Mars in the year 2045. Create a cinematic, realistic scene with a Mars base, rover, Indian flag, and Earth visible in the sky." },
-  { id: 7, title: "Smart Campus", description: "Design a futuristic college campus where AI assistants, smart classrooms, digital notice boards, renewable energy, and autonomous transport are used. Make it look realistic and welcoming." },
-  { id: 8, title: "Save the Planet", description: "Create an emotional environmental campaign image showing a clear contrast between a polluted Earth and a restored green Earth. The image should strongly communicate the importance of protecting nature." },
-  { id: 9, title: "Tech Startup Logo", description: "Create a modern logo concept for a fictional AI startup called 'NovaMind'. The logo should be simple, memorable, professional, and suitable for a technology company website." },
-  { id: 10, title: "Historical Reimagining", description: "Create a realistic scene showing an ancient Indian historical marketplace enhanced with modern sustainable technology such as solar lighting, digital payments, and electric transport." },
-  { id: 11, title: "Robot Assistant", description: "Design a friendly household robot helping an elderly person at home. Show the robot assisting with daily tasks while maintaining a warm, human-centered atmosphere." },
-  { id: 12, title: "Underwater City", description: "Imagine a fully functioning underwater city in 2100. Show transparent buildings, marine life, transportation systems, researchers, and sustainable technology in a cinematic realistic style." },
-  { id: 13, title: "Career of the Future", description: "Create an inspirational visual showing students preparing for future careers in AI, robotics, cybersecurity, data science, and space technology. Make it suitable for a college career-awareness campaign." },
-  { id: 14, title: "Mystery Scene", description: "Create a cinematic mystery scene inside an abandoned futuristic laboratory at night. Include clues, unusual machines, dramatic lighting, and an atmosphere that makes viewers curious about what happened." },
-  { id: 15, title: "One Prompt Challenge", description: "Create an original image based only on this idea: 'Technology should make humans more human.' Interpret the concept creatively and communicate the message visually without relying on long text." }
-];
-
-let assignedQuestion = Number(localStorage.getItem("assignedQuestion")) || 0;
-let assignedRound = Number(localStorage.getItem("assignedRound")) || 0;
-let assignedChallenge = null;
-
-const roundDisplay = document.getElementById("roundDisplay");
-const questionDisplay = document.getElementById("questionDisplay");
-const challengeTitle = document.getElementById("challengeTitle");
-const challengeDescription = document.getElementById("challengeDescription");
-
-async function loadAssignedChallenge() {
-  // First use the assignment already saved by login.html.
-  if (assignedQuestion >= 1 && assignedQuestion <= challenges.length) {
-    assignedChallenge = challenges.find(c => c.id === assignedQuestion);
-  }
-
-  // If localStorage does not contain the assignment, recover it from Firestore.
-  if (!assignedChallenge && currentEmail) {
-    try {
-      const userSnapshot = await getDocs(
-        query(collection(db, "users"), where("email", "==", currentEmail))
-      );
-
-      if (!userSnapshot.empty) {
-        const userData = userSnapshot.docs[0].data();
-        assignedQuestion = Number(userData.assignedQuestion) || 0;
-        assignedRound = Number(userData.assignedRound) || 0;
-        assignedChallenge = challenges.find(c => c.id === assignedQuestion) || null;
-
-        if (assignedQuestion) localStorage.setItem("assignedQuestion", String(assignedQuestion));
-        if (assignedRound) localStorage.setItem("assignedRound", String(assignedRound));
+      if (!currentEmail) {
+        showChallengeError("Participant email was not found. Please return to Participant Login and login again.");
+        return false;
       }
-    } catch (error) {
-      console.error("Could not recover assigned challenge:", error);
-    }
-  }
 
-  if (!assignedChallenge) {
-    challengeTitle.innerText = "Challenge not assigned";
-    challengeDescription.innerText = "Please return to the participant login and enter the competition again.";
-    roundDisplay.innerText = "ROUND —";
-    questionDisplay.innerText = "QUESTION —";
-    return;
-  }
-
-  roundDisplay.innerText = `ROUND ${assignedRound || 1}`;
-  questionDisplay.innerText = `QUESTION ${assignedQuestion}`;
-  challengeTitle.innerText = assignedChallenge.title;
-  challengeDescription.innerText = assignedChallenge.description;
-}
-
-loadAssignedChallenge();
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const imageInput =
-  document.getElementById(
-    "imageUpload"
-  );
-
-
-const preview =
-  document.getElementById(
-    "preview"
-  );
-
-
-const promptInput =
-  document.getElementById(
-    "prompt"
-  );
-
-
-const submitBtn =
-  document.getElementById(
-    "submitBtn"
-  );
-
-
-const generateBtn =
-  document.getElementById(
-    "generateBtn"
-  );
-
-
-const loading =
-  document.getElementById(
-    "loading"
-  );
-
-
-const timerElement =
-  document.getElementById(
-    "timer"
-  );
-
-
-/* =====================================================
-   TIMER SETTINGS
-===================================================== */
-
-const TIMER_DURATION =
-  20 * 60 * 1000;
-
-
-/* =====================================================
-   CHECK PARTICIPANT LOGIN
-===================================================== */
-
-if (
-  !currentEmail ||
-  currentUser === "Guest"
-) {
-
-  alert(
-    "Please login before entering the competition."
-  );
-
-  window.location.href =
-    "login.html";
-
-}
-
-
-/* =====================================================
-   GET TIMER START
-===================================================== */
-
-let timerStart =
-  Number(
-    localStorage.getItem(
-      "timerStart"
-    )
-  );
-
-
-/*
-   IMPORTANT:
-
-   battle.html DOES NOT create a new timer.
-
-   The timer must be created
-   when participant successfully logs in.
-*/
-
-if (
-  !timerStart ||
-  !Number.isFinite(
-    timerStart
-  )
-) {
-
-  alert(
-    "Your competition session could not be found. Please login again."
-  );
-
-  localStorage.removeItem(
-    "currentUser"
-  );
-
-  localStorage.removeItem(
-    "currentEmail"
-  );
-
-  window.location.href =
-    "login.html";
-
-}
-
-
-/* =====================================================
-   CANVA AI
-===================================================== */
-
-generateBtn.addEventListener(
-  "click",
-  function () {
-
-    const prompt =
-      promptInput.value.trim();
-
-
-    if (!prompt) {
-
-      alert(
-        "Please enter your design prompt first."
-      );
-
-      promptInput.focus();
-
-      return;
-
-    }
-
-
-    const canvaLink =
-      "https://www.canva.com/ai-image-generator/?prompt=" +
-      encodeURIComponent(
-        prompt
-      );
-
-
-    window.open(
-      canvaLink,
-      "_blank"
-    );
-
-
-    loading.innerText =
-      "Canva AI opened in a new tab. Generate your design, download it, and upload the final artwork here.";
-
-  }
-);
-
-
-/* =====================================================
-   IMAGE PREVIEW
-===================================================== */
-
-imageInput.addEventListener(
-  "change",
-  function (event) {
-
-    const file =
-      event.target.files[0];
-
-
-    if (!file) {
-
-      preview.style.display =
-        "none";
-
-      return;
-
-    }
-
-
-    if (
-      !file.type.startsWith(
-        "image/"
-      )
-    ) {
-
-      alert(
-        "Please select an image file."
-      );
-
-      imageInput.value =
-        "";
-
-      return;
-
-    }
-
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload =
-      function (e) {
-
-        preview.src =
-          e.target.result;
-
-        preview.style.display =
-          "block";
-
-      };
-
-
-    reader.readAsDataURL(
-      file
-    );
-
-  }
-);
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function logoutUser() {
-
-  localStorage.removeItem(
-    "currentUser"
-  );
-
-  localStorage.removeItem(
-    "currentEmail"
-  );
-
-  localStorage.removeItem(
-    "timerStart"
-  );
-
-}
-
-
-/* =====================================================
-   FORMAT TIME
-===================================================== */
-
-function formatTimeUsed(
-  totalSeconds
-) {
-
-  const minutes =
-    Math.floor(
-      totalSeconds / 60
-    );
-
-
-  const seconds =
-    totalSeconds % 60;
-
-
-  return (
-    minutes +
-    " min " +
-    String(
-      seconds
-    ).padStart(
-      2,
-      "0"
-    ) +
-    " sec"
-  );
-
-}
-
-
-/* =====================================================
-   SUBMIT DESIGN
-===================================================== */
-
-submitBtn.addEventListener(
-  "click",
-  async function () {
-
-
-    /* ================================================
-       GET FILE
-    ================================================= */
-
-    const file =
-      imageInput.files[0];
-
-
-    /* ================================================
-       GET PROMPT
-    ================================================= */
-
-    const prompt =
-      promptInput.value.trim();
-
-
-    /* ================================================
-       VALIDATION
-    ================================================= */
-
-    if (!prompt) {
-
-      alert(
-        "Please enter your design prompt."
-      );
-
-      promptInput.focus();
-
-      return;
-
-    }
-
-
-    if (!file) {
-
-      alert(
-        "Please upload your final design first."
-      );
-
-      return;
-
-    }
-
-
-    /* ================================================
-       GET TIMER
-    ================================================= */
-
-    timerStart =
-      Number(
-        localStorage.getItem(
-          "timerStart"
-        )
-      );
-
-
-    if (
-      !timerStart ||
-      !Number.isFinite(
-        timerStart
-      )
-    ) {
-
-      alert(
-        "Your timer session could not be found. Please login again."
-      );
-
-      logoutUser();
-
-      window.location.href =
-        "login.html";
-
-      return;
-
-    }
-
-
-    /* ================================================
-       CURRENT TIME
-    ================================================= */
-
-    const now =
-      Date.now();
-
-
-    /* ================================================
-       CALCULATE TIME USED
-    ================================================= */
-
-    let timeUsedSeconds =
-      Math.floor(
-        (
-          now -
-          timerStart
-        ) / 1000
-      );
-
-
-    if (
-      timeUsedSeconds < 0
-    ) {
-
-      timeUsedSeconds =
-        0;
-
-    }
-
-
-    /* Maximum 20 minutes */
-
-    if (
-      timeUsedSeconds >
-      20 * 60
-    ) {
-
-      timeUsedSeconds =
-        20 * 60;
-
-    }
-
-
-    /* ================================================
-       CALCULATE REMAINING
-    ================================================= */
-
-    let timeRemainingSeconds =
-      (
-        20 * 60
-      ) -
-      timeUsedSeconds;
-
-
-    if (
-      timeRemainingSeconds < 0
-    ) {
-
-      timeRemainingSeconds =
-        0;
-
-    }
-
-
-    /* ================================================
-       READABLE TIMES
-    ================================================= */
-
-    const timeUsed =
-      formatTimeUsed(
-        timeUsedSeconds
-      );
-
-
-    const timeRemaining =
-      formatTimeUsed(
-        timeRemainingSeconds
-      );
-
-
-    /* ================================================
-       DEBUG
-    ================================================= */
-
-    console.log(
-      "===================================="
-    );
-
-
-    console.log(
-      "Participant:",
-      currentUser
-    );
-
-
-    console.log(
-      "Email:",
-      currentEmail
-    );
-
-
-    console.log(
-      "Timer Start:",
-      new Date(
-        timerStart
-      ).toLocaleString()
-    );
-
-
-    console.log(
-      "Submitted At:",
-      new Date(
-        now
-      ).toLocaleString()
-    );
-
-
-    console.log(
-      "Time Used:",
-      timeUsed
-    );
-
-
-    console.log(
-      "Time Used Seconds:",
-      timeUsedSeconds
-    );
-
-
-    console.log(
-      "Time Remaining:",
-      timeRemaining
-    );
-
-
-    console.log(
-      "===================================="
-    );
-
-
-    /* ================================================
-       DISABLE UI
-    ================================================= */
-
-    submitBtn.disabled =
-      true;
-
-
-    generateBtn.disabled =
-      true;
-
-
-    imageInput.disabled =
-      true;
-
-
-    promptInput.disabled =
-      true;
-
-
-    submitBtn.innerText =
-      "Uploading...";
-
-
-    try {
-
-
-      /* ==============================================
-         CLOUDINARY UPLOAD
-      ============================================== */
-
-      const formData =
-        new FormData();
-
-
-      formData.append(
-        "file",
-        file
-      );
-
-
-      formData.append(
-        "upload_preset",
-        "ml_default"
-      );
-
-
-      const uploadResponse =
-        await fetch(
-
-          "https://api.cloudinary.com/v1_1/pydcirpp/image/upload",
-
-          {
-            method:
-              "POST",
-
-            body:
-              formData
+      try {
+        console.log("Loading assignment for:", currentEmail);
+
+        /* Always check Firebase first. This fixes different-PC/localStorage issues. */
+        let userSnapshot = await getDocs(
+          query(
+            collection(db, "users"),
+            where("email", "==", currentEmail)
+          )
+        );
+
+        /* Fallback for old records whose email casing differs. */
+        if (userSnapshot.empty) {
+          const allUsersSnapshot = await getDocs(collection(db, "users"));
+          const matchingDocs = allUsersSnapshot.docs.filter((docSnap) => {
+            const email = String(docSnap.data().email || "").trim().toLowerCase();
+            return email === currentEmail;
+          });
+
+          if (matchingDocs.length > 0) {
+            userSnapshot = {
+              empty: false,
+              docs: [matchingDocs[0]]
+            };
+          }
+        }
+
+        if (!userSnapshot.empty) {
+          const userData = userSnapshot.docs[0].data();
+
+          assignedQuestion = Number(userData.assignedQuestion) || 0;
+          assignedRound = Number(userData.assignedRound) || 0;
+
+          console.log("Firebase assignedQuestion:", assignedQuestion);
+          console.log("Firebase assignedRound:", assignedRound);
+
+          if (assignedQuestion >= 1 && assignedQuestion <= challenges.length) {
+            localStorage.setItem("assignedQuestion", String(assignedQuestion));
           }
 
-        );
+          if (assignedRound >= 1) {
+            localStorage.setItem("assignedRound", String(assignedRound));
+          }
+        } else {
+          /* Only use localStorage if Firebase cannot find this participant. */
+          assignedQuestion = Number(localStorage.getItem("assignedQuestion")) || 0;
+          assignedRound = Number(localStorage.getItem("assignedRound")) || 0;
+        }
 
+        if (
+          assignedQuestion < 1 ||
+          assignedQuestion > challenges.length
+        ) {
+          showChallengeError("No competition question has been assigned to this participant yet. Please contact the administrator.");
+          return false;
+        }
 
-      const uploadData =
-        await uploadResponse.json();
+        assignedChallenge = challenges.find(
+          (challenge) => Number(challenge.id) === Number(assignedQuestion)
+        ) || null;
 
+        if (!assignedChallenge) {
+          showChallengeError("The assigned challenge could not be found.");
+          return false;
+        }
 
-      if (
-        !uploadResponse.ok ||
-        !uploadData.secure_url
-      ) {
+        roundDisplay.innerText = `ROUND ${assignedRound || 1}`;
+        questionDisplay.innerText = `QUESTION ${assignedQuestion}`;
+        challengeTitle.innerText = assignedChallenge.title;
+        challengeDescription.innerText = assignedChallenge.description;
+        challengeDescription.classList.remove("challenge-error");
 
-        throw new Error(
+        console.log("Challenge loaded:", assignedChallenge.title);
+        return true;
 
-          uploadData.error?.message ||
-          "Cloudinary upload failed."
+      } catch (error) {
+        console.error("Could not load assigned challenge:", error);
+        showChallengeError("Unable to load your assigned question. Please refresh the page or contact the administrator.");
+        return false;
+      }
+    }
 
-        );
+    function showChallengeError(message) {
+      roundDisplay.innerText = "ROUND —";
+      questionDisplay.innerText = "QUESTION —";
+      challengeTitle.innerText = "Question Not Available";
+      challengeDescription.innerText = message;
+      challengeDescription.classList.add("challenge-error");
+    }
 
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+    const imageInput = document.getElementById("imageUpload");
+    const preview = document.getElementById("preview");
+    const promptInput = document.getElementById("prompt");
+    const submitBtn = document.getElementById("submitBtn");
+    const generateBtn = document.getElementById("generateBtn");
+    const loading = document.getElementById("loading");
+    const timerElement = document.getElementById("timer");
+
+    const TIMER_DURATION = 20 * 60 * 1000;
+
+    /* =====================================================
+       SESSION CHECK
+    ===================================================== */
+    if (!currentEmail || currentUser === "Guest") {
+      alert("Please login before entering the competition.");
+      window.location.href = "login.html";
+    }
+
+    /* =====================================================
+       TIMER START
+       battle.html never creates a timer.
+    ===================================================== */
+    let timerStart = Number(localStorage.getItem("timerStart"));
+
+    if (!timerStart || !Number.isFinite(timerStart)) {
+      alert("Your competition session could not be found. Please login again.");
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("currentEmail");
+      window.location.href = "login.html";
+    }
+
+    /* =====================================================
+       CANVA AI
+    ===================================================== */
+    generateBtn.addEventListener("click", function () {
+      const prompt = promptInput.value.trim();
+
+      if (!prompt) {
+        alert("Please enter your design prompt first.");
+        promptInput.focus();
+        return;
       }
 
+      const canvaLink =
+        "https://www.canva.com/ai-image-generator/?prompt=" +
+        encodeURIComponent(prompt);
 
-      /* ==============================================
-         SAVE TO FIRESTORE
-      ============================================== */
+      const canvaWindow = window.open(canvaLink, "_blank");
 
-      submitBtn.innerText =
-        "Saving submission...";
+      if (!canvaWindow) {
+        alert("Canva could not be opened. Please allow pop-ups for this website on the lab computer.");
+        loading.innerText = "Pop-up blocked. Please allow pop-ups and click Launch Canva AI again.";
+        return;
+      }
 
+      loading.innerText =
+        "Canva AI opened in a new tab. Generate your design, download it, and upload the final artwork here.";
+    });
 
-      const submissionData = {
+    /* =====================================================
+       IMAGE PREVIEW
+    ===================================================== */
+    imageInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
 
-        /* Assigned Challenge */
-        round: assignedRound,
-        questionNumber: assignedQuestion,
-        challengeId: assignedQuestion,
-        challengeTitle: assignedChallenge ? assignedChallenge.title : "Unknown Challenge",
+      if (!file) {
+        preview.style.display = "none";
+        preview.removeAttribute("src");
+        return;
+      }
 
-        /* Participant */
+      if (!file.type.startsWith("image/")) {
+        alert("Please select an image file.");
+        imageInput.value = "";
+        preview.style.display = "none";
+        return;
+      }
 
-        participant:
-          currentUser,
+      const reader = new FileReader();
 
-
-        email:
-          currentEmail,
-
-
-        /* Design */
-
-        prompt:
-          prompt,
-
-
-        image:
-          uploadData.secure_url,
-
-
-        /* ==========================================
-           TIMER INFORMATION
-        ========================================== */
-
-        timerStart:
-          Timestamp.fromMillis(
-            timerStart
-          ),
-
-
-        submittedAt:
-          Timestamp.fromMillis(
-            now
-          ),
-
-
-        timeUsedSeconds:
-          timeUsedSeconds,
-
-
-        timeUsed:
-          timeUsed,
-
-
-        timeRemainingSeconds:
-          timeRemainingSeconds,
-
-
-        timeRemaining:
-          timeRemaining,
-
-
-        /* Status */
-
-        status:
-          "Submitted"
-
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
       };
 
+      reader.onerror = function () {
+        alert("The selected image could not be previewed.");
+        preview.style.display = "none";
+      };
 
-      /* ==============================================
-         DEBUG FIRESTORE DATA
-      ============================================== */
+      reader.readAsDataURL(file);
+    });
 
-      console.log(
-        "Saving to Firestore:",
-        submissionData
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+    function logoutUser() {
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("currentEmail");
+      localStorage.removeItem("timerStart");
+    }
+
+    /* =====================================================
+       FORMAT TIME
+    ===================================================== */
+    function formatTimeUsed(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+
+      return (
+        minutes +
+        " min " +
+        String(seconds).padStart(2, "0") +
+        " sec"
       );
+    }
 
+    /* =====================================================
+       SUBMIT DESIGN
+    ===================================================== */
+    submitBtn.addEventListener("click", async function () {
+      const file = imageInput.files[0];
+      const prompt = promptInput.value.trim();
 
-      /* ==============================================
-         ADD DOCUMENT
-      ============================================== */
+      if (!assignedChallenge || !assignedQuestion) {
+        alert("Your competition question is not loaded yet. Please wait a moment and try again.");
+        return;
+      }
 
-      await addDoc(
+      if (!prompt) {
+        alert("Please enter your design prompt.");
+        promptInput.focus();
+        return;
+      }
 
-        collection(
-          db,
-          "submissions"
-        ),
+      if (!file) {
+        alert("Please upload your final design first.");
+        return;
+      }
 
-        submissionData
+      timerStart = Number(localStorage.getItem("timerStart"));
 
-      );
+      if (!timerStart || !Number.isFinite(timerStart)) {
+        alert("Your timer session could not be found. Please login again.");
+        logoutUser();
+        window.location.href = "login.html";
+        return;
+      }
 
+      const now = Date.now();
 
-      /* ==============================================
-         SUCCESS
-      ============================================== */
+      let timeUsedSeconds = Math.floor((now - timerStart) / 1000);
+      if (timeUsedSeconds < 0) timeUsedSeconds = 0;
+      if (timeUsedSeconds > 20 * 60) timeUsedSeconds = 20 * 60;
 
-      alert(
+      let timeRemainingSeconds = (20 * 60) - timeUsedSeconds;
+      if (timeRemainingSeconds < 0) timeRemainingSeconds = 0;
 
-        "🎉 Design submitted successfully!\n\n" +
+      const timeUsed = formatTimeUsed(timeUsedSeconds);
+      const timeRemaining = formatTimeUsed(timeRemainingSeconds);
 
-        "⏱️ Time used: " +
-        timeUsed +
+      submitBtn.disabled = true;
+      generateBtn.disabled = true;
+      imageInput.disabled = true;
+      promptInput.disabled = true;
+      submitBtn.innerText = "Uploading...";
 
-        "\n\n" +
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "ml_default");
 
-        "Thank you for participating in Prompt Forge!"
+        const uploadResponse = await fetch(
+          "https://api.cloudinary.com/v1_1/pydcirpp/image/upload",
+          {
+            method: "POST",
+            body: formData
+          }
+        );
 
-      );
+        const uploadData = await uploadResponse.json();
 
+        if (!uploadResponse.ok || !uploadData.secure_url) {
+          throw new Error(
+            uploadData.error?.message || "Cloudinary upload failed."
+          );
+        }
 
-      /* ==============================================
-         MARK COMPLETE
-      ============================================== */
+        submitBtn.innerText = "Saving submission...";
 
-      localStorage.setItem(
-        "submissionCompleted",
-        "true"
-      );
+        const submissionData = {
+          round: assignedRound,
+          questionNumber: assignedQuestion,
+          challengeId: assignedQuestion,
+          challengeTitle: assignedChallenge.title,
+          participant: currentUser,
+          email: currentEmail,
+          prompt: prompt,
+          image: uploadData.secure_url,
+          timerStart: Timestamp.fromMillis(timerStart),
+          submittedAt: Timestamp.fromMillis(now),
+          timeUsedSeconds: timeUsedSeconds,
+          timeUsed: timeUsed,
+          timeRemainingSeconds: timeRemainingSeconds,
+          timeRemaining: timeRemaining,
+          status: "Submitted"
+        };
 
+        console.log("Saving submission:", submissionData);
 
-      /* ==============================================
-         LOGOUT
-      ============================================== */
+        await addDoc(collection(db, "submissions"), submissionData);
+
+        alert(
+          "🎉 Design submitted successfully!\n\n" +
+          "⏱️ Time used: " + timeUsed +
+          "\n\nThank you for participating in Prompt Forge!"
+        );
+
+        localStorage.setItem("submissionCompleted", "true");
+        logoutUser();
+        window.location.href = "login.html";
+
+      } catch (error) {
+        console.error("SUBMISSION ERROR:", error);
+
+        alert("❌ Submission failed.\n\n" + error.message);
+
+        submitBtn.disabled = false;
+        generateBtn.disabled = false;
+        imageInput.disabled = false;
+        promptInput.disabled = false;
+        submitBtn.innerText = "✅ Submit Design";
+      }
+    });
+
+    /* =====================================================
+       TIMER
+    ===================================================== */
+    let timerInterval = null;
+    let timerExpiredAlready = false;
+
+    function timeExpired() {
+      if (timerExpiredAlready) return;
+
+      timerExpiredAlready = true;
+
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+
+      timerElement.innerText = "00:00";
+      submitBtn.disabled = true;
+      generateBtn.disabled = true;
+      imageInput.disabled = true;
+      promptInput.disabled = true;
 
       logoutUser();
 
-
-      /* ==============================================
-         REDIRECT
-      ============================================== */
-
-      window.location.href =
-        "login.html";
-
+      setTimeout(function () {
+        alert(
+          "⏰ Your time is over!\n\nThank you for participating in Prompt Forge. 🎨"
+        );
+        window.location.href = "login.html";
+      }, 100);
     }
 
+    function updateTimer() {
+      const start = Number(localStorage.getItem("timerStart"));
 
-    catch (error) {
+      if (!start || !Number.isFinite(start)) {
+        timeExpired();
+        return;
+      }
 
-      console.error(
-        "SUBMISSION ERROR:",
-        error
-      );
+      const elapsed = Date.now() - start;
+      const remaining = TIMER_DURATION - elapsed;
 
+      if (remaining <= 0) {
+        timeExpired();
+        return;
+      }
 
-      alert(
+      const minutes = Math.floor(remaining / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
 
-        "❌ Submission failed.\n\n" +
-        error.message
+      timerElement.innerText =
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
 
-      );
+      if (remaining <= 5 * 60 * 1000) {
+        timerElement.classList.add("timer-warning");
+      }
 
-
-      /* Re-enable */
-
-      submitBtn.disabled =
-        false;
-
-
-      generateBtn.disabled =
-        false;
-
-
-      imageInput.disabled =
-        false;
-
-
-      promptInput.disabled =
-        false;
-
-
-      submitBtn.innerText =
-        "✅ Submit Design";
-
+      if (remaining <= 60 * 1000) {
+        timerElement.classList.remove("timer-warning");
+        timerElement.classList.add("timer-danger");
+      }
     }
 
-  }
-);
-
-
-/* =====================================================
-   TIMER
-===================================================== */
-
-let timerInterval =
-  null;
-
-
-let timerExpiredAlready =
-  false;
-
-
-/* =====================================================
-   TIMER EXPIRED
-===================================================== */
-
-function timeExpired() {
-
-  if (
-    timerExpiredAlready
-  ) {
-
-    return;
-
-  }
-
-
-  timerExpiredAlready =
-    true;
-
-
-  if (
-    timerInterval
-  ) {
-
-    clearInterval(
-      timerInterval
-    );
-
-  }
-
-
-  timerElement.innerText =
-    "00:00";
-
-
-  /* Disable workspace */
-
-  submitBtn.disabled =
-    true;
-
-
-  generateBtn.disabled =
-    true;
-
-
-  imageInput.disabled =
-    true;
-
-
-  promptInput.disabled =
-    true;
-
-
-  /* Logout */
-
-  logoutUser();
-
-
-  /* Message */
-
-  setTimeout(
-    function () {
-
-      alert(
-
-        "⏰ Your time is over!\n\n" +
-
-        "Thank you for participating in Prompt Forge. 🎨"
-
-      );
-
-
-      window.location.href =
-        "login.html";
-
-    },
-    100
-  );
-
-}
-
-
-/* =====================================================
-   UPDATE TIMER
-===================================================== */
-
-function updateTimer() {
-
-  const start =
-    Number(
-      localStorage.getItem(
-        "timerStart"
-      )
-    );
-
-
-  if (
-    !start ||
-    !Number.isFinite(
-      start
-    )
-  ) {
-
-    timeExpired();
-
-    return;
-
-  }
-
-
-  const elapsed =
-    Date.now() -
-    start;
-
-
-  const remaining =
-    TIMER_DURATION -
-    elapsed;
-
-
-  /* ==============================================
-     EXPIRED
-  ============================================== */
-
-  if (
-    remaining <= 0
-  ) {
-
-    timeExpired();
-
-    return;
-
-  }
-
-
-  /* ==============================================
-     MINUTES
-  ============================================== */
-
-  const minutes =
-    Math.floor(
-      remaining / 60000
-    );
-
-
-  /* ==============================================
-     SECONDS
-  ============================================== */
-
-  const seconds =
-    Math.floor(
-      (
-        remaining %
-        60000
-      ) / 1000
-    );
-
-
-  /* ==============================================
-     DISPLAY
-  ============================================== */
-
-  timerElement.innerText =
-
-    String(
-      minutes
-    ).padStart(
-      2,
-      "0"
-    ) +
-
-    ":" +
-
-    String(
-      seconds
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  /* ==============================================
-     WARNING
-  ============================================== */
-
-  if (
-    remaining <=
-    5 * 60 * 1000
-  ) {
-
-    timerElement.classList.add(
-      "timer-warning"
-    );
-
-  }
-
-
-  /* ==============================================
-     DANGER
-  ============================================== */
-
-  if (
-    remaining <=
-    60 * 1000
-  ) {
-
-    timerElement.classList.remove(
-      "timer-warning"
-    );
-
-
-    timerElement.classList.add(
-      "timer-danger"
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   START TIMER
-===================================================== */
-
-updateTimer();
-
-
-timerInterval =
-  setInterval(
-    updateTimer,
-    1000
-  );
-
-
-/* =====================================================
-   PREVENT ACCESS AFTER SUBMISSION
-===================================================== */
-
-if (
-  localStorage.getItem(
-    "submissionCompleted"
-  ) === "true"
-) {
-
-  logoutUser();
-
-  window.location.href =
-    "login.html";
-
-}
-
-</script>
-
+    /* =====================================================
+       INITIALIZE
+       Question is loaded from Firebase before controls are enabled.
+    ===================================================== */
+    async function initializeBattlePage() {
+      const challengeLoaded = await loadAssignedChallenge();
+
+      if (!challengeLoaded) {
+        submitBtn.disabled = true;
+        generateBtn.disabled = true;
+        imageInput.disabled = true;
+        promptInput.disabled = true;
+        return;
+      }
+
+      updateTimer();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    /* =====================================================
+       PREVENT ACCESS AFTER SUBMISSION
+    ===================================================== */
+    if (localStorage.getItem("submissionCompleted") === "true") {
+      logoutUser();
+      window.location.href = "login.html";
+    } else {
+      initializeBattlePage();
+    }
+  </script>
 </body>
-
 </html>
