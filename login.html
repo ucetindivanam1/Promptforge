@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -17,1071 +16,1004 @@
 
 <style>
 
-    /* =========================================
-       RESET
-    ========================================= */
+/* =========================================
+   RESET
+========================================= */
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
 
-    html,
+/* =========================================
+   BODY
+========================================= */
+
+body {
+
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            #1e1b4b 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            #312e81 0%,
+            transparent 35%
+        ),
+        #050816;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    overflow-x: hidden;
+
+    position: relative;
+}
+
+/* =========================================
+   BACKGROUND GLOW
+========================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            124,
+            58,
+            237,
+            0.12
+        );
+
+    filter: blur(100px);
+
+    top: -220px;
+
+    left: -220px;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            37,
+            99,
+            235,
+            0.10
+        );
+
+    filter: blur(100px);
+
+    bottom: -220px;
+
+    right: -220px;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+/* =========================================
+   BACKGROUND GRID
+========================================= */
+
+.background-grid {
+
+    position: fixed;
+
+    inset: 0;
+
+    background-image:
+
+        linear-gradient(
+            rgba(
+                255,
+                255,
+                255,
+                0.025
+            ) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(
+                255,
+                255,
+                255,
+                0.025
+            ) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+/* =========================================
+   MAIN WRAPPER
+========================================= */
+
+.login-wrapper {
+
+    width: 100%;
+
+    max-width: 1050px;
+
+    min-height: 620px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.08fr
+        0.92fr;
+
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.72
+        );
+
+    border:
+        1px solid
+        rgba(
+            139,
+            92,
+            246,
+            0.25
+        );
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+
+        0 25px 80px
+        rgba(
+            0,
+            0,
+            0,
+            0.45
+        ),
+
+        0 0 80px
+        rgba(
+            124,
+            58,
+            237,
+            0.08
+        );
+
+    position: relative;
+
+    z-index: 2;
+}
+
+/* =========================================
+   LEFT INFORMATION SECTION
+========================================= */
+
+.login-info {
+
+    padding:
+        65px 60px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                76,
+                29,
+                149,
+                0.20
+            ),
+            rgba(
+                15,
+                23,
+                42,
+                0.15
+            )
+        );
+
+    position: relative;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo-mark {
+
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 32px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(
+            124,
+            58,
+            237,
+            0.14
+        );
+
+    border:
+        1px solid
+        rgba(
+            167,
+            139,
+            250,
+            0.30
+        );
+
+    margin-bottom: 24px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(
+            124,
+            58,
+            237,
+            0.12
+        );
+}
+
+/* =========================================
+   EVENT BADGE
+========================================= */
+
+.event-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    width: fit-content;
+
+    padding:
+        8px 14px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(
+            124,
+            58,
+            237,
+            0.14
+        );
+
+    border:
+        1px solid
+        rgba(
+            167,
+            139,
+            250,
+            0.35
+        );
+
+    color: #c4b5fd;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 18px;
+}
+
+/* =========================================
+   TITLE
+========================================= */
+
+.login-info h1 {
+
+    font-size: 58px;
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c4b5fd,
+            #22d3ee,
+            #818cf8
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.login-info > p {
+
+    color: #94a3b8;
+
+    font-size: 16px;
+
+    line-height: 1.75;
+
+    max-width: 480px;
+}
+
+/* =========================================
+   FEATURES
+========================================= */
+
+.features {
+
+    margin-top: 32px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 48px;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+}
+
+.feature-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background:
+        rgba(
+            124,
+            58,
+            237,
+            0.15
+        );
+
+    border:
+        1px solid
+        rgba(
+            124,
+            58,
+            237,
+            0.25
+        );
+
+    font-size: 17px;
+}
+
+/* =========================================
+   RIGHT LOGIN PANEL
+========================================= */
+
+.login-panel {
+
+    padding:
+        55px 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(
+            5,
+            8,
+            22,
+            0.15
+        );
+}
+
+/* =========================================
+   LOGIN CARD
+========================================= */
+
+.login-card {
+
+    width: 100%;
+
+    max-width: 390px;
+}
+
+/* =========================================
+   LOGIN HEADER
+========================================= */
+
+.login-card-header {
+
+    margin-bottom: 30px;
+}
+
+.login-card-header h2 {
+
+    font-size: 32px;
+
+    line-height: 1.2;
+
+    margin-bottom: 10px;
+
+    color: #f8fafc;
+}
+
+.login-card-header p {
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+/* =========================================
+   INPUT
+========================================= */
+
+.input-group {
+
+    margin-bottom: 20px;
+}
+
+.input-group label {
+
+    display: block;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 9px;
+}
+
+.input-wrapper {
+
+    position: relative;
+
+    width: 100%;
+}
+
+.input-icon {
+
+    position: absolute;
+
+    left: 16px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #64748b;
+
+    font-size: 17px;
+
+    pointer-events: none;
+}
+
+#email {
+
+    width: 100%;
+
+    height: 52px;
+
+    padding:
+        0 16px 0 48px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid #334155;
+
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.85
+        );
+
+    color: white;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+#email:hover {
+
+    border-color: #475569;
+}
+
+#email:focus {
+
+    border-color: #8b5cf6;
+
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.95
+        );
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            139,
+            92,
+            246,
+            0.12
+        );
+}
+
+#email::placeholder {
+
+    color: #475569;
+}
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+#loginBtn {
+
+    width: 100%;
+
+    height: 52px;
+
+    padding:
+        0 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #2563eb
+        );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
+}
+
+#loginBtn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(
+            124,
+            58,
+            237,
+            0.30
+        );
+}
+
+#loginBtn:active {
+
+    transform:
+        translateY(0);
+}
+
+#loginBtn:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+/* =========================================
+   REGISTER
+========================================= */
+
+.register-text {
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-top: 20px;
+}
+
+.register-text a {
+
+    color: #a78bfa;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    margin-left: 4px;
+
+    transition:
+        color 0.2s ease;
+}
+
+.register-text a:hover {
+
+    color: #c4b5fd;
+
+    text-decoration: underline;
+}
+
+/* =========================================
+   SECURITY NOTE
+========================================= */
+
+.security-note {
+
+    margin-top: 22px;
+
+    padding:
+        13px 15px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            0.50
+        );
+
+    border:
+        1px solid
+        rgba(
+            71,
+            85,
+            105,
+            0.25
+        );
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+
+    text-align: center;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer-text {
+
+    text-align: center;
+
+    color: #475569;
+
+    font-size: 11px;
+
+    margin-top: 24px;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+
     body {
-        width: 100%;
-        min-height: 100%;
+
+        padding: 20px;
     }
 
+    .login-wrapper {
 
-    /* =========================================
-       BODY
-    ========================================= */
+        grid-template-columns:
+            1fr 1fr;
+
+        min-height: 580px;
+    }
+
+    .login-info {
+
+        padding:
+            50px 40px;
+    }
+
+    .login-panel {
+
+        padding:
+            40px;
+    }
+
+    .login-info h1 {
+
+        font-size: 48px;
+    }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
 
     body {
 
         min-height: 100vh;
 
-        font-family: Arial, sans-serif;
+        padding: 20px;
 
-        background:
-            radial-gradient(
-                circle at 10% 20%,
-                #1e1b4b 0%,
-                transparent 35%
-            ),
-            radial-gradient(
-                circle at 90% 80%,
-                #312e81 0%,
-                transparent 35%
-            ),
-            #050816;
-
-        color: white;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        padding: 30px;
-
-        overflow-x: hidden;
-
-        position: relative;
+        overflow-y: auto;
     }
-
-
-    /* =========================================
-       BACKGROUND GLOW
-    ========================================= */
-
-    body::before {
-
-        content: "";
-
-        position: fixed;
-
-        width: 500px;
-
-        height: 500px;
-
-        border-radius: 50%;
-
-        background:
-            rgba(
-                124,
-                58,
-                237,
-                0.12
-            );
-
-        filter: blur(100px);
-
-        top: -220px;
-
-        left: -220px;
-
-        pointer-events: none;
-
-        z-index: 0;
-    }
-
-
-    body::after {
-
-        content: "";
-
-        position: fixed;
-
-        width: 500px;
-
-        height: 500px;
-
-        border-radius: 50%;
-
-        background:
-            rgba(
-                37,
-                99,
-                235,
-                0.10
-            );
-
-        filter: blur(100px);
-
-        bottom: -220px;
-
-        right: -220px;
-
-        pointer-events: none;
-
-        z-index: 0;
-    }
-
-
-    /* =========================================
-       BACKGROUND GRID
-    ========================================= */
-
-    .background-grid {
-
-        position: fixed;
-
-        inset: 0;
-
-        background-image:
-
-            linear-gradient(
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.025
-                ) 1px,
-                transparent 1px
-            ),
-
-            linear-gradient(
-                90deg,
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.025
-                ) 1px,
-                transparent 1px
-            );
-
-        background-size:
-            40px 40px;
-
-        pointer-events: none;
-
-        z-index: 0;
-    }
-
-
-    /* =========================================
-       MAIN WRAPPER
-    ========================================= */
 
     .login-wrapper {
 
         width: 100%;
 
-        max-width: 1050px;
+        max-width: 520px;
 
-        min-height: 620px;
+        min-height: auto;
 
-        display: grid;
+        grid-template-columns: 1fr;
 
-        grid-template-columns:
-            1.08fr
-            0.92fr;
+        border-radius: 22px;
 
-        background:
-            rgba(
-                15,
-                23,
-                42,
-                0.72
-            );
-
-        border:
-            1px solid
-            rgba(
-                139,
-                92,
-                246,
-                0.25
-            );
-
-        border-radius: 28px;
-
-        overflow: hidden;
-
-        backdrop-filter:
-            blur(20px);
-
-        -webkit-backdrop-filter:
-            blur(20px);
-
-        box-shadow:
-
-            0 25px 80px
-            rgba(
-                0,
-                0,
-                0,
-                0.45
-            ),
-
-            0 0 80px
-            rgba(
-                124,
-                58,
-                237,
-                0.08
-            );
-
-        position: relative;
-
-        z-index: 2;
+        margin: 20px 0;
     }
-
-
-    /* =========================================
-       LEFT INFORMATION SECTION
-    ========================================= */
 
     .login-info {
 
         padding:
-            65px 60px;
+            40px 30px 30px;
 
-        display: flex;
+        text-align: center;
 
-        flex-direction: column;
-
-        justify-content: center;
-
-        background:
-            linear-gradient(
-                145deg,
-                rgba(
-                    76,
-                    29,
-                    149,
-                    0.20
-                ),
-                rgba(
-                    15,
-                    23,
-                    42,
-                    0.15
-                )
-            );
-
-        position: relative;
+        align-items: center;
     }
-
-
-    /* =========================================
-       LOGO
-    ========================================= */
 
     .logo-mark {
-
-        width: 58px;
-
-        height: 58px;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        font-size: 32px;
-
-        border-radius: 16px;
-
-        background:
-            rgba(
-                124,
-                58,
-                237,
-                0.14
-            );
-
-        border:
-            1px solid
-            rgba(
-                167,
-                139,
-                250,
-                0.30
-            );
-
-        margin-bottom: 24px;
-
-        box-shadow:
-            0 10px 30px
-            rgba(
-                124,
-                58,
-                237,
-                0.12
-            );
-    }
-
-
-    /* =========================================
-       EVENT BADGE
-    ========================================= */
-
-    .event-badge {
-
-        display: inline-flex;
-
-        align-items: center;
-
-        width: fit-content;
-
-        padding:
-            8px 14px;
-
-        border-radius: 30px;
-
-        background:
-            rgba(
-                124,
-                58,
-                237,
-                0.14
-            );
-
-        border:
-            1px solid
-            rgba(
-                167,
-                139,
-                250,
-                0.35
-            );
-
-        color: #c4b5fd;
-
-        font-size: 12px;
-
-        font-weight: bold;
-
-        letter-spacing: 1px;
 
         margin-bottom: 18px;
     }
 
+    .event-badge {
 
-    /* =========================================
-       TITLE
-    ========================================= */
+        margin-bottom: 16px;
+    }
 
     .login-info h1 {
 
-        font-size: 58px;
+        font-size: 44px;
 
-        line-height: 1.05;
+        letter-spacing: -1px;
 
-        letter-spacing: -2px;
-
-        margin-bottom: 20px;
-
-        background:
-            linear-gradient(
-                90deg,
-                #c4b5fd,
-                #22d3ee,
-                #818cf8
-            );
-
-        -webkit-background-clip: text;
-
-        -webkit-text-fill-color: transparent;
+        margin-bottom: 18px;
     }
-
-
-    /* =========================================
-       DESCRIPTION
-    ========================================= */
 
     .login-info > p {
 
-        color: #94a3b8;
+        font-size: 14px;
 
-        font-size: 16px;
-
-        line-height: 1.75;
-
-        max-width: 480px;
+        line-height: 1.7;
     }
-
-
-    /* =========================================
-       FEATURES
-    ========================================= */
 
     .features {
 
-        margin-top: 32px;
+        width: 100%;
 
-        display: flex;
+        margin-top: 25px;
 
-        flex-direction: column;
-
-        gap: 14px;
+        text-align: left;
     }
-
-
-    .feature {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 14px;
-
-        min-height: 48px;
-
-        color: #cbd5e1;
-
-        font-size: 14px;
-    }
-
-
-    .feature-icon {
-
-        width: 40px;
-
-        height: 40px;
-
-        flex-shrink: 0;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        border-radius: 11px;
-
-        background:
-            rgba(
-                124,
-                58,
-                237,
-                0.15
-            );
-
-        border:
-            1px solid
-            rgba(
-                124,
-                58,
-                237,
-                0.25
-            );
-
-        font-size: 17px;
-    }
-
-
-    /* =========================================
-       RIGHT LOGIN PANEL
-    ========================================= */
 
     .login-panel {
 
         padding:
-            55px 60px;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        background:
-            rgba(
-                5,
-                8,
-                22,
-                0.15
-            );
+            35px 30px 40px;
     }
-
-
-    /* =========================================
-       LOGIN CARD
-    ========================================= */
 
     .login-card {
 
-        width: 100%;
-
-        max-width: 390px;
+        max-width: 100%;
     }
-
-
-    /* =========================================
-       LOGIN HEADER
-    ========================================= */
-
-    .login-card-header {
-
-        margin-bottom: 30px;
-    }
-
 
     .login-card-header h2 {
 
-        font-size: 32px;
+        font-size: 28px;
+    }
+}
 
-        line-height: 1.2;
+/* =========================================
+   SMALL MOBILE
+========================================= */
 
-        margin-bottom: 10px;
+@media (max-width: 450px) {
 
-        color: #f8fafc;
+    body {
+
+        padding: 12px;
     }
 
+    .login-wrapper {
 
-    .login-card-header p {
-
-        color: #64748b;
-
-        font-size: 14px;
-
-        line-height: 1.6;
+        border-radius: 18px;
     }
 
+    .login-info {
 
-    /* =========================================
-       INPUT
-    ========================================= */
-
-    .input-group {
-
-        margin-bottom: 20px;
+        padding:
+            30px 22px 25px;
     }
 
+    .login-panel {
 
-    .input-group label {
+        padding:
+            30px 22px 35px;
+    }
 
-        display: block;
+    .login-info h1 {
 
-        color: #cbd5e1;
+        font-size: 38px;
+    }
+
+    .event-badge {
+
+        font-size: 10px;
+
+        padding:
+            7px 11px;
+    }
+
+    .feature {
 
         font-size: 13px;
-
-        font-weight: 600;
-
-        margin-bottom: 9px;
     }
 
+    .feature-icon {
 
-    .input-wrapper {
+        width: 36px;
 
-        position: relative;
-
-        width: 100%;
+        height: 36px;
     }
 
+    .login-card-header h2 {
 
-    .input-icon {
-
-        position: absolute;
-
-        left: 16px;
-
-        top: 50%;
-
-        transform:
-            translateY(-50%);
-
-        color: #64748b;
-
-        font-size: 17px;
-
-        pointer-events: none;
+        font-size: 25px;
     }
-
-
-    #email {
-
-        width: 100%;
-
-        height: 52px;
-
-        padding:
-            0 16px 0 48px;
-
-        border-radius: 12px;
-
-        border:
-            1px solid #334155;
-
-        background:
-            rgba(
-                15,
-                23,
-                42,
-                0.85
-            );
-
-        color: white;
-
-        outline: none;
-
-        font-size: 14px;
-
-        transition:
-            border-color 0.25s ease,
-            box-shadow 0.25s ease,
-            background 0.25s ease;
-    }
-
-
-    #email:hover {
-
-        border-color: #475569;
-    }
-
-
-    #email:focus {
-
-        border-color: #8b5cf6;
-
-        background:
-            rgba(
-                15,
-                23,
-                42,
-                0.95
-            );
-
-        box-shadow:
-            0 0 0 3px
-            rgba(
-                139,
-                92,
-                246,
-                0.12
-            );
-    }
-
-
-    #email::placeholder {
-
-        color: #475569;
-    }
-
-
-    /* =========================================
-       LOGIN BUTTON
-    ========================================= */
-
-    #loginBtn {
-
-        width: 100%;
-
-        height: 52px;
-
-        padding:
-            0 18px;
-
-        border: none;
-
-        border-radius: 12px;
-
-        background:
-            linear-gradient(
-                90deg,
-                #7c3aed,
-                #2563eb
-            );
-
-        color: white;
-
-        font-size: 15px;
-
-        font-weight: bold;
-
-        cursor: pointer;
-
-        transition:
-            transform 0.25s ease,
-            box-shadow 0.25s ease,
-            opacity 0.25s ease;
-    }
-
-
-    #loginBtn:hover {
-
-        transform:
-            translateY(-2px);
-
-        box-shadow:
-            0 12px 30px
-            rgba(
-                124,
-                58,
-                237,
-                0.30
-            );
-    }
-
-
-    #loginBtn:active {
-
-        transform:
-            translateY(0);
-    }
-
-
-    #loginBtn:disabled {
-
-        opacity: 0.6;
-
-        cursor: not-allowed;
-
-        transform: none;
-
-        box-shadow: none;
-    }
-
-
-    /* =========================================
-       REGISTER
-    ========================================= */
-
-    .register-text {
-
-        text-align: center;
-
-        color: #64748b;
-
-        font-size: 13px;
-
-        line-height: 1.5;
-
-        margin-top: 20px;
-    }
-
-
-    .register-text a {
-
-        color: #a78bfa;
-
-        text-decoration: none;
-
-        font-weight: bold;
-
-        margin-left: 4px;
-
-        transition:
-            color 0.2s ease;
-    }
-
-
-    .register-text a:hover {
-
-        color: #c4b5fd;
-
-        text-decoration: underline;
-    }
-
-
-    /* =========================================
-       SECURITY NOTE
-    ========================================= */
-
-    .security-note {
-
-        margin-top: 22px;
-
-        padding:
-            13px 15px;
-
-        border-radius: 10px;
-
-        background:
-            rgba(
-                15,
-                23,
-                42,
-                0.50
-            );
-
-        border:
-            1px solid
-            rgba(
-                71,
-                85,
-                105,
-                0.25
-            );
-
-        color: #64748b;
-
-        font-size: 11px;
-
-        line-height: 1.55;
-
-        text-align: center;
-    }
-
-
-    /* =========================================
-       FOOTER
-    ========================================= */
-
-    .footer-text {
-
-        text-align: center;
-
-        color: #475569;
-
-        font-size: 11px;
-
-        margin-top: 24px;
-    }
-
-
-    /* =========================================
-       TABLET
-    ========================================= */
-
-    @media (max-width: 950px) {
-
-        body {
-
-            padding: 20px;
-        }
-
-
-        .login-wrapper {
-
-            grid-template-columns:
-                1fr 1fr;
-
-            min-height: 580px;
-        }
-
-
-        .login-info {
-
-            padding:
-                50px 40px;
-        }
-
-
-        .login-panel {
-
-            padding:
-                40px;
-        }
-
-
-        .login-info h1 {
-
-            font-size: 48px;
-        }
-
-    }
-
-
-    /* =========================================
-       MOBILE
-    ========================================= */
-
-    @media (max-width: 800px) {
-
-        body {
-
-            min-height: 100vh;
-
-            padding: 20px;
-
-            overflow-y: auto;
-        }
-
-
-        .login-wrapper {
-
-            width: 100%;
-
-            max-width: 520px;
-
-            min-height: auto;
-
-            grid-template-columns: 1fr;
-
-            border-radius: 22px;
-
-            margin: 20px 0;
-        }
-
-
-        .login-info {
-
-            padding:
-                40px 30px 30px;
-
-            text-align: center;
-
-            align-items: center;
-        }
-
-
-        .logo-mark {
-
-            margin-bottom: 18px;
-        }
-
-
-        .event-badge {
-
-            margin-bottom: 16px;
-        }
-
-
-        .login-info h1 {
-
-            font-size: 44px;
-
-            letter-spacing: -1px;
-
-            margin-bottom: 18px;
-        }
-
-
-        .login-info > p {
-
-            font-size: 14px;
-
-            line-height: 1.7;
-        }
-
-
-        .features {
-
-            width: 100%;
-
-            margin-top: 25px;
-
-            text-align: left;
-        }
-
-
-        .login-panel {
-
-            padding:
-                35px 30px 40px;
-        }
-
-
-        .login-card {
-
-            max-width: 100%;
-        }
-
-
-        .login-card-header h2 {
-
-            font-size: 28px;
-        }
-
-    }
-
-
-    /* =========================================
-       SMALL MOBILE
-    ========================================= */
-
-    @media (max-width: 450px) {
-
-        body {
-
-            padding: 12px;
-        }
-
-
-        .login-wrapper {
-
-            border-radius: 18px;
-        }
-
-
-        .login-info {
-
-            padding:
-                30px 22px 25px;
-        }
-
-
-        .login-panel {
-
-            padding:
-                30px 22px 35px;
-        }
-
-
-        .login-info h1 {
-
-            font-size: 38px;
-        }
-
-
-        .event-badge {
-
-            font-size: 10px;
-
-            padding:
-                7px 11px;
-        }
-
-
-        .feature {
-
-            font-size: 13px;
-        }
-
-
-        .feature-icon {
-
-            width: 36px;
-
-            height: 36px;
-        }
-
-
-        .login-card-header h2 {
-
-            font-size: 25px;
-        }
-
-    }
+}
 
 </style>
-
 
 </head>
 
 <body>
 
-```
 <!-- =========================================
      BACKGROUND
 ========================================= -->
@@ -1102,34 +1034,26 @@
 
     <section class="login-info">
 
-
         <div class="logo-mark">
             ⚡
         </div>
-
 
         <div class="event-badge">
             AI DESIGN CHALLENGE 2026
         </div>
 
-
         <h1>
             Prompt Forge
         </h1>
 
-
         <p>
-
             Enter the arena where creativity meets
             artificial intelligence. Create powerful
             prompts, generate amazing designs and
             prove your prompt engineering skills.
-
         </p>
 
-
         <div class="features">
-
 
             <div class="feature">
 
@@ -1143,7 +1067,6 @@
 
             </div>
 
-
             <div class="feature">
 
                 <div class="feature-icon">
@@ -1155,7 +1078,6 @@
                 </span>
 
             </div>
-
 
             <div class="feature">
 
@@ -1169,9 +1091,7 @@
 
             </div>
 
-
         </div>
-
 
     </section>
 
@@ -1182,9 +1102,7 @@
 
     <section class="login-panel">
 
-
         <div class="login-card">
-
 
             <div class="login-card-header">
 
@@ -1208,19 +1126,18 @@
                     Registered Email
                 </label>
 
-
                 <div class="input-wrapper">
 
                     <span class="input-icon">
                         ✉
                     </span>
 
-
                     <input
                         type="email"
                         id="email"
                         placeholder="Enter your registered email"
                         autocomplete="email"
+                        spellcheck="false"
                     >
 
                 </div>
@@ -1234,9 +1151,7 @@
                 id="loginBtn"
                 type="button"
             >
-
                 Enter Competition →
-
             </button>
 
 
@@ -1272,12 +1187,9 @@
 
             </div>
 
-
         </div>
 
-
     </section>
-
 
 </div>
 
@@ -1288,551 +1200,1013 @@
 
 <script type="module">
 
-    import { db } from "./firebase.js";
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    runTransaction,
+    Timestamp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-    import {
-        collection,
-        query,
-        where,
-        getDocs,
-        doc,
-        runTransaction,
-        Timestamp
-    }
-    from
-    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loginBtn =
+    document.getElementById("loginBtn");
+
+const emailInput =
+    document.getElementById("email");
 
 
-    /* =====================================
-       ELEMENTS
-    ====================================== */
+/* =========================================
+   SETTINGS
+========================================= */
 
-    const loginBtn =
-        document.getElementById(
-            "loginBtn"
-        );
+const TOTAL_QUESTIONS = 15;
 
 
-    const emailInput =
-        document.getElementById(
-            "email"
-        );
+/* =========================================
+   ASSIGN QUESTION
+========================================= */
 
+async function assignQuestion(userDocId) {
 
-    /* =====================================
-       SETTINGS
-    ====================================== */
-
-    const TOTAL_QUESTIONS = 15;
-
-
-    /* =====================================
-       ASSIGN QUESTION
-    ====================================== */
-
-    async function assignQuestion(
-        userDocId
-    ) {
-
-        const userRef =
-            doc(
-                db,
-                "users",
-                userDocId
-            );
-
-
-        const eventRef =
-            doc(
-                db,
-                "eventState",
-                "promptForge"
-            );
-
-
-        return await runTransaction(
+    const userRef =
+        doc(
             db,
-            async (transaction) => {
+            "users",
+            userDocId
+        );
+
+    const eventRef =
+        doc(
+            db,
+            "eventState",
+            "promptForge"
+        );
+
+    return await runTransaction(
+        db,
+        async (transaction) => {
+
+            /*
+             * READ USER
+             */
+
+            const userSnapshot =
+                await transaction.get(
+                    userRef
+                );
+
+            if (!userSnapshot.exists()) {
+
+                throw new Error(
+                    "Participant account not found."
+                );
+            }
+
+            const user =
+                userSnapshot.data();
 
 
-                /*
-                    Read participant.
-                */
+            /*
+             * EXISTING ASSIGNMENT
+             *
+             * If participant already has
+             * a question, NEVER allocate
+             * another question.
+             */
 
-                const userSnapshot =
-                    await transaction.get(
-                        userRef
+            if (
+                user.assignedQuestion !== undefined &&
+                user.assignedQuestion !== null &&
+                user.assignedRound !== undefined &&
+                user.assignedRound !== null
+            ) {
+
+                const existingQuestion =
+                    Number(
+                        user.assignedQuestion
                     );
 
-
-                if (
-                    !userSnapshot.exists()
-                ) {
-
-                    throw new Error(
-                        "Participant account not found."
+                const existingRound =
+                    Number(
+                        user.assignedRound
                     );
 
-                }
-
-
-                const user =
-                    userSnapshot.data();
-
-
-                /*
-                    If already assigned,
-                    keep the same question.
-
-                    This prevents a participant
-                    getting another question
-                    when they login again.
-                */
-
                 if (
-                    user.assignedQuestion != null
-                    &&
-                    user.assignedRound != null
+                    existingQuestion >= 1 &&
+                    existingQuestion <= TOTAL_QUESTIONS &&
+                    existingRound >= 1
                 ) {
 
                     return {
 
                         question:
-                            Number(
-                                user.assignedQuestion
-                            ),
+                            existingQuestion,
 
                         round:
-                            Number(
-                                user.assignedRound
-                            )
+                            existingRound
 
                     };
 
                 }
 
+            }
 
-                /*
-                    Read global event state.
-                */
 
-                const eventSnapshot =
-                    await transaction.get(
-                        eventRef
+            /*
+             * READ GLOBAL EVENT STATE
+             */
+
+            const eventSnapshot =
+                await transaction.get(
+                    eventRef
+                );
+
+            let nextSlot = 1;
+
+            if (
+                eventSnapshot.exists()
+            ) {
+
+                const eventData =
+                    eventSnapshot.data();
+
+                nextSlot =
+                    Number(
+                        eventData.nextSlot || 1
                     );
 
-
-                let nextSlot = 1;
-
-
-                if (
-                    eventSnapshot.exists()
-                ) {
-
-                    const eventData =
-                        eventSnapshot.data();
+            }
 
 
-                    nextSlot =
-                        Number(
-                            eventData.nextSlot || 1
-                        );
+            /*
+             * SAFETY CHECK
+             */
+
+            if (
+                !Number.isInteger(nextSlot) ||
+                nextSlot < 1
+            ) {
+
+                nextSlot = 1;
+
+            }
+
+
+            /*
+             * QUESTION
+             *
+             * Slot 1  -> Q1
+             * Slot 2  -> Q2
+             * ...
+             * Slot 15 -> Q15
+             * Slot 16 -> Q1 Round 2
+             */
+
+            const question =
+                (
+                    (nextSlot - 1)
+                    %
+                    TOTAL_QUESTIONS
+                ) + 1;
+
+
+            /*
+             * ROUND
+             */
+
+            const round =
+                Math.floor(
+                    (nextSlot - 1)
+                    /
+                    TOTAL_QUESTIONS
+                ) + 1;
+
+
+            /*
+             * UPDATE GLOBAL SLOT
+             */
+
+            transaction.set(
+
+                eventRef,
+
+                {
+
+                    nextSlot:
+                        nextSlot + 1,
+
+                    updatedAt:
+                        Timestamp.now()
+
+                },
+
+                {
+                    merge: true
+                }
+
+            );
+
+
+            /*
+             * SAVE PARTICIPANT ASSIGNMENT
+             */
+
+            transaction.update(
+
+                userRef,
+
+                {
+
+                    assignedQuestion:
+                        question,
+
+                    assignedRound:
+                        round,
+
+                    battleAssignedAt:
+                        Timestamp.now()
 
                 }
 
-
-                /*
-                    Calculate question.
-                */
-
-                const question =
-                    (
-                        (nextSlot - 1)
-                        %
-                        TOTAL_QUESTIONS
-                    ) + 1;
+            );
 
 
-                /*
-                    Calculate round.
-                */
+            /*
+             * RETURN ASSIGNMENT
+             */
 
-                const round =
-                    Math.floor(
-                        (nextSlot - 1)
-                        /
-                        TOTAL_QUESTIONS
-                    ) + 1;
+            return {
 
+                question:
+                    question,
 
-                /*
-                    Move global slot
-                    to the next participant.
-                */
+                round:
+                    round
 
-                transaction.set(
+            };
 
-                    eventRef,
+        }
+    );
 
-                    {
-
-                        nextSlot:
-                            nextSlot + 1,
-
-                        updatedAt:
-                            Timestamp.now()
-
-                    },
-
-                    {
-                        merge: true
-                    }
-
-                );
+}
 
 
-                /*
-                    Save assignment.
-                */
+/* =========================================
+   FIND PARTICIPANT
+========================================= */
 
-                transaction.update(
+async function findParticipant(email) {
 
-                    userRef,
-
-                    {
-
-                        assignedQuestion:
-                            question,
-
-                        assignedRound:
-                            round,
-
-                        battleAssignedAt:
-                            Timestamp.now()
-
-                    }
-
-                );
-
-
-                return {
-
-                    question:
-                        question,
-
-                    round:
-                        round
-
-                };
-
-            }
+    const usersRef =
+        collection(
+            db,
+            "users"
         );
+
+
+    /*
+     * FIRST:
+     * Exact lowercase email query.
+     */
+
+    const exactQuery =
+        query(
+
+            usersRef,
+
+            where(
+                "email",
+                "==",
+                email
+            )
+
+        );
+
+
+    const exactSnapshot =
+        await getDocs(
+            exactQuery
+        );
+
+
+    if (
+        !exactSnapshot.empty
+    ) {
+
+        return exactSnapshot.docs[0];
 
     }
 
 
-    /* =====================================
-       LOGIN
-    ====================================== */
+    /*
+     * SECOND:
+     * Try original entered email.
+     *
+     * This helps if the database contains
+     * uppercase characters.
+     */
 
-    async function loginParticipant() {
+    const originalEmail =
+        emailInput.value.trim();
 
 
-        const email =
-            emailInput.value
-                .trim()
-                .toLowerCase();
+    if (
+        originalEmail &&
+        originalEmail !== email
+    ) {
 
+        const originalQuery =
+            query(
 
-        /*
-            Empty email.
-        */
+                usersRef,
 
-        if (!email) {
+                where(
+                    "email",
+                    "==",
+                    originalEmail
+                )
 
-            alert(
-                "Please enter your registered email."
             );
 
-            emailInput.focus();
 
-            return;
+        const originalSnapshot =
+            await getDocs(
+                originalQuery
+            );
+
+
+        if (
+            !originalSnapshot.empty
+        ) {
+
+            return originalSnapshot.docs[0];
+
         }
+
+    }
+
+
+    /*
+     * THIRD:
+     * Fallback scan.
+     *
+     * This handles email capitalization
+     * differences.
+     */
+
+    const allUsersSnapshot =
+        await getDocs(
+            usersRef
+        );
+
+
+    for (
+        const userDoc
+        of allUsersSnapshot.docs
+    ) {
+
+        const data =
+            userDoc.data();
+
+        const storedEmail =
+            String(
+                data.email || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (
+            storedEmail === email
+        ) {
+
+            return userDoc;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================
+   CLEAR OLD SESSION
+========================================= */
+
+function clearBattleSession() {
+
+    localStorage.removeItem(
+        "currentUser"
+    );
+
+    localStorage.removeItem(
+        "currentEmail"
+    );
+
+    localStorage.removeItem(
+        "assignedQuestion"
+    );
+
+    localStorage.removeItem(
+        "assignedRound"
+    );
+
+    localStorage.removeItem(
+        "timerStart"
+    );
+
+    localStorage.removeItem(
+        "submissionCompleted"
+    );
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+async function loginParticipant() {
+
+    const email =
+        emailInput.value
+            .trim()
+            .toLowerCase();
+
+
+    /*
+     * EMPTY EMAIL
+     */
+
+    if (!email) {
+
+        alert(
+            "Please enter your registered email."
+        );
+
+        emailInput.focus();
+
+        return;
+
+    }
+
+
+    /*
+     * BASIC EMAIL VALIDATION
+     */
+
+    if (
+        !email.includes("@") ||
+        !email.includes(".")
+    ) {
+
+        alert(
+            "Please enter a valid email address."
+        );
+
+        emailInput.focus();
+
+        return;
+
+    }
+
+
+    /*
+     * DISABLE BUTTON
+     */
+
+    loginBtn.disabled = true;
+
+    loginBtn.textContent =
+        "Checking...";
+
+
+    try {
+
+        /*
+         * Clear only the old temporary
+         * session data.
+         *
+         * Firestore assignment is NOT deleted.
+         */
+
+        localStorage.removeItem(
+            "currentUser"
+        );
+
+        localStorage.removeItem(
+            "currentEmail"
+        );
+
+        localStorage.removeItem(
+            "assignedQuestion"
+        );
+
+        localStorage.removeItem(
+            "assignedRound"
+        );
+
+        localStorage.removeItem(
+            "timerStart"
+        );
+
+        localStorage.removeItem(
+            "submissionCompleted"
+        );
 
 
         /*
-            Disable button.
-        */
-
-        loginBtn.disabled =
-            true;
-
+         * FIND USER
+         */
 
         loginBtn.textContent =
-            "Checking...";
+            "Finding participant...";
 
 
-        try {
-
-
-            /* =============================
-               FIND USER
-            ============================== */
-
-            const usersRef =
-                collection(
-                    db,
-                    "users"
-                );
-
-
-            const userQuery =
-                query(
-
-                    usersRef,
-
-                    where(
-                        "email",
-                        "==",
-                        email
-                    )
-
-                );
-
-
-            const snapshot =
-                await getDocs(
-                    userQuery
-                );
-
-
-            /*
-                User doesn't exist.
-            */
-
-            if (
-                snapshot.empty
-            ) {
-
-                alert(
-                    "This email is not registered. Please register first."
-                );
-
-
-                loginBtn.disabled =
-                    false;
-
-
-                loginBtn.textContent =
-                    "Enter Competition →";
-
-
-                return;
-            }
-
-
-            /*
-                Get participant document.
-            */
-
-            const userDoc =
-                snapshot.docs[0];
-
-
-            const userData =
-                userDoc.data();
-
-
-            /* =============================
-               APPROVAL CHECK
-            ============================== */
-
-            if (
-                userData.emailApproved
-                !==
-                true
-            ) {
-
-                alert(
-                    "Your registration has not been approved by the administrator yet."
-                );
-
-
-                loginBtn.disabled =
-                    false;
-
-
-                loginBtn.textContent =
-                    "Enter Competition →";
-
-
-                return;
-            }
-
-
-            /* =============================
-               ASSIGN QUESTION
-            ============================== */
-
-            loginBtn.textContent =
-                "Assigning challenge...";
-
-
-            const assignment =
-                await assignQuestion(
-                    userDoc.id
-                );
-
-
-            /* =============================
-               SESSION
-            ============================== */
-
-            localStorage.setItem(
-
-                "currentUser",
-
-                userData.fullName
-                ||
-                "Participant"
-
-            );
-
-
-            localStorage.setItem(
-
-                "currentEmail",
-
-                userData.email
-                ||
+        const userDoc =
+            await findParticipant(
                 email
-
             );
 
 
-            localStorage.setItem(
+        /*
+         * USER NOT FOUND
+         */
 
-                "assignedQuestion",
-
-                String(
-                    assignment.question
-                )
-
-            );
-
-
-            localStorage.setItem(
-
-                "assignedRound",
-
-                String(
-                    assignment.round
-                )
-
-            );
-
-
-            /*
-                IMPORTANT:
-
-                Timer starts ONLY after
-                successful login.
-            */
-
-            localStorage.setItem(
-
-                "timerStart",
-
-                String(
-                    Date.now()
-                )
-
-            );
-
-
-            /*
-                New session.
-            */
-
-            localStorage.removeItem(
-                "submissionCompleted"
-            );
-
-
-            /* =============================
-               GO TO BATTLE
-            ============================== */
-
-            window.location.href =
-                "battle.html";
-
-
-        }
-        catch (error) {
-
-
-            console.error(
-                "Login error:",
-                error
-            );
-
+        if (!userDoc) {
 
             alert(
-                "Unable to enter the competition.\n\n"
-                +
-                error.message
+                "This email is not registered. Please register first."
             );
 
-
-            loginBtn.disabled =
-                false;
-
+            loginBtn.disabled = false;
 
             loginBtn.textContent =
                 "Enter Competition →";
 
+            return;
+
         }
+
+
+        /*
+         * USER DATA
+         */
+
+        const userData =
+            userDoc.data();
+
+
+        /*
+         * APPROVAL CHECK
+         *
+         * Main field:
+         * emailApproved === true
+         *
+         * Also accept approved === true
+         * when older registrations exist.
+         */
+
+        const isApproved =
+            userData.emailApproved === true ||
+            userData.approved === true;
+
+
+        if (!isApproved) {
+
+            alert(
+                "Your registration has not been approved by the administrator yet."
+            );
+
+            loginBtn.disabled = false;
+
+            loginBtn.textContent =
+                "Enter Competition →";
+
+            return;
+
+        }
+
+
+        /*
+         * REJECTED USERS
+         */
+
+        if (
+            String(
+                userData.approvalStatus || ""
+            ).toLowerCase()
+            ===
+            "rejected"
+        ) {
+
+            alert(
+                "Your registration has been rejected by the administrator."
+            );
+
+            loginBtn.disabled = false;
+
+            loginBtn.textContent =
+                "Enter Competition →";
+
+            return;
+
+        }
+
+
+        /*
+         * ASSIGN CHALLENGE
+         */
+
+        loginBtn.textContent =
+            "Assigning challenge...";
+
+
+        const assignment =
+            await assignQuestion(
+                userDoc.id
+            );
+
+
+        /*
+         * VERIFY ASSIGNMENT
+         */
+
+        const assignedQuestion =
+            Number(
+                assignment.question
+            );
+
+        const assignedRound =
+            Number(
+                assignment.round
+            );
+
+
+        if (
+            !Number.isInteger(
+                assignedQuestion
+            ) ||
+            assignedQuestion < 1 ||
+            assignedQuestion > TOTAL_QUESTIONS
+        ) {
+
+            throw new Error(
+                "Invalid challenge number received from Firebase."
+            );
+
+        }
+
+
+        if (
+            !Number.isInteger(
+                assignedRound
+            ) ||
+            assignedRound < 1
+        ) {
+
+            throw new Error(
+                "Invalid competition round received from Firebase."
+            );
+
+        }
+
+
+        /*
+         * =================================
+         * SAVE SESSION
+         * =================================
+         */
+
+        const participantName =
+            String(
+                userData.fullName ||
+                userData.name ||
+                "Participant"
+            );
+
+
+        const participantEmail =
+            String(
+                userData.email ||
+                email
+            )
+            .trim()
+            .toLowerCase();
+
+
+        /*
+         * Participant name
+         */
+
+        localStorage.setItem(
+            "currentUser",
+            participantName
+        );
+
+
+        /*
+         * Participant email
+         */
+
+        localStorage.setItem(
+            "currentEmail",
+            participantEmail
+        );
+
+
+        /*
+         * Assigned question
+         */
+
+        localStorage.setItem(
+            "assignedQuestion",
+            String(
+                assignedQuestion
+            )
+        );
+
+
+        /*
+         * Assigned round
+         */
+
+        localStorage.setItem(
+            "assignedRound",
+            String(
+                assignedRound
+            )
+        );
+
+
+        /*
+         * Timer starts ONLY HERE.
+         *
+         * It does NOT start merely because
+         * battle.html loads.
+         */
+
+        const timerStart =
+            Date.now();
+
+
+        localStorage.setItem(
+            "timerStart",
+            String(
+                timerStart
+            )
+        );
+
+
+        /*
+         * New battle session
+         */
+
+        localStorage.removeItem(
+            "submissionCompleted"
+        );
+
+
+        /*
+         * =================================
+         * FINAL VERIFICATION
+         * =================================
+         *
+         * Make sure browser storage really
+         * contains the assignment before
+         * redirecting.
+         */
+
+        const savedQuestion =
+            localStorage.getItem(
+                "assignedQuestion"
+            );
+
+        const savedRound =
+            localStorage.getItem(
+                "assignedRound"
+            );
+
+        const savedEmail =
+            localStorage.getItem(
+                "currentEmail"
+            );
+
+        const savedTimer =
+            localStorage.getItem(
+                "timerStart"
+            );
+
+
+        if (
+            savedQuestion !==
+            String(assignedQuestion)
+        ) {
+
+            throw new Error(
+                "Unable to save the assigned question on this computer."
+            );
+
+        }
+
+
+        if (
+            savedRound !==
+            String(assignedRound)
+        ) {
+
+            throw new Error(
+                "Unable to save the assigned round on this computer."
+            );
+
+        }
+
+
+        if (
+            !savedEmail
+        ) {
+
+            throw new Error(
+                "Unable to save participant email."
+            );
+
+        }
+
+
+        if (
+            !savedTimer
+        ) {
+
+            throw new Error(
+                "Unable to start the competition timer."
+            );
+
+        }
+
+
+        /*
+         * Console information.
+         *
+         * Useful for checking the lab PC.
+         */
+
+        console.log(
+            "================================="
+        );
+
+        console.log(
+            "PROMPT FORGE LOGIN SUCCESS"
+        );
+
+        console.log(
+            "Participant:",
+            participantName
+        );
+
+        console.log(
+            "Email:",
+            participantEmail
+        );
+
+        console.log(
+            "Question:",
+            assignedQuestion
+        );
+
+        console.log(
+            "Round:",
+            assignedRound
+        );
+
+        console.log(
+            "Timer:",
+            timerStart
+        );
+
+        console.log(
+            "================================="
+        );
+
+
+        /*
+         * =================================
+         * GO TO BATTLE
+         * =================================
+         */
+
+        loginBtn.textContent =
+            "Entering Competition...";
+
+
+        window.location.href =
+            "battle.html";
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
+
+
+        /*
+         * IMPORTANT:
+         * Do not delete Firestore assignment.
+         *
+         * Only temporary browser session
+         * data is cleared.
+         */
+
+        localStorage.removeItem(
+            "currentUser"
+        );
+
+        localStorage.removeItem(
+            "currentEmail"
+        );
+
+        localStorage.removeItem(
+            "assignedQuestion"
+        );
+
+        localStorage.removeItem(
+            "assignedRound"
+        );
+
+        localStorage.removeItem(
+            "timerStart"
+        );
+
+
+        alert(
+            "Unable to enter the competition.\n\n"
+            +
+            (
+                error.message ||
+                "Unknown error occurred."
+            )
+        );
+
+
+        loginBtn.disabled =
+            false;
+
+        loginBtn.textContent =
+            "Enter Competition →";
 
     }
 
-
-    /* =====================================
-       BUTTON LOGIN
-    ====================================== */
-
-    loginBtn.addEventListener(
-        "click",
-        loginParticipant
-    );
+}
 
 
-    /* =====================================
-       ENTER KEY LOGIN
-    ====================================== */
+/* =========================================
+   BUTTON LOGIN
+========================================= */
 
-    emailInput.addEventListener(
+loginBtn.addEventListener(
+    "click",
+    loginParticipant
+);
 
-        "keydown",
 
-        function(event) {
+/* =========================================
+   ENTER KEY LOGIN
+========================================= */
 
-            if (
-                event.key === "Enter"
-            ) {
+emailInput.addEventListener(
+    "keydown",
+    function(event) {
 
-                event.preventDefault();
+        if (
+            event.key === "Enter"
+        ) {
 
-                loginParticipant();
+            event.preventDefault();
 
-            }
+            loginParticipant();
 
         }
 
-    );
+    }
+);
 
 </script>
-
 
 </body>
 
