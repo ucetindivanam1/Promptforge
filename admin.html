@@ -404,6 +404,8 @@
 
                         <th>Email</th>
 
+                        <th>Mobile Number</th>
+
                         <th>Round</th>
 
                         <th>Question</th>
@@ -903,6 +905,15 @@
                         </td>
 
                         <td>
+                            ${escapeHTML(
+                                u.mobile ||
+                                u.mobileNumber ||
+                                u.phone ||
+                                "N/A"
+                            )}
+                        </td>
+
+                        <td>
 
                             ${
                                 assignedRound
@@ -1266,6 +1277,51 @@
                         );
 
 
+                    let calculatedTimeUsedSeconds =
+                        data.timeUsedSeconds;
+
+                    if (
+                        (
+                            calculatedTimeUsedSeconds === undefined ||
+                            calculatedTimeUsedSeconds === null
+                        ) &&
+                        data.timerStart &&
+                        data.submittedAt
+                    ) {
+                        try {
+                            const startMillis =
+                                typeof data.timerStart.toMillis === "function"
+                                    ? data.timerStart.toMillis()
+                                    : Number(data.timerStart);
+
+                            const submittedMillis =
+                                typeof data.submittedAt.toMillis === "function"
+                                    ? data.submittedAt.toMillis()
+                                    : Number(data.submittedAt);
+
+                            if (
+                                Number.isFinite(startMillis) &&
+                                Number.isFinite(submittedMillis)
+                            ) {
+                                calculatedTimeUsedSeconds =
+                                    Math.max(
+                                        0,
+                                        Math.min(
+                                            20 * 60,
+                                            Math.floor(
+                                                (submittedMillis - startMillis) / 1000
+                                            )
+                                        )
+                                    );
+                            }
+                        } catch (timeError) {
+                            console.warn(
+                                "Could not calculate submission time:",
+                                timeError
+                            );
+                        }
+                    }
+
                     submissions.push({
 
                         id:
@@ -1273,7 +1329,10 @@
 
                         ...data,
 
-                        round,
+                        timeUsedSeconds:
+                            calculatedTimeUsedSeconds,
+
+                        round:
 
                         questionNumber,
 
@@ -1786,7 +1845,15 @@
                         data.email ||
                         user.email ||
                         "N/A",
-                    round,
+                    mobile:
+                        data.mobile ||
+                        data.mobileNumber ||
+                        data.phone ||
+                        user.mobile ||
+                        user.mobileNumber ||
+                        user.phone ||
+                        "N/A",
+                    round:
                     questionNumber,
                     challengeTitle:
                         data.challengeTitle ||
@@ -1921,6 +1988,7 @@
                 const details = [
                     ["Participant", submission.participant],
                     ["Email", submission.email],
+                    ["Mobile Number", submission.mobile || "N/A"],
                     ["Round", submission.round || "N/A"],
                     [
                         "Question",
@@ -2255,13 +2323,14 @@
             return "N/A";
         }
 
-        /* Already formatted as MM:SS */
         if (
             typeof value === "string" &&
             value.includes(":")
         ) {
-            const parts =
-                value.split(":").map(Number);
+            const parts = value
+                .trim()
+                .split(":")
+                .map(Number);
 
             if (
                 parts.length === 2 &&
@@ -2269,14 +2338,15 @@
                     part => Number.isFinite(part)
                 )
             ) {
-                const minutes =
-                    Math.max(0, Math.floor(parts[0]));
+                const minutes = Math.max(
+                    0,
+                    Math.floor(parts[0])
+                );
 
-                const seconds =
-                    Math.max(
-                        0,
-                        Math.floor(parts[1])
-                    ) % 60;
+                const seconds = Math.max(
+                    0,
+                    Math.floor(parts[1])
+                ) % 60;
 
                 return (
                     `${String(minutes).padStart(2, "0")}:` +
@@ -2285,19 +2355,20 @@
             }
         }
 
-        /* Firestore numeric timeUsedSeconds */
-        const seconds =
-            Number(value);
+        const seconds = Number(value);
 
         if (!Number.isFinite(seconds)) {
             return "N/A";
         }
 
-        const safeSeconds =
-            Math.max(0, Math.floor(seconds));
+        const safeSeconds = Math.max(
+            0,
+            Math.floor(seconds)
+        );
 
-        const minutes =
-            Math.floor(safeSeconds / 60);
+        const minutes = Math.floor(
+            safeSeconds / 60
+        );
 
         const remainingSeconds =
             safeSeconds % 60;
