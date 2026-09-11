@@ -1970,6 +1970,25 @@ submitBtn.addEventListener(
                Upload image to Cloudinary.
             */
 
+            /* =========================================================
+               RECORD SUBMISSION TIME
+            ========================================================= */
+
+            /*
+               IMPORTANT:
+               Capture the submission time before the Cloudinary upload.
+
+               This means the participant's upload time does not
+               incorrectly increase their competition time.
+            */
+
+            const submissionClickTime = Date.now();
+
+
+            /*
+               Upload image to Cloudinary.
+            */
+
             const imageUrl =
                 await uploadToCloudinary(
                     imageFile
@@ -1980,16 +1999,120 @@ submitBtn.addEventListener(
                 "Saving your submission...";
 
 
+            /* =========================================================
+               CALCULATE TIME USED
+            ========================================================= */
+
+            const storedTimerStart =
+                Number(
+                    localStorage.getItem(
+                        "timerStart"
+                    )
+                );
+
+
+            let timeUsedSeconds = 0;
+
+
+            if (
+                storedTimerStart &&
+                Number.isFinite(storedTimerStart)
+            ) {
+
+                timeUsedSeconds =
+                    Math.floor(
+                        (
+                            submissionClickTime -
+                            storedTimerStart
+                        ) / 1000
+                    );
+
+            }
+
+
+            /*
+               Never allow the saved time to be below 0
+               or above the 20-minute challenge limit.
+            */
+
+            timeUsedSeconds =
+                Math.max(
+                    0,
+                    Math.min(
+                        timeUsedSeconds,
+                        20 * 60
+                    )
+                );
+
+
+            /* =========================================================
+               CALCULATE TIME REMAINING
+            ========================================================= */
+
+            const timeRemainingSeconds =
+                Math.max(
+                    0,
+                    (20 * 60) -
+                    timeUsedSeconds
+                );
+
+
+            /* =========================================================
+               FORMAT TIME
+            ========================================================= */
+
+            function formatSubmissionTime(seconds) {
+
+                const minutes =
+                    Math.floor(
+                        seconds / 60
+                    );
+
+                const remainingSeconds =
+                    seconds % 60;
+
+
+                return (
+                    String(minutes).padStart(2, "0") +
+                    ":" +
+                    String(remainingSeconds).padStart(2, "0")
+                );
+
+            }
+
+
+            const timeUsed =
+                formatSubmissionTime(
+                    timeUsedSeconds
+                );
+
+
+            const timeRemaining =
+                formatSubmissionTime(
+                    timeRemainingSeconds
+                );
+
+
+            /* =========================================================
+               CREATE SUBMISSION DATA
+            ========================================================= */
+
             const submissionData = {
 
                 round:
-                    assignedRound,
+                    Number(
+                        assignedRound
+                    ),
 
                 questionNumber:
-                    assignedQuestion,
+                    Number(
+                        assignedQuestion
+                    ),
 
                 challengeId:
-                    assignedQuestion,
+                    Number(
+                        assignedQuestion
+                    ),
 
                 challengeTitle:
                     assignedChallenge
@@ -2016,8 +2139,46 @@ submitBtn.addEventListener(
                 imageUrl:
                     imageUrl,
 
+                /*
+                   Also save the image using the other
+                   field names so Admin can display it.
+                */
+
+                image:
+                    imageUrl,
+
+                designUrl:
+                    imageUrl,
+
+
+                /* =====================================================
+                   TIMER DATA
+                ===================================================== */
+
+                timerStart:
+                    storedTimerStart
+                        ? Timestamp.fromMillis(
+                            storedTimerStart
+                        )
+                        : null,
+
                 submittedAt:
-                    Timestamp.now(),
+                    Timestamp.fromMillis(
+                        submissionClickTime
+                    ),
+
+                timeUsedSeconds:
+                    timeUsedSeconds,
+
+                timeUsed:
+                    timeUsed,
+
+                timeRemainingSeconds:
+                    timeRemainingSeconds,
+
+                timeRemaining:
+                    timeRemaining,
+
 
                 status:
                     "submitted"
