@@ -424,7 +424,7 @@
                     <tr>
 
                         <td
-                            colspan="9"
+                            colspan="10"
                             class="loading">
 
                             Loading participants...
@@ -764,7 +764,7 @@
                 usersTable.innerHTML = `
                     <tr>
                         <td
-                            colspan="9"
+                            colspan="10"
                             class="empty-message">
 
                             No participants found.
@@ -1491,18 +1491,33 @@
                         <td>
 
                             ${
-                                data.image
+                                (
+                                    data.image ||
+                                    data.imageUrl ||
+                                    data.designUrl ||
+                                    ""
+                                )
 
                                 ? `
 
                                     <a
-                                        href="${escapeAttribute(data.image)}"
+                                        href="${escapeAttribute(
+                                            data.image ||
+                                            data.imageUrl ||
+                                            data.designUrl ||
+                                            ""
+                                        )}"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         title="Open submitted design">
 
                                         <img
-                                            src="${escapeAttribute(data.image)}"
+                                            src="${escapeAttribute(
+                                                data.image ||
+                                                data.imageUrl ||
+                                                data.designUrl ||
+                                                ""
+                                            )}"
                                             alt="Submitted design"
                                             class="design-thumb"
                                             loading="lazy"
@@ -2230,39 +2245,67 @@
        FORMAT TIME
     ========================================== */
 
-    function formatTime(seconds) {
+    function formatTime(value) {
 
         if (
-
-            seconds === undefined ||
-            seconds === null ||
-            isNaN(Number(seconds))
-
+            value === undefined ||
+            value === null ||
+            value === ""
         ) {
-
             return "N/A";
-
         }
 
+        /* Already formatted as MM:SS */
+        if (
+            typeof value === "string" &&
+            value.includes(":")
+        ) {
+            const parts =
+                value.split(":").map(Number);
 
-        seconds =
-            Number(seconds);
+            if (
+                parts.length === 2 &&
+                parts.every(
+                    part => Number.isFinite(part)
+                )
+            ) {
+                const minutes =
+                    Math.max(0, Math.floor(parts[0]));
 
+                const seconds =
+                    Math.max(
+                        0,
+                        Math.floor(parts[1])
+                    ) % 60;
+
+                return (
+                    `${String(minutes).padStart(2, "0")}:` +
+                    `${String(seconds).padStart(2, "0")}`
+                );
+            }
+        }
+
+        /* Firestore numeric timeUsedSeconds */
+        const seconds =
+            Number(value);
+
+        if (!Number.isFinite(seconds)) {
+            return "N/A";
+        }
+
+        const safeSeconds =
+            Math.max(0, Math.floor(seconds));
 
         const minutes =
-            Math.floor(
-                seconds / 60
-            );
-
+            Math.floor(safeSeconds / 60);
 
         const remainingSeconds =
-            seconds % 60;
-
+            safeSeconds % 60;
 
         return (
-            `${minutes}m ${remainingSeconds}s`
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(remainingSeconds).padStart(2, "0")}`
         );
-
     }
 
 
